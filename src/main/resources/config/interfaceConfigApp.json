@@ -1,31 +1,266 @@
 {
 	"title": "Aplicación transaccional de Super Andes Uniandes",
 	"frameH": 600,
-	"frameW": 800,
+	"frameW": 1390,
 	"bannerPath": "./src/main/resources/config/logo.png",
 	"menuBar":
 	[
-		{ "menuTitle": "TipoBebida",
+		{ "menuTitle":"Ventas",
 		  "options":
-			[
-				{
-					"label": "Adicionar",
-					"event": "adicionarTipoBebida"
-				},
-				{
-					"label": "Listar",
-					"event": "listarTipoBebida"
-				},
-				{
-					"label": "Borrar por Id",
-					"event": "eliminarTipoBebidaPorId"
-				},
-				{
-					"label": "Buscar por Nombre",
-					"event": "buscarTipoBebidaPorNombre"
-				}
-			]
+		  	[
+		  		{
+		  			"label":"Nueva Venta",
+		  			"event":"nuevaVenta"
+		  		},
+		  		{
+		  			"label":"Buscar por Sucursal",
+		  			"event":"buscarPorSucursal"
+		  		},
+		  		{
+		  			"label":"Buscar por Cliente",
+		  			"event":"buscarPorCliente"
+		  		},
+		  		{
+		  			"label":"Listar Ventas",
+		  			"event":"listarVentas"
+		  		}
+		  	]
 		},
+		{ "menuTitle": "Sucursales",
+		  "options": 
+		  	[
+		  		{
+		  			"label":"Agregar Sucursal",
+		  			"event":"agregarSucursal"
+		  		},
+		  		{
+		  			"label":"Eliminar Sucursal",
+		  			"event":"eliminarSucursal"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Listar Sucursales",
+		  			"event":"listarSucursales"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Buscar Sucursal",
+		  			"event":"buscarSucursal"
+		  		},
+		  		{
+		  			"label":"Actualizar Sucursal",
+		  			"event":"actualizarSucursal"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Agregar Almacenamiento Sucursal",
+		  			"event":"agregarAlmacenamiento"
+		  		},
+		  		{
+		  			"label":"Eliminar Almacenamiento Sucursal",
+		  			"event":"eliminarAlmacenamiento"
+		  		}
+		  	]
+		},
+		{ "menuTitle": "Productos",
+		  "options":
+		  	[
+		  		{
+		  			"label":"Agregar Producto",
+		  			"event":"agregarProducto"
+		  		},
+		  		{
+		  			"label":"Eliminar Producto",
+		  			"event":"eliminarProducto"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Listar Productos",
+		  			"event":"listarProductos"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Buscar Producto",
+		  			"event":"buscarProducto"
+		  		},
+		  		{
+		  			"label":"Actualizar Producto",
+		  			"event":"actualizarProducto"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Agregar Producto Redimible",
+		  			"event":"agregarRedimible"
+		  		},
+		  		{
+		  			"label":"Eliminar Producto Redimible",
+		  			"event":"eliminarRedimible"
+		  		},
+		  		{
+		  			"label":"Actualizar Producto Redimible",
+		  			"event":"actualizarRedimible"
+		  		}
+		  	]
+		},
+		{ "menuTitle":"Categorias",
+		  "options":
+		  	[
+				{
+		  			"label":"Agregar Categoria",
+		  			"event":"agregarCategoria"
+		  		},
+		  		{
+		  			"label":"Eliminar Categoria",
+		  			"event":"eliminarCategoria"
+		  		},
+		  		{
+		  			"label":"Buscar Categoria",
+		  			"event":"buscarCategoria"
+		  		},
+		  		{
+		  			"label":"Listar Categorias",
+		  			"event":"listarCategorias"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Agregar Tipo Producto",
+		  			"event":"agregarTipoProducto"
+		  		},
+		  		{
+		  			"label":"Eliminar Tipo Producto",
+		  			"event":"eliminarTipoProducto"
+		  		},
+		  		{
+		  			"label":"Buscar Tipo Producto",
+		  			"event":"buscarTipoProducto"
+		  		},
+		  		{
+		  			"label":"Listar Tipos de Productos",
+		  			"event":"listarTipoProductos"
+		  		}
+		  	]
+		},
+		{ "menuTitle": "Promociones",
+		  "options":
+		  	[
+		  		{
+		  			"label":"Agregar Promoción",
+		  			"event":"agregarPromocion"
+		  		},
+		  		{
+		  			"label":"Eliminar Promoción",
+		  			"event":"eliminarPromocion"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Finalizar Promoción",
+		  			"event":"finalizarPromocion"
+		  		},
+		  		{
+		  			"label":"Buscar Promoción",
+		  			"event":"buscarPromocion"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Listar Promociones",
+		  			"event":"listarPromociones"
+		  		}
+		  	]
+		},
+		{ "menuTitle":"Clientes",
+		  "options":
+		  	[
+		  		{
+		  			"label":"Agregar Cliente",
+		  			"event":"agregarCliente"
+		  		},
+		  		{
+		  			"label":"Eliminar Cliente",
+		  			"event":"eliminarCliente"
+		  		},
+		  		{
+		  			"label":"Buscar Cliente",
+		  			"event":"buscarCliente"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Listar Clientes",
+		  			"event":"listarClientes"
+		  		}
+		  	]
+		},
+		{ "menuTitle":"Proveedores",
+		  "options":
+		  	[
+		  		{
+		  			"label":"Agregar Proveedor",
+		  			"event":"agregarProveedor"
+		  		},
+		  		{
+		  			"label":"Eliminar Proveedor",
+		  			"event":"eliminarProveedor"
+		  		},
+		  		{
+		  			"label":"Buscar Proveedor",
+		  			"event":"buscarProveedor"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Hacer Pedido Proveedor",
+		  			"event":"hacerPedido"
+		  		},
+		  		{
+		  			"label":"Agregar Producto Proveedor",
+		  			"event":"agregarProductoProveedor"
+		  		},
+		  		{
+		  			"label":"Eliminar Producto Proveedor",
+		  			"event":"eliminarProductoProveedor"
+		  		}
+		  	]
+		},
+		{ "menuTitle":"Información",
+		  "options":
+		  	[
+		  		{
+		  			"label":"Actualizar Información",
+		  			"event":"actualizarInfo"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Agregar Resolución",
+		  			"event":"agregarResolución"
+		  		},
+		  		{
+		  			"label":"Listar Resolución",
+		  			"event":"listarResolución"
+		  		}
+		  	]
+		},		
 		{ "menuTitle": "Mantenimiento",
 		  "options":
 			[
@@ -51,11 +286,11 @@
 				}
 			]
 		},		
-		{ "menuTitle": "DocumentaciÃ³n",
+		{ "menuTitle": "Documentación",
 		  "options":
 			[
 				{
-					"label": "PresentaciÃ³n general",
+					"label": "Presentación general",
 					"event": "mostrarPresentacionGeneral"
 				},
 				{
@@ -67,7 +302,7 @@
 					"event": "mostrarEsquemaBD"
 				},
 				{
-					"label": "Script creaciÃ³n de la BD",
+					"label": "Script creación de la BD",
 					"event": "mostrarScriptBD"
 				},
 				{
@@ -79,7 +314,7 @@
 					"event": "mostrarJavadoc"
 				}
 			]
-		},		
+		},
 		{ "menuTitle": "Acerca de ...",
 		  "options":
 			[

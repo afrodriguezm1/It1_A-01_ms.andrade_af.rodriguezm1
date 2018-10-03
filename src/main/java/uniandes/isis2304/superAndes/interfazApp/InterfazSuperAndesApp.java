@@ -1,5 +1,6 @@
 package uniandes.isis2304.superAndes.interfazApp;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +8,9 @@ import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -30,11 +33,15 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	
 	private static final String CONFIG_INTERFAZ = "./src/main/resources/config/interfaceConfigApp.json";
 	
+	private static final String CONFIG_TABLAS = "./src/main/resources/config/TablasBD_A.json";
+	
 	private JsonObject tableConfig;
 	
 	private SuperAndes superAndes;
 	
 	private JsonObject guiConfig;
+	
+	private PanelDatos panelDatos;
 
 	private JMenuBar menuBar;
 	
@@ -46,6 +53,16 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		{
 			crearMenu(guiConfig.getAsJsonArray("menuBar"));
 		}
+		
+		tableConfig = openConfig("Tablas BD", CONFIG_TABLAS);
+		superAndes = new SuperAndes(tableConfig);
+		
+		String path = guiConfig.get("bannerPath").getAsString();
+		panelDatos = new PanelDatos();
+		
+		setLayout ( new BorderLayout());
+		add(new JLabel( new ImageIcon (path)), BorderLayout.NORTH);
+		add(panelDatos, BorderLayout.CENTER);
 	}
 	
 	public JsonObject openConfig(String tipo, String archConfig)
@@ -120,7 +137,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			JsonObject jom = men.getAsJsonObject();
 			
 			String menuTitle = jom.get("menuTitle").getAsString();
-			JsonArray opciones = jom.getAsJsonArray("option");
+			JsonArray opciones = jom.getAsJsonArray("options");
 			
 			JMenu menu = new JMenu(menuTitle);
 			
@@ -128,13 +145,20 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			{
 				JsonObject jo = op.getAsJsonObject();
 				String lb = jo.get("label").getAsString();
-				String event = jo.get("event").getAsString();
-				
-				JMenuItem mItem = new JMenuItem(lb);
-				mItem.addActionListener(this);
-				mItem.setActionCommand(event);
-				
-				menu.add(mItem);
+				if(lb.equals("separador"))
+				{
+					menu.addSeparator();
+				}
+				else
+				{
+					String event = jo.get("event").getAsString();
+					
+					JMenuItem mItem = new JMenuItem(lb);
+					mItem.addActionListener(this);
+					mItem.setActionCommand(event);
+					
+					menu.add(mItem);
+				}
 			}
 			menuBar.add(menu);
 		}
