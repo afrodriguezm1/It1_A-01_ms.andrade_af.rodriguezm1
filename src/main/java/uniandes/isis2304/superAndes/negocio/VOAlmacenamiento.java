@@ -24,6 +24,11 @@ public interface VOAlmacenamiento
 	public long getIdSucursal();
 	
 	/**
+	 * @return El codigo de barras del producto almacenado
+	 */
+	public String getCodigoBarrasProducto();
+	
+	/**
 	 * @return El id de la categoria que acepta el almacenamiento
 	 */
 	public long getIdCategoria();

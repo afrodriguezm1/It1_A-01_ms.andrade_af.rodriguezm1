@@ -48,9 +48,9 @@ public class InfoProdSucursal implements VOInfoProdSucursal
 	 * @param codigoBarras - El codigo de barras del producto
 	 * @param cantidadProduct - La cantidad de productos
 	 */
-	public InfoProdSucursal(long idOrden, String codigoBarras, int cantidadProducto)
+	public InfoProdSucursal(long idVenta, String codigoBarras, int cantidadProducto)
 	{
-		this.idVenta = idOrden;
+		this.idVenta = idVenta;
 		this.codigoBarras = codigoBarras;
 		this.cantidadProducto = cantidadProducto;
 	}

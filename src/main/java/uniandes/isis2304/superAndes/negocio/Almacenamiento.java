@@ -23,6 +23,11 @@ public class Almacenamiento implements VOAlmacenamiento
 	private long idSucursal;
 	
 	/**
+	 * El código del producto guardado en el almacen
+	 */
+	private String codigoBarrasProducto;
+	
+	/**
 	 * El identidicador de la categoria del almacen
 	 */
 	private long idCategoria;
@@ -68,6 +73,7 @@ public class Almacenamiento implements VOAlmacenamiento
 	{
 		this.id = 0;
 		this.idSucursal = 0;
+		this.codigoBarrasProducto = "";
 		this.idCategoria = 0;
 		this.idTipoProducto = 0;
 		this.capacidadVol = 0;
@@ -89,10 +95,11 @@ public class Almacenamiento implements VOAlmacenamiento
 	 * @param tipoAlmacenamiento
 	 * @param nivelReAvastecimiento
 	 */
-	public Almacenamiento(long id, long idSucursal, long idCategoria, long idTipoProducto, double capacidadVol, double capacidadPeso, int cantidad, int tipoAlmacenamiento, int nivelReAvastecimiento)
+	public Almacenamiento(long id, long idSucursal, String codigoBarrasProducto, long idCategoria, long idTipoProducto, double capacidadVol, double capacidadPeso, int cantidad, int tipoAlmacenamiento, int nivelReAvastecimiento)
 	{
 		this.id = id;
 		this.idSucursal = idSucursal;
+		this.codigoBarrasProducto = codigoBarrasProducto;
 		this.idCategoria = idCategoria;
 		this.idTipoProducto = idTipoProducto;
 		this.capacidadVol = capacidadVol;
@@ -132,6 +139,22 @@ public class Almacenamiento implements VOAlmacenamiento
 	public void setIdSucursal(long idSucursal)
 	{
 		this.idSucursal = idSucursal;
+	}
+	
+	/**
+	 * @return codigo del producto que se almacena
+	 */
+	public String getCodigoBarrasProducto()
+	{
+		return codigoBarrasProducto;
+	}
+	
+	/**
+	 * @param codigoBarrasProducto - El nuevo código de barras del producto
+	 */
+	public void setCodigoBarrasProducto(String codigoBarrasProducto)
+	{
+		this.codigoBarrasProducto = codigoBarrasProducto;
 	}
 
 	/**
@@ -252,7 +275,7 @@ public class Almacenamiento implements VOAlmacenamiento
 	@Override
 	public String toString()
 	{
-		return "Almacenamiento [id=" + id + ", idSucursal=" + idSucursal + ", idCategoria=" + idCategoria +", idTipoProducto=" + idTipoProducto
+		return "Almacenamiento [id=" + id + ", idSucursal=" + idSucursal + ", codigoBarrasProducto=" + codigoBarrasProducto + ", idCategoria=" + idCategoria +", idTipoProducto=" + idTipoProducto
 				+ ", capacidadVol=" + capacidadVol + ", capacidadPeso=" + capacidadPeso + ", cantidad=" + cantidad + ", tipoAlmacenamiento=" + tipoAlmacenamiento 
 				+ ", nivelReAvastecimiento=" + nivelReAvastecimiento + "]";
 	}
