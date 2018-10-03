@@ -9,11 +9,7 @@ import java.sql.Timestamp;
  */
 public class Promocion implements VOPromocion
 {
-	/**
-	 * Id de la promocion
-	 */
-	private long id;
-	
+
 	/**
 	 * Id de la sucursal
 	 */
@@ -59,7 +55,7 @@ public class Promocion implements VOPromocion
 	 */
 	public Promocion()
 	{
-		this.id =0;
+
 		this.idSucursal = 0;
 		this.codigoBarras = 0;
 		this.nombre = "";
@@ -82,10 +78,9 @@ public class Promocion implements VOPromocion
 	 * @param valorOriginal
 	 * @param valorPromo
 	 */
-	public Promocion(long id, long idSucursal, long codigoBarras, String nombre, Timestamp fechaInicio,
+	public Promocion( long idSucursal, long codigoBarras, String nombre, Timestamp fechaInicio,
 			Timestamp fechaFin, int tipoPromo, int valorOriginal, int valorPromo) {
-		super();
-		this.id = id;
+
 		this.idSucursal = idSucursal;
 		this.codigoBarras = codigoBarras;
 		this.nombre = nombre;
@@ -94,20 +89,6 @@ public class Promocion implements VOPromocion
 		this.tipoPromo = tipoPromo;
 		this.valorOriginal = valorOriginal;
 		this.valorPromo = valorPromo;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	/**
@@ -227,7 +208,7 @@ public class Promocion implements VOPromocion
 	 */
 	@Override
 	public String toString() {
-		return "Promocion [id=" + id + ", idSucursal=" + idSucursal + ", codigoBarras=" + codigoBarras + ", nombre="
+		return "Promocion [idSucursal=" + idSucursal + ", codigoBarras=" + codigoBarras + ", nombre="
 				+ nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", tipoPromo=" + tipoPromo
 				+ ", valorOriginal=" + valorOriginal + ", valorPromo=" + valorPromo + "]";
 	}

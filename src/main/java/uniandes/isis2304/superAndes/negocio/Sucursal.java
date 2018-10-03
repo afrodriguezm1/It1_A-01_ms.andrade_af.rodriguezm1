@@ -6,10 +6,7 @@ package uniandes.isis2304.superAndes.negocio;
  */
 public class Sucursal implements VOSucursal
 {
-	/**
-	 * Identificador unico de la sucursal
-	 */
-	private long id;
+
 	
 	/**
 	 * Nombre de la sucursal
@@ -31,7 +28,7 @@ public class Sucursal implements VOSucursal
 	 */
 	public Sucursal()
 	{
-		id = 0;
+
 		nombre = "";
 		direccion ="";
 		ciudad = "";
@@ -45,29 +42,13 @@ public class Sucursal implements VOSucursal
 	 * @param pDireccion
 	 * @param pCiudad
 	 */
-	public Sucursal(long pId, String pNombre, String pDireccion, String pCiudad)
+	public Sucursal(String pNombre, String pDireccion, String pCiudad)
 	{
-		this.id = pId;
+
 		this.nombre = pNombre;
 		this.direccion = pDireccion;
 		this.ciudad = pCiudad;
 		
-	}
-
-
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
-
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
 	}
 
 
@@ -124,7 +105,7 @@ public class Sucursal implements VOSucursal
 	 */
 	@Override
 	public String toString() {
-		return "Sucursal [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", ciudad=" + ciudad + "]";
+		return "Sucursal [ nombre=" + nombre + ", direccion=" + direccion + ", ciudad=" + ciudad + "]";
 	}
 	
 	

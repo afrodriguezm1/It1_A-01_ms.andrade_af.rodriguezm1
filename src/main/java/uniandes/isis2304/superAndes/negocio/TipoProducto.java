@@ -6,10 +6,7 @@ package uniandes.isis2304.superAndes.negocio;
  */
 public class TipoProducto implements VOTipoProducto
 {
-	/**
-	 * Id del tipo de producto
-	 */
-	private long id;
+
 	
 	/**
 	 * Id de la categoria del producto.
@@ -26,7 +23,7 @@ public class TipoProducto implements VOTipoProducto
 	 */
 	public TipoProducto()
 	{
-		this.id = 0;
+
 		this.idCategoria = 0;
 		this.nombre = "";
 	}
@@ -37,26 +34,13 @@ public class TipoProducto implements VOTipoProducto
 	 * @param idCategoria
 	 * @param nombre
 	 */
-	public TipoProducto(long id, long idCategoria, String nombre) {
-		super();
-		this.id = id;
+	public TipoProducto( long idCategoria, String nombre) {
+
 		this.idCategoria = idCategoria;
 		this.nombre = nombre;
 	}
 
-	/**
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the idCategoria
@@ -91,7 +75,7 @@ public class TipoProducto implements VOTipoProducto
 	 */
 	@Override
 	public String toString() {
-		return "TipoProducto [id=" + id + ", idCategoria=" + idCategoria + ", nombre=" + nombre + "]";
+		return "TipoProducto [idCategoria=" + idCategoria + ", nombre=" + nombre + "]";
 	}
 	
 	

@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 
 public interface VOPromocion
 {
-	public long getId();
+
 	
 	public long getIdSucursal();
 	
