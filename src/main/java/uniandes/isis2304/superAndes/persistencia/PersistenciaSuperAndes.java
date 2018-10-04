@@ -934,135 +934,106 @@ public class PersistenciaSuperAndes
 	}
 
 	//------------------------------------------------------------------------
-	// Almacenamiento
-	//------------------------------------------------------------------------
+		// Almacenamiento
+		//------------------------------------------------------------------------
 
-	public Almacenamiento agregarBodegaSucursal(long idSucursal, String codigoBarras, long idCategoria, long idTipoProducto, double capacidadVol, double capacidadPeso, int cantidad, int nivelReavastecimiento)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
+		public Almacenamiento agregarAlamacenamientoSucursal(long idSucursal, String codigoBarras, long idCategoria, long idTipoProducto, double capacidadVol, double capacidadPeso, int cantidad, int tipoAlma, int nivelReavastecimiento)
 		{
-			tx.begin();
-			long id = sqlAlmacenamiento.siguienteId(pm);
-			long tuplaInsertadas = sqlAlmacenamiento.agregarBodegaSucursal(pm, idSucursal, codigoBarras, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, nivelReavastecimiento);
-			tx.commit();
-
-			log.trace("Inserción Almacenamiento a sucursal: " + idSucursal + " : " + tuplaInsertadas +" tuplas Insertadas");
-			return new Almacenamiento(id, idSucursal, codigoBarras, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, 2, nivelReavastecimiento);
-		}
-		catch(Exception e)
-		{
-			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
+			PersistenceManager pm = pmf.getPersistenceManager();
+			Transaction tx = pm.currentTransaction();
+			try
 			{
-				tx.rollback();
+				tx.begin();
+				long id = sqlAlmacenamiento.siguienteId(pm);
+				long tuplasInsertadas = sqlAlmacenamiento.agregarAlmacenamientoSucursal(pm, idSucursal, codigoBarras, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, tipoAlma, nivelReavastecimiento);
+				tx.commit();
+
+				log.trace("Inserción Almacenamiento a sucursal: " + idSucursal + " : " + tuplasInsertadas +" tuplas Insertadas");
+				return new Almacenamiento(id, idSucursal, codigoBarras, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, 2, nivelReavastecimiento);
 			}
-			pm.close();
-		}
-	}
-
-	public Almacenamiento agregarEstanteSucursal(long idSucursal, String codigoBarras, long idCategoria, long idTipoProducto, double capacidadVol, double capacidadPeso, int cantidad, int nivelReavastecimiento)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long id = sqlAlmacenamiento.siguienteId(pm);
-			long tuplaInsertadas = sqlAlmacenamiento.agregarEstanteSucursal(pm, idSucursal, codigoBarras, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, nivelReavastecimiento);
-			tx.commit();
-
-			log.trace("Inserción Almacenamiento a sucursal: " + idSucursal + " : " + tuplaInsertadas +" tuplas Insertadas");
-			return new Almacenamiento(id, idSucursal, codigoBarras, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, 1, nivelReavastecimiento);
-		}
-		catch(Exception e)
-		{
-			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
+			catch(Exception e)
 			{
-				tx.rollback();
+				log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+				return null;
 			}
-			pm.close();
-		}
-	}
-
-	public long eliminarAlmacenDeSucursal(long idSucursal, String codigoBarras, int tipoAlmacenamiento)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long resp = sqlAlmacenamiento.eliminarAlmacenamientoSucursal(pm, idSucursal, codigoBarras, tipoAlmacenamiento);
-			tx.commit();
-
-			return resp;
-		}
-		catch(Exception e)
-		{
-			log.error("Exception : " + e.getMessage() +"\n" + darDetalleException(e));
-			return -1;
-		}
-		finally
-		{
-			if (tx.isActive())
+			finally
 			{
-				tx.rollback();
+				if (tx.isActive())
+				{
+					tx.rollback();
+				}
+				pm.close();
 			}
-			pm.close();
 		}
-	}
 
-	public long acutalizarCantidadAlmacenamiento(long idSucursal, String codigobarras, int cantidad, int tipoAlmacenamiento)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
+		public long eliminarAlmacenDeSucursal(long idSucursal, String codigoBarras, int tipoAlmacenamiento)
 		{
-			tx.begin();
-			long resp = sqlAlmacenamiento.actualizarCantidadesAlmacenamiento(pm, idSucursal, codigobarras, cantidad, tipoAlmacenamiento);
-			tx.commit();
-
-			return resp;
-		}
-		catch(Exception e)
-		{
-			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return -1;
-		}
-		finally
-		{
-			if (tx.isActive())
+			PersistenceManager pm = pmf.getPersistenceManager();
+			Transaction tx = pm.currentTransaction();
+			try
 			{
-				tx.rollback();
+				tx.begin();
+				long resp = sqlAlmacenamiento.eliminarAlmacenamientoSucursal(pm, idSucursal, codigoBarras, tipoAlmacenamiento);
+				tx.commit();
+
+				return resp;
 			}
-			pm.close();
+			catch(Exception e)
+			{
+				log.error("Exception : " + e.getMessage() +"\n" + darDetalleException(e));
+				return -1;
+			}
+			finally
+			{
+				if (tx.isActive())
+				{
+					tx.rollback();
+				}
+				pm.close();
+			}
 		}
-	}
 
-	public Almacenamiento darAlmacenamientoEnEspecifico(long idSucursal, String codigoBarras, int tipoAlma)
-	{
-		return sqlAlmacenamiento.buscarAlmacenamientoEnEspecifico(pmf.getPersistenceManager(), idSucursal, codigoBarras, tipoAlma);
-	}
+		public long acutalizarCantidadAlmacenamiento(long idSucursal, String codigobarras, int cantidad, int tipoAlmacenamiento)
+		{
+			PersistenceManager pm = pmf.getPersistenceManager();
+			Transaction tx = pm.currentTransaction();
+			try
+			{
+				tx.begin();
+				long resp = sqlAlmacenamiento.actualizarCantidadesAlmacenamiento(pm, idSucursal, codigobarras, cantidad, tipoAlmacenamiento);
+				tx.commit();
 
-	public List<Almacenamiento> darAlmacenesPorSucursal(long idSucursal)
-	{
-		return sqlAlmacenamiento.buscarAlmacenesPorSucursal(pmf.getPersistenceManager(), idSucursal);
-	}
+				return resp;
+			}
+			catch(Exception e)
+			{
+				log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+				return -1;
+			}
+			finally
+			{
+				if (tx.isActive())
+				{
+					tx.rollback();
+				}
+				pm.close();
+			}
+		}
 
-	public List<Almacenamiento> darAlmacenesSuperAndes()
-	{
-		return sqlAlmacenamiento.buscarAlmacenes(pmf.getPersistenceManager());
-	}
+		public Almacenamiento darAlmacenamientoEnEspecifico(long idSucursal, String codigoBarras, int tipoAlma)
+		{
+			return sqlAlmacenamiento.buscarAlmacenamientoEnEspecifico(pmf.getPersistenceManager(), idSucursal, codigoBarras, tipoAlma);
+		}
+
+		public List<Almacenamiento> darAlmacenesPorSucursal(long idSucursal)
+		{
+			return sqlAlmacenamiento.buscarAlmacenesPorSucursal(pmf.getPersistenceManager(), idSucursal);
+		}
+
+		public List<Almacenamiento> darAlmacenesSuperAndes()
+		{
+			return sqlAlmacenamiento.buscarAlmacenes(pmf.getPersistenceManager());
+		}
 
 	//------------------------------------------------------------------------
 	// Clientes

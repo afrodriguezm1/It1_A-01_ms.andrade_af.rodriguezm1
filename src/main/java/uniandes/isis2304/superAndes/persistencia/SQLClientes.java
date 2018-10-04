@@ -67,13 +67,13 @@ public class SQLClientes
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM CLIENTES WHERE nombre LIKE '%?%'");
 		q.setResultClass(Clientes.class);
-		return (List<Clientes>) q.executeUnique();
+		return (List<Clientes>) q.executeList();
 	}
 	
 	public List<Clientes> darClientes(PersistenceManager pm)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM CLIENTES");
 		q.setResultClass(Clientes.class);
-		return (List<Clientes>) q.executeUnique();
+		return (List<Clientes>) q.executeList();
 	}
 }
