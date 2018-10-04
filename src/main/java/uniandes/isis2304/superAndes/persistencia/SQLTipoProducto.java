@@ -52,10 +52,10 @@ public class SQLTipoProducto
 	 * @param pCiudad
 	 * @return
 	 */
-	public long adicionarTipoProducto(PersistenceManager pm, long id,long idCategoria, String pNombre)
+	public long adicionarTipoProducto(PersistenceManager pm, long idCategoria, String pNombre)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO  TIPO_PRODUCTO (Id, Id_categoria, Nombre) values (?, ?, ?)");
-        q.setParameters(id, idCategoria, pNombre);
+        Query q = pm.newQuery(SQL, "INSERT INTO  TIPO_PRODUCTO (Id_categoria, Nombre) values ( ?, ?)");
+        q.setParameters(idCategoria, pNombre);
         return (long) q.executeUnique();
 	}
 	/**

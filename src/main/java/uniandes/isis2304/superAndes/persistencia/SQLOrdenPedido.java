@@ -52,12 +52,12 @@ public class SQLOrdenPedido
 	 * @param pNombre
 	 * @return
 	 */
-	public long adicionarOrdenPedido(PersistenceManager pm,long id, long idSucursal, String nit, Timestamp fechaExp,
+	public long adicionarOrdenPedido(PersistenceManager pm, long idSucursal, String nit, Timestamp fechaExp,
 			Timestamp fechaEst, Timestamp fechaEntrega, String estado)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO ORDEN_PEDIDO (Id, Id_sucursal, Codigo_barras, Nombre, Fecha_inicio, Fecha_fin, Tipo_promo, Valor1, Valor2) "
-        		+ "values (?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, idSucursal, nit, fechaExp, fechaEst, fechaEntrega, estado);
+        Query q = pm.newQuery(SQL, "INSERT INTO ORDEN_PEDIDO (Id_sucursal, Codigo_barras, Nombre, Fecha_inicio, Fecha_fin, Tipo_promo, Valor1, Valor2) "
+        		+ "values (?, ?, ?, ?, ?, ?)");
+        q.setParameters(idSucursal, nit, fechaExp, fechaEst, fechaEntrega, estado);
         return (long) q.executeUnique();
 	}
 	/**

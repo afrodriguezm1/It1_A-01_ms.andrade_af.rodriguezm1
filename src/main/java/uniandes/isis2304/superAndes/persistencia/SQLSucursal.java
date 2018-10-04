@@ -51,10 +51,10 @@ public class SQLSucursal
 	 * @param pCiudad
 	 * @return
 	 */
-	public long adicionarSucursal(PersistenceManager pm, long pId, String pNombre, String pDireccion, String pCiudad)
+	public long adicionarSucursal(PersistenceManager pm,String pNombre, String pDireccion, String pCiudad)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO SUCURSAL (Id, Nombre, Direccion, Ciudad) values (?, ?, ?, ?)");
-        q.setParameters(pId, pNombre, pDireccion, pCiudad);
+        Query q = pm.newQuery(SQL, "INSERT INTO SUCURSAL (Nombre, Direccion, Ciudad) values (?, ?, ?)");
+        q.setParameters(pNombre, pDireccion, pCiudad);
         return (long) q.executeUnique();
 	}
 	/**

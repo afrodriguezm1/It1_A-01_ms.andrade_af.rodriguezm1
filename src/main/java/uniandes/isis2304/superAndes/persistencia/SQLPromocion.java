@@ -52,12 +52,12 @@ public class SQLPromocion
 	 * @param pNombre
 	 * @return
 	 */
-	public long adicionarPromocion(PersistenceManager pm,long id, long idSucursal, long codigoBarras, String nombre, Timestamp fechaInicio,
+	public long adicionarPromocion(PersistenceManager pm, long idSucursal, long codigoBarras, String nombre, Timestamp fechaInicio,
 			Timestamp fechaFin, int tipoPromo, int valorOriginal, int valorPromo)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO PROMOCION (Id, Id_sucursal, Codigo_barras, Nombre, Fecha_inicio, Fecha_fin, Tipo_promo, Valor1, Valor2) "
-        		+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        q.setParameters(id, idSucursal, codigoBarras, nombre, fechaInicio, fechaFin, tipoPromo, valorOriginal, valorPromo);
+        Query q = pm.newQuery(SQL, "INSERT INTO PROMOCION (Id_sucursal, Codigo_barras, Nombre, Fecha_inicio, Fecha_fin, Tipo_promo, Valor1, Valor2) "
+        		+ "values ( ?, ?, ?, ?, ?, ?, ?, ?)");
+        q.setParameters(idSucursal, codigoBarras, nombre, fechaInicio, fechaFin, tipoPromo, valorOriginal, valorPromo);
         return (long) q.executeUnique();
 	}
 	/**

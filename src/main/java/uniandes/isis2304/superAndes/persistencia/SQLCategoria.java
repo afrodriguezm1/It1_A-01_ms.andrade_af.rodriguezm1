@@ -49,10 +49,10 @@ public class SQLCategoria
 	 * @param pNombre
 	 * @return
 	 */
-	public long adicionarCategoria(PersistenceManager pm, long id, String pNombre)
+	public long adicionarCategoria(PersistenceManager pm,  String pNombre)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO  CATEGORIA (Id, Nombre) values (?, ?)");
-        q.setParameters(id, pNombre);
+        Query q = pm.newQuery(SQL, "INSERT INTO  CATEGORIA (Nombre) values (?)");
+        q.setParameters(pNombre);
         return (long) q.executeUnique();
 	}
 	/**
