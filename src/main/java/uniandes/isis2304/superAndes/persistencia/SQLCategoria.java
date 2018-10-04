@@ -74,7 +74,7 @@ public class SQLCategoria
 	 * @param id
 	 * @return
 	 */
-	public long eliminarCategoriaPorNit(PersistenceManager pm, long id )
+	public long eliminarCategoriaPorId(PersistenceManager pm, long id )
 	{
         Query q = pm.newQuery(SQL, "DELETE FROM  CATEGORIA WHERE Id = ?");
         q.setParameters(id);

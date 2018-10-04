@@ -77,7 +77,7 @@ public class SQLTipoProducto
 	 * @param id
 	 * @return
 	 */
-	public long eliminarProveedorPorNit(PersistenceManager pm, long id )
+	public long eliminarTipoProductoPorId(PersistenceManager pm, long id )
 	{
         Query q = pm.newQuery(SQL, "DELETE FROM TIPO_PRODUCTO WHERE Id = ?");
         q.setParameters(id);
