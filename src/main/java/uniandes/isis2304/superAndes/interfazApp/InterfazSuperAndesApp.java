@@ -3,6 +3,7 @@ package uniandes.isis2304.superAndes.interfazApp;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -23,6 +24,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.google.gson.Gson;
@@ -95,6 +97,11 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
      */
 	private JMenuBar menuBar;
 	
+	/**
+	 * Panel de carrito de compras
+	 */
+	private JPanel panelCarrito;
+	
 	/* ****************************************************************
 	 * 			Métodos
 	 *****************************************************************/
@@ -116,11 +123,17 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		superAndes = new SuperAndes(tableConfig);
 		
 		String path = guiConfig.get("bannerPath").getAsString();
-		panelDatos = new PanelDatos();
+		panelDatos = new PanelDatos(this);
 		
-		setLayout ( new BorderLayout());
-		add(new JLabel( new ImageIcon (path)), BorderLayout.NORTH);
-		add(panelDatos, BorderLayout.CENTER);
+		setLayout ( new GridLayout(2, 1));
+		add(new JLabel( new ImageIcon (path)));
+		JPanel panel = new JPanel();
+		panel.setLayout( new GridLayout(1, 2));
+		panel.add(panelDatos);
+		
+		panelCarrito = new PanelCarrito();
+		panel.add(panelCarrito);
+		add(panel);
 	}
 	
 	/* ****************************************************************
@@ -165,7 +178,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		{
 			log.info("Se aplica configuracion por defecto");
 			titulo = "SuperAndes APP Default";
-			alto = 300;
+			alto = 3000;
 			ancho = 500;
 		}
 		else

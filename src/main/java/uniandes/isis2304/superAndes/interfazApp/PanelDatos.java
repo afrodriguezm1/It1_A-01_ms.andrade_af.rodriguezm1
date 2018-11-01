@@ -11,8 +11,9 @@ public class PanelDatos extends JPanel
 {
 	private JTextArea textArea;
 	
-	public PanelDatos()
+	public PanelDatos(InterfazSuperAndesApp interfa)
 	{
+		setSize(interfa.getWidth()/2, interfa.getHeight()/2);
 		setBorder ( new TitledBorder("Panel de información"));
 		setLayout( new BorderLayout());
 		
