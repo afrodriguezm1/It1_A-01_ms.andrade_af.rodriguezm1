@@ -42,10 +42,10 @@ public class SQLInfoProductoSucursal
 		this.psa = psa;	
 	}
 	
-	public long agregarInfoProductoSucursal(PersistenceManager pm, long idVenta, String codigoBarras)
+	public long agregarInfoProductoSucursal(PersistenceManager pm, long idVenta, String codigoBarras, int cantidad)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_SUCURSAL (id_venta, codigo_barras, cantidad_producto) VALUES (?, ?, 1)");
-		q.setParameters(idVenta, codigoBarras);
+		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_SUCURSAL (id_venta, codigo_barras, cantidad_producto) VALUES (?, ?, ?)");
+		q.setParameters(idVenta, codigoBarras, cantidad);
 		return (long) q.executeUnique();
 	}
 	

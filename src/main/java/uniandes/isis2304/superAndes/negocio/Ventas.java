@@ -27,6 +27,8 @@ public class Ventas implements VOVentas
 	
 	private Date fechaVenta;
 	
+	private long precio;
+	
 	public Ventas()
 	{
 		this.id = 0;
@@ -105,6 +107,16 @@ public class Ventas implements VOVentas
 	public void setFechaVenta(Date fechaVenta)
 	{
 		this.fechaVenta = fechaVenta;
+	}
+	
+	public long getPrecio()
+	{
+		return precio;
+	}
+	
+	public void setPrecio(long precio)
+	{
+		this.precio = precio;
 	}
 	
 	@Override

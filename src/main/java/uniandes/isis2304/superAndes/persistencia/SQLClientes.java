@@ -51,13 +51,13 @@ public class SQLClientes
 	public long eliminarCliente(PersistenceManager pm, String email)
 	{
 		Query q = pm.newQuery(SQL, "DELETE FROM CLIENTES WHERE email = ?");
-		q.setParameters(email);
-		return (long) q.executeResultUnique();
+		q.setParameters("prueba");
+		return (long) q.executeUnique();
 	}
 	
 	public Clientes darClientePorEmail(PersistenceManager pm, String email)
 	{
-		Query q = pm.newQuery(SQL, "SELEC * FROM CLIENTES WHERE email = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM CLIENTES WHERE email = ?");
 		q.setResultClass(Clientes.class);
 		q.setParameters(email);
 		return (Clientes) q.executeUnique();

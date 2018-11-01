@@ -26,6 +26,8 @@ public interface VOVentas
 	
 	public Date getFechaVenta();
 	
+	public long getPrecio();
+	
 	@Override
 	public String toString();
 }

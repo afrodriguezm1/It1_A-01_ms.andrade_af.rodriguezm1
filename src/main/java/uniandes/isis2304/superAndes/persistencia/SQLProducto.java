@@ -1,5 +1,7 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -52,11 +54,11 @@ public class SQLProducto
 	 * @param pCiudad
 	 * @return
 	 */
-	public long adicionarProducto(PersistenceManager pm, long codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca,
+	public long adicionarProducto(PersistenceManager pm, String codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca,
 			String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso)
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO (Codigo_barras, Id_categoria, Id_tipo_producto, Nombre, Marca, Presentacion, Cantidad_presen, Uni_medida, Volumen, Peso) "
-        		+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        		+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
         q.setParameters(codigoBarras, idCategoria, idTipoProducto, nombre, marca,
     			presentacion, cantidadPresent,uniMedida, volumen, peso);
         return (long) q.executeUnique();
@@ -67,10 +69,9 @@ public class SQLProducto
 	 * @param id
 	 * @return
 	 */
-	public Producto darProductoPorCodBarras(PersistenceManager pm, long id)
+	public Producto darProductoPorCodBarras(PersistenceManager pm, String id)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM  PRODUCTO WHERE Codigo_barras = ?");
-		q.setResultClass(Producto.class);
 		q.setParameters(id);
 		return (Producto) q.executeUnique();
 	}

@@ -7,7 +7,7 @@ package uniandes.isis2304.superAndes.negocio;
  * */
 public interface VOProducto 
 {
-	public long getCodigoBarras();
+	public String getCodigoBarras();
 	
 	public long getIdCategoria();
 	

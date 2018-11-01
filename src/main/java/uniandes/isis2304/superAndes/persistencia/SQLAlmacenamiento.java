@@ -46,8 +46,8 @@ public class SQLAlmacenamiento
 
 	public long agregarAlmacenamientoSucursal(PersistenceManager pm, long idSucursal, String codigoBarrasProducto, long idCategoria, long idTipoProducto, double capacidadVol, double capacidadPeso,  int cantidad, int tipoAlma, int nivelReavastecimiento)
 	{
-		Query b = pm.newQuery(SQL, "INSERT INTO ALMACENAMIENTO (id_sucursal, codigo_barras_producto, id_categoria, id_tipo_prod, capa_vol"
-				+ ", capa_peso, cantidad, tipo_almacen, nivel_reavast) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		Query b = pm.newQuery(SQL, "INSERT INTO ALMACENAMIENTO (id_sucursal, codigo_barras_producto, id_categoria_prod, id_tipo_prod, capa_vol"
+				+ ", capa_peso, cantidad, tipo_alma, nivel_reavast) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		b.setParameters(idSucursal, codigoBarrasProducto, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, tipoAlma, nivelReavastecimiento);
 		return (long) b.executeUnique();
 	}
@@ -91,7 +91,7 @@ public class SQLAlmacenamiento
 	
 	public long siguienteId(PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT id FROM ALMACENAMIENTO WHERE ROWID = (SELECT MAX(ROWID) FROM ALMACENAMENTO)");
+		Query q = pm.newQuery(SQL, "SELECT id FROM ALMACENAMIENTO WHERE ROWID = (SELECT MAX(ROWID) FROM ALMACENAMIENTO)");
 		q.setResultClass(Almacenamiento.class);
 		return((Almacenamiento)q.executeUnique()).getId() + 1;
 	}

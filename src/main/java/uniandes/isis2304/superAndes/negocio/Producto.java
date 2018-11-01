@@ -9,7 +9,7 @@ public class Producto implements VOProducto
 	/**
 	 * Codigo de barras del producto
 	 */
-	private long codigoBarras;
+	private String codigo_Barras;
 	
 	/**
 	 * Id categoria del producto
@@ -61,7 +61,7 @@ public class Producto implements VOProducto
 	 */
 	public Producto()
 	{
-		this.codigoBarras = 0;
+		this.codigo_Barras = "";
 		this.idCategoria = 0;
 		this.idTipoProducto = 0;
 		this.nombre = "";
@@ -86,9 +86,9 @@ public class Producto implements VOProducto
 	 * @param volumen
 	 * @param peso
 	 */
-	public Producto(long codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca,
-			String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso) {
-		this.codigoBarras = codigoBarras;
+	public Producto(String codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca, String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso) 
+	{
+		this.codigo_Barras = codigoBarras;
 		this.idCategoria = idCategoria;
 		this.idTipoProducto = idTipoProducto;
 		this.nombre = nombre;
@@ -103,15 +103,15 @@ public class Producto implements VOProducto
 	/**
 	 * @return the codigoBarras
 	 */
-	public long getCodigoBarras() {
-		return codigoBarras;
+	public String getCodigoBarras() {
+		return codigo_Barras;
 	}
 
 	/**
 	 * @param codigoBarras the codigoBarras to set
 	 */
-	public void setCodigoBarras(long codigoBarras) {
-		this.codigoBarras = codigoBarras;
+	public void setCodigoBarras(String codigoBarras) {
+		this.codigo_Barras = codigoBarras;
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class Producto implements VOProducto
 	 */
 	@Override
 	public String toString() {
-		return "Producto [codigoBarras=" + codigoBarras + ", idCategoria=" + idCategoria + ", idTipoProducto="
+		return "Producto [codigoBarras=" + codigo_Barras + ", idCategoria=" + idCategoria + ", idTipoProducto="
 				+ idTipoProducto + ", nombre=" + nombre + ", marca=" + marca + ", presentacion=" + presentacion
 				+ ", cantidadPresent=" + cantidadPresent + ", uniMedida=" + uniMedida + ", volumen=" + volumen
 				+ ", peso=" + peso + "]";

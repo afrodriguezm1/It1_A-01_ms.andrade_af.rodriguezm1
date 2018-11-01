@@ -65,6 +65,10 @@
 		  		{
 		  			"label":"Eliminar Almacenamiento Sucursal",
 		  			"event":"eliminarAlmacenamiento"
+		  		},
+		  		{
+		  			"label":"Listar Almacenamientos de sucursal",
+		  			"event":"listarAlmacenamientoSucursal"
 		  		}
 		  	]
 		},
@@ -193,10 +197,6 @@
 		  			"event":"agregarCliente"
 		  		},
 		  		{
-		  			"label":"Eliminar Cliente",
-		  			"event":"eliminarCliente"
-		  		},
-		  		{
 		  			"label":"Buscar Cliente",
 		  			"event":"buscarCliente"
 		  		},
@@ -265,16 +265,16 @@
 		  "options":
 			[
 				{
-					"label": "Mostrar log Parranderos",
-					"event": "mostrarLogParranderos"
+					"label": "Mostrar log SuperAndes",
+					"event": "mostrarLogSuperAndes"
 				},
 				{
 					"label": "Mostrar log datanucleus",
 					"event": "mostrarLogDatanuecleus"
 				},
 				{
-					"label": "Limpiar log de parranderos",
-					"event": "limpiarLogParranderos"
+					"label": "Limpiar log de SuperAndes",
+					"event": "limpiarLogSuperAndes"
 				},
 				{
 					"label": "Limpiar log de datanucleus",

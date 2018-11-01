@@ -1,0 +1,30 @@
+21:03:47,214 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:03:47,597 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : null
+
+21:03:47,668 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:06:19,079 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:06:19,392 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : null
+
+21:06:19,439 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:13:38,051 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:13:38,448 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : null
+
+21:13:38,492 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:14:37,058 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:14:37,127 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : null
+
+21:14:37,165 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:21:04,983 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:21:05,630 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : El Query tenia que devolver objetos de tipo "uniandes.isis2304.superAndes.negocio.Informacion" pero era imposible poner el valor al campo "FACTURAE"  tipo "java.math.BigDecimal". El campo debe tener un metodo publico set/put o ser publico.
+
+21:21:05,684 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:22:19,029 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:22:19,691 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO VENTAS (id_sucursal, email_cliente, consecutivo_FE, cufe, fecha_venta)VALUES (?, ?, ?, ?, TO_DATE(SYSDATE, 'DD-MON-YYYY'))".
+ORA-01843: mes no válido
+
+21:22:19,736 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:22:38,983 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba
+21:22:39,056 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO VENTAS (id_sucursal, email_cliente, consecutivo_FE, cufe, fecha_venta)VALUES (?, ?, ?, ?, TO_DATE(SYSDATE, 'DD-MON-YYYY'))".
+ORA-01843: mes no válido
+
+21:22:39,100 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Nueva Venta: prueba

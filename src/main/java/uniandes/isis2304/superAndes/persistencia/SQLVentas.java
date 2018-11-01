@@ -42,11 +42,11 @@ public class SQLVentas
 		this.psa = psa;
 	}
 	
-	public long agregarVenta(PersistenceManager pm, long idSucursal, String email, long consecutivoFE, String CUFE, Date fechaVenta)
+	public long agregarVenta(PersistenceManager pm, long idSucursal, String email, long consecutivoFE, String CUFE)
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO VENTAS (id_sucursal, email_cliente, consecutivo_FE, cufe, fecha_venta)"
-				+ "VALUES (?, ?, ?, ?, ?)");
-		q.setParameters(idSucursal, email, consecutivoFE, CUFE, fechaVenta);
+				+ "VALUES (?, ?, ?, ?, TO_DATE(SYSDATE, 'DD-MON-YYYY'))");
+		q.setParameters(idSucursal, email, consecutivoFE, CUFE);
 		return (long) q.executeUnique();
 	}
 	
@@ -76,9 +76,16 @@ public class SQLVentas
 	
 	public long darSiguienteId(PersistenceManager pm)
 	{
-		Query q = pm.newQuery(SQL, "SELECT id FROM VENTAS WHERE ROWID = (SELECT MAX(ROWID) FROM VENTAS)");
-		q.setResultClass(Ventas.class);
-		return((Ventas)q.executeUnique()).getId() + 1;
+		try
+		{
+			Query q = pm.newQuery(SQL, "SELECT id FROM VENTAS WHERE ROWID = (SELECT MAX(ROWID) FROM VENTAS)");
+			q.setResultClass(Ventas.class);
+			return((Ventas)q.executeUnique()).getId() + 1;
+		}
+		catch(Exception e)
+		{}
+		return 1;
+		
 	}
 	
 	public long darIdActual(PersistenceManager pm)

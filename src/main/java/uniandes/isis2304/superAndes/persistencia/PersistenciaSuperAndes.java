@@ -400,7 +400,7 @@ public class PersistenciaSuperAndes
 	//------------------------------------------------------------------------
 	// TipoProducto
 	//------------------------------------------------------------------------	
-	public Producto adicionarProducto(long codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca,
+	public Producto adicionarProducto(String codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca,
 			String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -457,7 +457,7 @@ public class PersistenciaSuperAndes
 		}
 	}
 	
-	public Producto darProductoPorCodBarras(long id)
+	public Producto darProductoPorCodBarras(String id)
 	{
 		return sqlProducto.darProductoPorCodBarras(pmf.getPersistenceManager(), id);
 	}
@@ -944,15 +944,17 @@ public class PersistenciaSuperAndes
 			try
 			{
 				tx.begin();
-				long id = sqlAlmacenamiento.siguienteId(pm);
 				long tuplasInsertadas = sqlAlmacenamiento.agregarAlmacenamientoSucursal(pm, idSucursal, codigoBarras, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, tipoAlma, nivelReavastecimiento);
 				tx.commit();
 
+
+				long id = sqlAlmacenamiento.siguienteId(pm);
 				log.trace("Inserción Almacenamiento a sucursal: " + idSucursal + " : " + tuplasInsertadas +" tuplas Insertadas");
 				return new Almacenamiento(id, idSucursal, codigoBarras, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, 2, nivelReavastecimiento);
 			}
 			catch(Exception e)
 			{
+				e.printStackTrace();
 				log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 				return null;
 			}
@@ -1080,6 +1082,7 @@ public class PersistenciaSuperAndes
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return -1;
 		}
@@ -1152,6 +1155,7 @@ public class PersistenciaSuperAndes
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error(("Exception : " + e.getMessage() + "\n" + darDetalleException(e)));
 			return - 1;
 		}
@@ -1226,6 +1230,7 @@ public class PersistenciaSuperAndes
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return -1;
 		}
@@ -1258,7 +1263,7 @@ public class PersistenciaSuperAndes
 	// Ventas
 	//------------------------------------------------------------------------
 
-	public Ventas agregarVenta(long idSucursal, String email, Date fechaVenta)
+	public Ventas agregarVenta(long idSucursal, String email)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1267,18 +1272,14 @@ public class PersistenciaSuperAndes
 			tx.begin();
 			long id = sqlVentas.darSiguienteId(pm);
 			long factE = 0;
-			if(sqlInformacion.facturaElectronica(pm) == true)
-			{
-				factE = sqlResoluciones.darConsecutivoActual(pm);
-				sqlResoluciones.incrementarConsecutivoActual(pm);
-			}
-			long tuplaInsertadas = sqlVentas.agregarVenta(pm, idSucursal, email, factE, "", fechaVenta);
+			long tuplaInsertadas = sqlVentas.agregarVenta(pm, idSucursal, email, factE, "");
 			tx.commit();
 			log.trace("Insercion de venta en sucursal : " + idSucursal + " : " + tuplaInsertadas + " tuplas insertadas");
-			return new Ventas(id, idSucursal, email, factE, "", fechaVenta);
+			return new Ventas(id, idSucursal, email, factE, "", new Date());
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			log.error("Exception : " + e.getMessage() +"\n" + darDetalleException(e));
 			return null;
 		}
@@ -1311,14 +1312,14 @@ public class PersistenciaSuperAndes
 	// Info Producto Sucursal
 	//------------------------------------------------------------------------
 
-	public InfoProdSucursal agregarInfProdSucursal(long idVenta, String codigoBarras)
+	public InfoProdSucursal agregarInfProdSucursal(long idVenta, String codigoBarras, int cantidad)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlInfProSucursal.agregarInfoProductoSucursal(pm, idVenta, codigoBarras);
+			long tuplasInsertadas = sqlInfProSucursal.agregarInfoProductoSucursal(pm, idVenta, codigoBarras, cantidad);
 			tx.commit();
 
 			log.trace("Inserción de InfoProdSucursal de venta : " + idVenta +" : "  + tuplasInsertadas +" tuplas insertadas");

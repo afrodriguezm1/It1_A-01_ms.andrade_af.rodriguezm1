@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="lib/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/ojdbc8.jar"/>
 	<classpathentry kind="lib" path="lib/transaction-api-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jfoenix-8.0.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

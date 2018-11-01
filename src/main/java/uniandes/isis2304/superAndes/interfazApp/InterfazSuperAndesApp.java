@@ -2,10 +2,16 @@ package uniandes.isis2304.superAndes.interfazApp;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -26,7 +32,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.superAndes.negocio.SuperAndes;
+import uniandes.isis2304.superAndes.negocio.VOAlmacenamiento;
 import uniandes.isis2304.superAndes.negocio.VOClientes;
+import uniandes.isis2304.superAndes.negocio.VOEmpresas;
+import uniandes.isis2304.superAndes.negocio.VOInfoProdProveedor;
+import uniandes.isis2304.superAndes.negocio.VOInfoProdSucursal;
+import uniandes.isis2304.superAndes.negocio.VOPersona;
+import uniandes.isis2304.superAndes.negocio.VOSucursal;
+import uniandes.isis2304.superAndes.negocio.VOVentas;
 
 @SuppressWarnings("serial")
 public class InterfazSuperAndesApp extends JFrame implements ActionListener
@@ -230,17 +243,54 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		{
 			String emailCliente = JOptionPane.showInputDialog(this, "Email del cliente?", "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
 			String nombreCliente = JOptionPane.showInputDialog(this, "Nombre del Cliente?", "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
-			if(emailCliente != null)
+			int tipo = JOptionPane.showConfirmDialog(this, "El cliente es una empresa?", "Agregar Cliente", JOptionPane.YES_NO_OPTION);
+			System.out.println(tipo);
+			String dato1 = JOptionPane.showInputDialog(this, ((tipo == 0)? "Nit de la empresa" : "Documento del cliente"), "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
+			if(tipo == 0)
 			{
-				VOClientes tb = superAndes.agregarCliente(emailCliente, nombreCliente);
-				if(tb == null)
+				String dato2 = JOptionPane.showInputDialog(this, "Dirección del cliente?", "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
+				if(emailCliente != null)
 				{
-					throw new Exception("No se pudo crear el cliente con el email: " + emailCliente);
+					VOClientes tb = superAndes.agregarCliente(emailCliente, nombreCliente);
+					VOEmpresas tb2 = superAndes.agregarEmpresa(emailCliente, dato1, dato2);
+					if(tb == null || tb2 == null)
+					{
+						throw new Exception("No se pudo crear el cliente con el email: " + emailCliente);
+					}
+					String resultado = "En agregarCliente\n\n";
+					resultado += "Cliente adicionado exitosamente:    " + emailCliente + "\n";
+					resultado += "                    	   Nombre:    " + nombreCliente + "\n";
+					resultado += "                    	   Nit:       " + dato1 + "\n";
+					resultado += "                    	   Dirección: " + dato2 + "\n";
+					resultado += "\n Operación terminada";
+					panelDatos.actualizarInterfaz(resultado);
 				}
-				String resultado = "En agregarCliente\n\n";
-				resultado += "Cliente adicionado exitosamente: " + emailCliente;
-				resultado += "\n Operación terminada";
-				panelDatos.actualizarInterfaz(resultado);
+				else
+				{
+					panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+				}
+			}
+			else if(tipo == 1)
+			{
+				if(emailCliente != null)
+				{
+					VOClientes tb = superAndes.agregarCliente(emailCliente, nombreCliente);
+					VOPersona tb2 = superAndes.agregarPersona(emailCliente, Integer.parseInt(dato1));
+					if(tb == null || tb2 == null)
+					{
+						throw new Exception("No se pudo crear el cliente con el email: " + emailCliente);
+					}
+					String resultado = "En agregarCliente\n\n";
+					resultado += "Cliente adicionado exitosamente: " + emailCliente + "\n";
+					resultado += "                    	   Nombre:    " + nombreCliente + "\n";
+					resultado += "                    	   Documento: " + dato1 + "\n";
+					resultado += "\n Operación terminada";
+					panelDatos.actualizarInterfaz(resultado);
+				}
+				else
+				{
+					panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+				}
 			}
 			else
 			{
@@ -270,6 +320,39 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
+	
+	public void buscarCliente()
+	{
+		try
+		{
+			String emailCliente = JOptionPane.showInputDialog(this, "Email del cliente?", "Buscar cliente por email", JOptionPane.QUESTION_MESSAGE);
+			if(emailCliente != null)
+			{
+				VOClientes cliente = superAndes.darCliente(emailCliente);
+				String resultado = "En buscar Cliente por cliente\n\n";
+				if(resultado != null)
+				{
+					resultado += "El cliente es: " + cliente;
+				}
+				else
+				{
+					resultado += "Un cliente con email: " + emailCliente + " NO EXISTE\n";
+				}
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancela por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
 	/**
      * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
      * @param lista - La lista con los tipos de bebida
@@ -285,6 +368,174 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
         }
         return resp;
 	}
+    
+    /* ****************************************************************
+	 * 			CRUD de Almacenamiento
+	 *****************************************************************/
+    
+    public void agregarAlmacenamiento()
+    {
+    	try
+    	{
+    		String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		String codigoProd = JOptionPane.showInputDialog(this, "Cordigo barras que almacenará?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		String idCat = JOptionPane.showInputDialog(this, "Id categoria de producto?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		String idTipo = JOptionPane.showInputDialog(this, "Id tipo producto?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		String capaVol = JOptionPane.showInputDialog(this, "Capacidad en volumen del almacenamiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		String capaPeso = JOptionPane.showInputDialog(this, "Capacidad en peso del almacenamiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		String nivelRevast = JOptionPane.showInputDialog(this, "Nivel de reavastecimiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		int tipo = JOptionPane.showConfirmDialog(this, "Es bodega?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
+    		if( idSucursal != null && codigoProd != null && capaVol != null && capaPeso != null && nivelRevast != null)
+    		{
+    			VOAlmacenamiento al = superAndes.agregarAlmacenamiento(Integer.parseInt(idSucursal), codigoProd, Integer.parseInt(idCat), Integer.parseInt(idTipo), Integer.parseInt(capaVol), Integer.parseInt(capaPeso), tipo + 1, Integer.parseInt(nivelRevast));
+    			if(al == null)
+    			{
+        			throw new Exception ("No se pudo crear un almacenamiento a la sucursal: " + idSucursal);	
+    			}
+    			String resultado = "En adicinarAlmacenamiento\n\n";
+    			resultado += "Almacenamiento adicionado exitosamente: " + al;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    		String resultado = generarMensajeError(e);
+    		panelDatos.actualizarInterfaz(resultado);
+    	}
+    }
+    
+    public void eliminarAlmacenamiento()
+    {
+    	try
+    	{
+    		String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Eliminar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		String codBarras = JOptionPane.showInputDialog(this, "Codigo de barras?", "Eliminar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+    		int tipo = JOptionPane.showConfirmDialog(this, "Desea eliminar la bodega?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
+    		if(idSucursal != null && codBarras != null)
+    		{
+    			long alEliminados = superAndes.eliminarAlmacenamientoSucursal(Integer.parseInt(idSucursal), codBarras, tipo + 1);
+    			
+    			String resultado = "En eliminar Almacenamiento\n\n";
+    			resultado += alEliminados + " Almacenamientos eliminados\n";
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelaa por el usuario");
+    		}
+    	}
+    	catch(Exception e)
+    	{
+    		String resultado = generarMensajeError(e);
+    		panelDatos.actualizarInterfaz(resultado);
+    	}
+    }
+    
+    public void listarAlmacenamientoSucursal()
+    {
+    	try
+    	{
+    		String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Listar almacenamientos", JOptionPane.QUESTION_MESSAGE);
+    		if(idSucursal != null)
+    		{
+    			List <VOAlmacenamiento> lista = superAndes.darVOAlmacenamiento(Integer.parseInt(idSucursal));
+
+    			System.out.println(lista.size());
+    			String resultado = "En listarAlmacenamiento";
+    			resultado += "\n" + listarAlmacenamientos(lista);
+    			panelDatos.actualizarInterfaz(resultado);
+    			resultado += "\n Operación Terminada";
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    		String resultado = generarMensajeError(e);
+    		panelDatos.actualizarInterfaz(resultado);
+    	}
+    }
+    
+    private String listarAlmacenamientos(List<VOAlmacenamiento> lista)
+    {
+    	String resp = "Los almacenamientos son: \n";
+    	int i =1;
+    	for(VOAlmacenamiento al : lista)
+    	{
+    		System.out.println(i);
+    		resp += i++ + ". " + al.toString() + "\n";
+    	}
+    	return resp;
+    }
+    
+    /* ****************************************************************
+	 * 			CRUD de Almacenamiento
+	 *****************************************************************/
+    
+    public void nuevaVenta()
+    {
+    	try
+    	{
+    		String idSucursal = JOptionPane.showInputDialog (this, "Id Sucursal?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE);
+    		String email = JOptionPane.showInputDialog (this, "Email del cliente?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE);
+    		ArrayList<String> codigos = new ArrayList();
+    		ArrayList<Integer> cantidad = new ArrayList<>();
+    		int resp = 0;
+    		while(resp == 0)
+    		{
+    			codigos.add(JOptionPane.showInputDialog (this, "Código de barras?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE));
+    			cantidad.add(Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad del producto", "Venta Nueva", JOptionPane.QUESTION_MESSAGE)));
+    			resp = JOptionPane.showConfirmDialog(this, "desea agregar otro producto?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
+    		}
+    		if(idSucursal != null && email != null && !codigos.isEmpty() && !cantidad.isEmpty())
+    		{
+    			VOVentas su = superAndes.nuevaVenta(Integer.parseInt(idSucursal), email);
+
+				ArrayList<VOInfoProdSucursal> arreglo = new ArrayList<>();
+    			for(int i = 0; i < codigos.size(); i++)
+    			{
+    				VOInfoProdSucursal a = superAndes.agregarProductoVenta(su.getId(), codigos.get(i), cantidad.get(i));
+    				arreglo.add(a);
+    			}
+    			if(su == null || arreglo.isEmpty())
+    			{
+    				throw new Exception("No se pudo crear la venta nueva");
+    			}
+    			String resultado = "En adicionar venta\n\n";
+    			resultado += "Venta agregada exitosamente: " + su;
+    			for(int i = 0; i < codigos.size(); i++)
+    			{
+    				resultado += codigos.get(i) + cantidad.get(i);
+    			}
+    			resultado += "\nOperación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+    	}
+    	catch(Exception e)
+    	{
+    		String resultado = generarMensajeError(e);
+    		panelDatos.actualizarInterfaz(resultado);
+    	}
+    }
+    
+    
+    /* ****************************************************************
+	 * 			CRUD de mensajes de error
+	 *****************************************************************/
 	
 	/**
 	 * Genera una cadena para indicar al usuario que hubo un error en la aplicación
@@ -295,7 +546,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		String resultado = "************ Error en la ejecución\n";
 		resultado += e.getLocalizedMessage() + ", " + darDetalleException(e);
-		resultado += "\n\nRevise datanucleus.log y parranderos.log para más detalles";
+		resultado += "\n\nRevise datanucleus.log y superandes.log para más detalles";
 		return resultado;
 	}
 	
@@ -313,6 +564,117 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			return je.getNestedExceptions() [0].getMessage();
 		}
 		return resp;
+	}
+	
+	
+	
+	/* ****************************************************************
+	 * 			Métodos administrativos
+	 *****************************************************************/
+	
+	/**
+	 * Muestra el log de SuperAndes
+	 */
+	public void mostrarLogSuperAndes()
+	{
+		mostrarArchivo("superandes.log");
+	}
+	
+	/**
+	 * Abre el archivo dado como parámetro con la aplicación por defecto del sistema
+	 * @param nombreArchivo - El nombre del archivo que se quiere mostrar
+	 */
+	private void mostrarArchivo (String nombreArchivo)
+	{
+		try
+		{
+			Desktop.getDesktop().open(new File(nombreArchivo));
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Muestra el log de datanucleus
+	 */
+	public void mostrarLogDatanuecleus()
+	{
+		mostrarArchivo("datanucleus.log");
+	}
+	
+	/**
+	 * Limpia el contenido del log de SuperAndes
+	 * Muestra en el panel de datos la traza de la ejecución
+	 */
+	public void limpiarLogSuperAndes()
+	{
+		boolean resp = limpiarArchivo("superandes.log");
+		
+		String resultado = "\n\n************ Limpiando el log de superAndes ************ \n";
+		resultado += "Archivo " + (resp ? "limpiado exitosamente" : "NO PUDO ser limpiado !!");
+		resultado += "\nLimpieza terminada";
+
+		panelDatos.actualizarInterfaz(resultado);
+	}
+	
+	/**
+	 * Limpia el contenido del log de datanucleus
+	 * Muestra en el panel de datos la traza de la ejecución
+	 */
+	public void limpiarLogDatanucleus()
+	{
+		boolean resp = limpiarArchivo ("datanucleus.log");
+
+		// Generación de la cadena de caracteres con la traza de la ejecución de la demo
+		String resultado = "\n\n************ Limpiando el log de datanucleus ************ \n";
+		resultado += "Archivo " + (resp ? "limpiado exitosamente" : "NO PUDO ser limpiado !!");
+		resultado += "\nLimpieza terminada";
+
+		panelDatos.actualizarInterfaz(resultado);
+	}
+	
+	/**
+	 * Limpia el contenido de un archivo dado su nombre
+	 * @param nombreArchivo - El nombre del archivo que se quiere borrar
+	 * @return true si se pudo limpiar
+	 */
+	private boolean limpiarArchivo(String nombreArchivo)
+	{
+		BufferedWriter bw;
+		try 
+		{
+			bw = new BufferedWriter(new FileWriter(new File (nombreArchivo)));
+			bw.write ("");
+			bw.close ();
+			return true;
+		} 
+		catch (IOException e) 
+		{
+			return false;
+		}
+	}
+	
+	/**
+     * Muestra la información acerca del desarrollo de esta apicación
+     */
+	public void acercaDe ()
+	{
+		String resultado = "\n\n ************************************\n\n";
+		resultado += " * Universidad	de	los	Andes	(Bogotá	- Colombia)\n";
+		resultado += " * Departamento	de	Ingeniería	de	Sistemas	y	Computación\n";
+		resultado += " * \n";		
+		resultado += " * Curso: isis2304 - Sistemas Transaccionales\n";
+		resultado += " * Proyecto: SuperAndes Uniandes - Iteración 2\n";
+		resultado += " * @version 1.0\n";
+		resultado += " * @author Mario Santiago Andrade \n";
+		resultado += " * @author Andrés Felipe Rodriguez \n";
+		resultado += " * Octubre de 2018\n";
+		resultado += " * \n";
+		resultado += "\n ************************************\n\n";
+
+		panelDatos.actualizarInterfaz(resultado);		
 	}
 
 	/**
