@@ -143,6 +143,10 @@ public class SuperAndes
 		return info;
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar productos
+	 *****************************************************************/
+	
 	public Producto agregarProducto(String codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca,
 			String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso)
 	{
@@ -166,6 +170,9 @@ public class SuperAndes
 		}
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar proveedores
+	 *****************************************************************/
 	public Proveedor agregarProveedor(String nit, String pNombre, double calificacion)
 	{
 		log.info("Adicionando proveedor:" + nit);
@@ -188,6 +195,9 @@ public class SuperAndes
 		}
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar promociones
+	 *****************************************************************/
 	public Promocion agregarPromocion(long idSucursal, String codigoBarras, String nombre, Date fechaInicio,
 			Date fechaFin, int tipoPromo, int valorOriginal, int valorPromo)
 	{
@@ -211,6 +221,9 @@ public class SuperAndes
 		}
 	}
 	
+	/* ****************************************************************
+	 * 			Métodos para manejar sucursales
+	 *****************************************************************/
 	public Sucursal agregarSucursal(String pNombre, String pDireccion, String pCiudad)
 	{
 		log.info("Adicionando sucursal:" + pNombre);
@@ -230,6 +243,31 @@ public class SuperAndes
 			}
 			log.info("Generando los VO de sucursales: " + voSucursal.size() +" existentes");
 			return voSucursal;
+		}
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar carritos
+	 *****************************************************************/
+	public Carrito agregarCarrito(String email, long idSucursal, long precio, String estado)
+	{
+		log.info("Adicionando Carrito:" + email);
+		Carrito carrito = psa.agregarCarrito(email, idSucursal, precio, estado);
+				log.info("Adicionando Carrito:" + email);
+		return carrito;
+	}
+	
+	public List<VOCarrito> darVOCarrito()
+	{
+		log.info("Generando los VO de carrito");
+		{
+			List<VOCarrito> voCarrito = new LinkedList<VOCarrito>();
+			for(Carrito tb : psa.darCarritos())
+			{
+				voCarrito.add(tb);
+			}
+			log.info("Generando los VO de carritos: " + voCarrito.size() +" existentes");
+			return voCarrito;
 		}
 	}
 }

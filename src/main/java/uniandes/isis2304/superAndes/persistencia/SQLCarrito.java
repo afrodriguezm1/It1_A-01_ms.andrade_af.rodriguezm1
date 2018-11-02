@@ -1,5 +1,13 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import uniandes.isis2304.superAndes.negocio.Carrito;
+import uniandes.isis2304.superAndes.negocio.Sucursal;
+
 public class SQLCarrito 
 {
 	//---------------------------------------------------------------------------
@@ -33,4 +41,59 @@ public class SQLCarrito
 	{
 		this.psa = psa;
 	}
+	
+	/**
+	 * 
+	 * @param pm
+	 * @param email
+	 * @param idSucursal
+	 * @param precio
+	 * @param estado
+	 * @return
+	 */
+	public long adicionarCarrito(PersistenceManager pm, String email, long idSucursal, long precio, String estado)
+	{
+		Query q = pm.newQuery(SQL, "INSERT INTO CARRITO (Email_Cliente, Id_Sucursal, Precio, Estado) values (?, ?, ?, ?)");
+        q.setParameters(email, idSucursal, precio, estado);
+        return (long) q.executeUnique();
+	}
+	
+	/**
+	 * Dar carrito por email de cliente
+	 * @param pm
+	 * @param email
+	 * @return
+	 */
+	public Carrito darCarritoPorId(PersistenceManager pm, String email, long idSucursal)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM CARRITO WHERE Email_Cliente = ? AND Id_Sucursal = ?");
+		q.setResultClass(Carrito.class);
+		q.setParameters(email, idSucursal);
+		return (Carrito) q.executeUnique();
+	}
+	
+	/**
+	 * Elimina un carrito por email
+	 * @param pm
+	 * @param id
+	 * @return
+	 */
+	public long eliminarCarritoPorId (PersistenceManager pm, String email, long idSucursal)
+	{
+		Query toDelete = pm.newQuery(SQL, "SELECT ID FROM CARRITO WHERE  " );
+        Query q = pm.newQuery(SQL, "DELETE FROM CARRITO WHERE Email_Cliente = ? AND Id_Sucursal = ?");
+        q.setParameters(email, idSucursal );
+        return (long) q.executeUnique();
+	}
+	
+	/**
+	 * Dar todos los carritos
+	 */
+	public List<Carrito> darCarritos(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM CARRITO");
+		q.setResultClass(Carrito.class);
+		return (List<Carrito>) q.executeList();
+	}
+	
 }

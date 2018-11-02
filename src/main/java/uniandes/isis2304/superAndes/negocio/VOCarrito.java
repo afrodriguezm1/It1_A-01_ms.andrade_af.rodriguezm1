@@ -13,10 +13,6 @@ public interface VOCarrito
 	// Métodos
 	//---------------------------------------------------------------------
 	
-	/**
-	 * @return El id ÚNICO del carrito
-	 */
-	public long getId();
 	
 	/**
 	 * @return El email del cliente que tiene el carrito

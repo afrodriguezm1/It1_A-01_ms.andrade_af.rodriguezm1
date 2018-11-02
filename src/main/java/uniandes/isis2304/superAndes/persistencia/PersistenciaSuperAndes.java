@@ -20,6 +20,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import uniandes.isis2304.superAndes.negocio.Almacenamiento;
+import uniandes.isis2304.superAndes.negocio.Carrito;
 import uniandes.isis2304.superAndes.negocio.Categoria;
 import uniandes.isis2304.superAndes.negocio.Clientes;
 import uniandes.isis2304.superAndes.negocio.Empresas;
@@ -88,6 +89,8 @@ public class PersistenciaSuperAndes
 	private SQLResoluciones sqlResoluciones;
 
 	private SQLInformacion sqlInformacion;
+	
+	private SQLCarrito sqlCarrito;
 
 	private PersistenciaSuperAndes()
 	{
@@ -114,7 +117,8 @@ public class PersistenciaSuperAndes
 		tablas.add("VENTAS");
 		tablas.add("INFO_PRODUCTO_SUCURSAL");
 		tablas.add("RESOLUCIONES");
-		tablas.add("INFORMACION");		
+		tablas.add("INFORMACION");
+		tablas.add("CARRITO");
 	}
 
 	private PersistenciaSuperAndes(JsonObject tableConfig)
@@ -1465,6 +1469,72 @@ public class PersistenciaSuperAndes
 	{
 		return sqlInformacion.darInformacion(pmf.getPersistenceManager());
 	}
+	
+
+	//------------------------------------------------------------------------
+	// Carrito
+	//------------------------------------------------------------------------
+	
+	public Carrito agregarCarrito(String email, long idSucursal, long precio, String estado)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCarrito.adicionarCarrito(pm, email, idSucursal, precio, estado);
+			tx.commit();
+			log.trace("Insercion de Carrito:  " + email + " : " + tuplasInsertadas + " tuplas insertadas");
+			return new Carrito(email,idSucursal, precio, estado);
+		}
+		catch(Exception e)
+		{
+			log.error("Exception : " +e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public List<Carrito> darCarritos()
+	{
+		return sqlCarrito.darCarritos(pmf.getPersistenceManager());
+	}
+	
+	public long eliminarCarrito(long idSucursal, String email)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			
+			tx.begin();
+			long resp = sqlCarrito.eliminarCarritoPorId(pm, email, idSucursal);
+			tx.commit();
+			return resp;
+		}
+		catch(Exception e)
+		{
+			log.error("Exception :" + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	
 	
 	
 }
