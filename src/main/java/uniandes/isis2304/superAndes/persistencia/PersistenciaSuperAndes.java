@@ -271,6 +271,11 @@ public class PersistenciaSuperAndes
 		return sqlSucursal.darSucursalPorId(pmf.getPersistenceManager(),id);
 	}
 	
+	public List<Sucursal> darSucursales()
+	{
+		return sqlSucursal.darSucursales(pmf.getPersistenceManager());
+	}
+	
 	//------------------------------------------------------------------------
 	// Proveedor
 	//------------------------------------------------------------------------	
@@ -333,6 +338,10 @@ public class PersistenciaSuperAndes
 		return sqlProveedor.darProveedorPorNit(pmf.getPersistenceManager(), nit);
 	}
 	
+	public List<Proveedor> darProveedores()
+	{
+		return sqlProveedor.darProveedores(pmf.getPersistenceManager());
+	}
 	//------------------------------------------------------------------------
 	// Categoria
 	//------------------------------------------------------------------------	
@@ -431,7 +440,7 @@ public class PersistenciaSuperAndes
 		}
 	}
 	
-	public long eliminarProductoPorCodBarras(long id)
+	public long eliminarProductoPorCodBarras(String id)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -460,6 +469,11 @@ public class PersistenciaSuperAndes
 	public Producto darProductoPorCodBarras(String id)
 	{
 		return sqlProducto.darProductoPorCodBarras(pmf.getPersistenceManager(), id);
+	}
+	
+	public List<Producto> darProductos()
+	{
+		return sqlProducto.darProductos(pmf.getPersistenceManager());
 	}
 	
 	//------------------------------------------------------------------------
@@ -709,8 +723,8 @@ public class PersistenciaSuperAndes
 	//------------------------------------------------------------------------
 	// Promocion
 	//------------------------------------------------------------------------	
-		public Promocion adicionarPromocion(long idSucursal, long codigoBarras, String nombre, Timestamp fechaInicio,
-				Timestamp fechaFin, int tipoPromo, int valorOriginal, int valorPromo)
+		public Promocion adicionarPromocion(long idSucursal, String codigoBarras, String nombre, Date fechaInicio,
+				Date fechaFin, int tipoPromo, int valorOriginal, int valorPromo)
 		{
 			PersistenceManager pm = pmf.getPersistenceManager();
 			Transaction tx = pm.currentTransaction();
@@ -769,6 +783,11 @@ public class PersistenciaSuperAndes
 	public Promocion darPromocionPorId(long id)
 	{
 		return sqlPromocion.darPromocionPorId(pmf.getPersistenceManager(), id);
+	}
+	
+	public List<Promocion> darPromociones()
+	{
+		return sqlPromocion.darPromociones(pmf.getPersistenceManager());
 	}
 	
 	//------------------------------------------------------------------------
@@ -1446,4 +1465,6 @@ public class PersistenciaSuperAndes
 	{
 		return sqlInformacion.darInformacion(pmf.getPersistenceManager());
 	}
+	
+	
 }

@@ -9,7 +9,7 @@ public class Producto implements VOProducto
 	/**
 	 * Codigo de barras del producto
 	 */
-	private String codigo_Barras;
+	private String codigoBarras;
 	
 	/**
 	 * Id categoria del producto
@@ -61,7 +61,7 @@ public class Producto implements VOProducto
 	 */
 	public Producto()
 	{
-		this.codigo_Barras = "";
+		this.codigoBarras = "";
 		this.idCategoria = 0;
 		this.idTipoProducto = 0;
 		this.nombre = "";
@@ -86,9 +86,9 @@ public class Producto implements VOProducto
 	 * @param volumen
 	 * @param peso
 	 */
-	public Producto(String codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca, String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso) 
-	{
-		this.codigo_Barras = codigoBarras;
+	public Producto(String codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca,
+			String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso) {
+		this.codigoBarras = codigoBarras;
 		this.idCategoria = idCategoria;
 		this.idTipoProducto = idTipoProducto;
 		this.nombre = nombre;
@@ -104,14 +104,14 @@ public class Producto implements VOProducto
 	 * @return the codigoBarras
 	 */
 	public String getCodigoBarras() {
-		return codigo_Barras;
+		return codigoBarras;
 	}
 
 	/**
 	 * @param codigoBarras the codigoBarras to set
 	 */
 	public void setCodigoBarras(String codigoBarras) {
-		this.codigo_Barras = codigoBarras;
+		this.codigoBarras = codigoBarras;
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class Producto implements VOProducto
 	 */
 	@Override
 	public String toString() {
-		return "Producto [codigoBarras=" + codigo_Barras + ", idCategoria=" + idCategoria + ", idTipoProducto="
+		return "Producto [codigoBarras=" + codigoBarras + ", idCategoria=" + idCategoria + ", idTipoProducto="
 				+ idTipoProducto + ", nombre=" + nombre + ", marca=" + marca + ", presentacion=" + presentacion
 				+ ", cantidadPresent=" + cantidadPresent + ", uniMedida=" + uniMedida + ", volumen=" + volumen
 				+ ", peso=" + peso + "]";

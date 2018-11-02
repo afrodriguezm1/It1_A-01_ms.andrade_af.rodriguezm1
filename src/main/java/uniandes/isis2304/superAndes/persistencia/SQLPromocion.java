@@ -1,12 +1,15 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.util.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import uniandes.isis2304.superAndes.negocio.ProductoSucursal;
 import uniandes.isis2304.superAndes.negocio.Promocion;
+import uniandes.isis2304.superAndes.negocio.Proveedor;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto Proveedor de SuperAndes
@@ -52,8 +55,8 @@ public class SQLPromocion
 	 * @param pNombre
 	 * @return
 	 */
-	public long adicionarPromocion(PersistenceManager pm, long idSucursal, long codigoBarras, String nombre, Timestamp fechaInicio,
-			Timestamp fechaFin, int tipoPromo, int valorOriginal, int valorPromo)
+	public long adicionarPromocion(PersistenceManager pm, long idSucursal, String codigoBarras, String nombre, Date fechaInicio,
+			Date fechaFin, int tipoPromo, int valorOriginal, int valorPromo)
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO PROMOCION (Id_sucursal, Codigo_barras, Nombre, Fecha_inicio, Fecha_fin, Tipo_promo, Valor1, Valor2) "
         		+ "values ( ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -84,5 +87,15 @@ public class SQLPromocion
         Query q = pm.newQuery(SQL, "DELETE FROM PROMOCION WHERE Id = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 */
+	public List<Promocion> darPromociones(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM PROMOCION");
+		q.setResultClass(Promocion.class);
+		return (List<Promocion>) q.executeList();
 	}
 }

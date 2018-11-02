@@ -6,7 +6,8 @@ package uniandes.isis2304.superAndes.negocio;
  * @author Mario Andrade
  * */
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 
 public interface VOPromocion
 {
@@ -14,13 +15,13 @@ public interface VOPromocion
 	
 	public long getIdSucursal();
 	
-	public long getCodigoBarras();
+	public String getCodigoBarras();
 	
 	public String getNombre();
 	
-	public Timestamp getFechaInicio();
+	public Date getFechaInicio();
 	
-	public Timestamp getFechaFin();
+	public Date getFechaFin();
 	
 	public int getTipoPromo();
 	

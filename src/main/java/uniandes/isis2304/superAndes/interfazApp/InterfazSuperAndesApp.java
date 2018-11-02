@@ -12,6 +12,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -40,6 +42,9 @@ import uniandes.isis2304.superAndes.negocio.VOEmpresas;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdProveedor;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdSucursal;
 import uniandes.isis2304.superAndes.negocio.VOPersona;
+import uniandes.isis2304.superAndes.negocio.VOProducto;
+import uniandes.isis2304.superAndes.negocio.VOPromocion;
+import uniandes.isis2304.superAndes.negocio.VOProveedor;
 import uniandes.isis2304.superAndes.negocio.VOSucursal;
 import uniandes.isis2304.superAndes.negocio.VOVentas;
 
@@ -544,6 +549,310 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
     		panelDatos.actualizarInterfaz(resultado);
     	}
     }
+    
+    /* ****************************************************************
+	 * 			CRUD de Productos
+	 *****************************************************************/   
+
+	public void agregarProducto()
+	{
+		try
+		{
+			String codBarras = JOptionPane.showInputDialog(this, "Codigo de barras", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String idCategoriaStr = JOptionPane.showInputDialog(this, "ID Categoria", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String idTipoProdStr = JOptionPane.showInputDialog(this, "ID Tipo Producto", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String nombre = JOptionPane.showInputDialog(this, "Nombre", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String marca = JOptionPane.showInputDialog(this, "Marca", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String presentacion = JOptionPane.showInputDialog(this, "Presentacion", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String cantidadPresentStr = JOptionPane.showInputDialog(this, "Cantidad Presentacion", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String uniMedida = JOptionPane.showInputDialog(this, "Unidad de Medida", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String volumenStr = JOptionPane.showInputDialog(this, "Volumen", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+			String pesoStr = JOptionPane.showInputDialog(this, "Peso", "Agregar Producto", JOptionPane.QUESTION_MESSAGE);
+
+			long idCategoria = Long.parseLong(idCategoriaStr);
+			long idTipoProd = Long.parseLong(idTipoProdStr);
+			int cantidadPresent = Integer.parseInt(cantidadPresentStr);
+			int volumen = Integer.parseInt(volumenStr);
+			int peso = Integer.parseInt(pesoStr);
+
+			if(codBarras != null)
+			{
+				VOProducto tb = superAndes.agregarProducto(codBarras, idCategoria, idTipoProd, nombre, marca, presentacion, cantidadPresent, uniMedida, volumen, peso);
+				if(tb == null)
+				{
+					throw new Exception("No se pudo crear el producto con el codigo de barras: " + codBarras);
+				}
+				String resultado = "En agregarProducto\n\n";
+				resultado += "Producto adicionado exitosamente: " + codBarras;
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	public void listarProductos()
+	{
+		try
+		{
+			List<VOProducto> lista = superAndes.darVOProductos();
+			String resultado = "En listarProductos";
+			resultado += "\n" + listarProductos(lista);
+			panelDatos.actualizarInterfaz(resultado);
+			resultado += "\n Operacion terminada";
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	/**
+	 * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
+	 * @param lista - La lista con los tipos de bebida
+	 * @return La cadena con una líea para cada tipo de bebida recibido
+	 */
+	private String listarProductos(List<VOProducto> lista) 
+	{
+		String resp = "Los productos existentes son:\n";
+		int i = 1;
+		for (VOProducto tb : lista)
+		{
+			resp += i++ + ". " + tb.toString() + "\n";
+		}
+		return resp;
+	}
+	/* ****************************************************************
+	 * 			CRUD de Sucursales
+	 *****************************************************************/   
+
+	public void agregarSucursal()
+	{
+		try
+		{
+
+			String nombre = JOptionPane.showInputDialog(this, "Nombre", "Agregar Sucursal", JOptionPane.QUESTION_MESSAGE);
+			String ciudad = JOptionPane.showInputDialog(this, "Ciudad", "Agregar Sucursal", JOptionPane.QUESTION_MESSAGE);
+			String direccion = JOptionPane.showInputDialog(this, "Direccion", "Agregar Sucursal", JOptionPane.QUESTION_MESSAGE);
+
+			if(nombre != null && ciudad != null && direccion != null)
+			{
+				VOSucursal tb = superAndes.agregarSucursal(nombre, ciudad, direccion);
+				if(tb == null)
+				{
+					throw new Exception("No se pudo crear la sucursal con el nombre: " + nombre);
+				}
+				String resultado = "En agregarSucursal\n\n";
+				resultado += "Sucursal adicionada exitosamente: " + nombre;
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	public void listarSucursales()
+	{
+		try
+		{
+			List<VOSucursal> lista = superAndes.darVOSucursal();
+			String resultado = "En listarSucursales";
+			resultado += "\n" + listarSucursales(lista);
+			panelDatos.actualizarInterfaz(resultado);
+			resultado += "\n Operacion terminada";
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	/**
+	 * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
+	 * @param lista - La lista con los tipos de bebida
+	 * @return La cadena con una líea para cada tipo de bebida recibido
+	 */
+	private String listarSucursales(List<VOSucursal> lista) 
+	{
+		String resp = "Las sucursales existentes son:\n";
+		int i = 1;
+		for (VOSucursal tb : lista)
+		{
+			resp += i++ + ". " + tb.toString() + "\n";
+		}
+		return resp;
+	}
+
+	/* ****************************************************************
+	 * 			CRUD de Proveedores
+	 *****************************************************************/   
+
+	public void agregarProveedor()
+	{
+		try
+		{
+
+			String nit = JOptionPane.showInputDialog(this, "NIT", "Agregar Proveedor", JOptionPane.QUESTION_MESSAGE);
+			String nombre = JOptionPane.showInputDialog(this, "Ciudad", "Agregar Proveedor", JOptionPane.QUESTION_MESSAGE);
+			String calificacionStr = JOptionPane.showInputDialog(this, "Direccion", "Agregar Proveedor", JOptionPane.QUESTION_MESSAGE);
+
+			double calificacion = Double.parseDouble(calificacionStr);
+
+			if(nit != null && nombre != null && calificacionStr != null)
+			{
+				VOProveedor tb = superAndes.agregarProveedor(nit, nombre, calificacion);
+				if(tb == null)
+				{
+					throw new Exception("No se pudo crear el proveedor con el nit: " + nit);
+				}
+				String resultado = "En agregarProveedor\n\n";
+				resultado += "Proveedor adicionada exitosamente: " + nit;
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	public void listarProveedores()
+	{
+		try
+		{
+			List<VOProveedor> lista = superAndes.darVOProveedor();
+			String resultado = "En listarProveedores";
+			resultado += "\n" + listarProveedores(lista);
+			panelDatos.actualizarInterfaz(resultado);
+			resultado += "\n Operacion terminada";
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	/**
+	 * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
+	 * @param lista - La lista con los tipos de bebida
+	 * @return La cadena con una líea para cada tipo de bebida recibido
+	 */
+	private String listarProveedores(List<VOProveedor> lista) 
+	{
+		String resp = "Los proveedores existentes son:\n";
+		int i = 1;
+		for (VOProveedor tb : lista)
+		{
+			resp += i++ + ". " + tb.toString() + "\n";
+		}
+		return resp;
+	}
+
+	/* ****************************************************************
+	 * 			CRUD de Promociones
+	 * ****************************************************************/   
+
+	public void agregarPromocion()
+	{
+		try
+		{
+			String idSucursalStr = JOptionPane.showInputDialog(this, "ID Sucursal", "Agregar Promocion", JOptionPane.QUESTION_MESSAGE);
+			String codigoBarras = JOptionPane.showInputDialog(this, "Codigo de barras producto", "Agregar Promocion", JOptionPane.QUESTION_MESSAGE);
+			String nombre = JOptionPane.showInputDialog(this, "Nombre", "Agregar Promocion", JOptionPane.QUESTION_MESSAGE);
+			String fechaInicioStr = JOptionPane.showInputDialog(this, "Fecha Inicio (DD/MM/YYYY)", "Agregar Promocion", JOptionPane.QUESTION_MESSAGE);
+			String fechaFinStr = JOptionPane.showInputDialog(this, "Fecha Fin (DD/MM/YYYY)", "Agregar Promocion", JOptionPane.QUESTION_MESSAGE);
+			String tipoPromoStr = JOptionPane.showInputDialog(this, "Tipo promocion (numero)", "Agregar Promocion", JOptionPane.QUESTION_MESSAGE);
+			String valorOriginalStr = JOptionPane.showInputDialog(this, "Valor Original", "Agregar Promocion", JOptionPane.QUESTION_MESSAGE);
+			String valorPromoStr = JOptionPane.showInputDialog(this, "Valor Promocion", "Agregar Promocion", JOptionPane.QUESTION_MESSAGE);
+
+			long idSucursal = Long.parseLong(idSucursalStr);
+			int tipoPromo = Integer.parseInt(tipoPromoStr);
+			int valorOriginal = Integer.parseInt(valorOriginalStr);
+			int valorPromo = Integer.parseInt(valorPromoStr);
+			SimpleDateFormat format = new SimpleDateFormat("DD/MM/YYYY");
+			Date fechaInicio = format.parse(fechaInicioStr);
+			Date fechaFin = format.parse(fechaFinStr);
+
+
+
+			if(idSucursalStr != null)
+			{
+				VOPromocion tb = superAndes.agregarPromocion(idSucursal, codigoBarras,nombre, fechaInicio, fechaFin, tipoPromo, valorOriginal, valorPromo);
+				if(tb == null)
+				{
+					throw new Exception("No se pudo crear la promocion con el nombre: " + nombre + ", en la sucursal: " + idSucursal);
+				}
+				String resultado = "En agregarPromocion\n\n";
+				resultado += "Promocion adicionada exitosamente: " + nombre + " " + idSucursal;
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	public void listarPromociones()
+	{
+		try
+		{
+			List<VOPromocion> lista = superAndes.darVOPromocion();
+			String resultado = "En listarProductos";
+			resultado += "\n" + listarPromociones(lista);
+			panelDatos.actualizarInterfaz(resultado);
+			resultado += "\n Operacion terminada";
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	/**
+	 * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
+	 * @param lista - La lista con los tipos de bebida
+	 * @return La cadena con una líea para cada tipo de bebida recibido
+	 */
+	private String listarPromociones(List<VOPromocion> lista) 
+	{
+		String resp = "Los productos existentes son:\n";
+		int i = 1;
+		for (VOPromocion tb : lista)
+		{
+			resp += i++ + ". " + tb.toString() + "\n";
+		}
+		return resp;
+	}   
+
     
     
     /* ****************************************************************

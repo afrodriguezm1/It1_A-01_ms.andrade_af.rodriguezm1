@@ -1,8 +1,11 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import uniandes.isis2304.superAndes.negocio.Producto;
 import uniandes.isis2304.superAndes.negocio.Proveedor;
 
 /**
@@ -81,5 +84,15 @@ public class SQLProveedor
         Query q = pm.newQuery(SQL, "DELETE FROM PROVEEDOR WHERE Nit = ?");
         q.setParameters(nit);
         return (long) q.executeUnique();
+	}
+	
+	/**
+	 * 
+	 */
+	public List<Proveedor> darProveedores(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM PROVEEDOR");
+		q.setResultClass(Proveedor.class);
+		return (List<Proveedor>) q.executeList();
 	}
 }

@@ -1,5 +1,6 @@
 package uniandes.isis2304.superAndes.negocio;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -140,5 +141,95 @@ public class SuperAndes
 		InfoProdSucursal info = psa.agregarInfProdSucursal(idVenta, codigoBarras, cantidad);
 		log.info("Adicionando producto a venta: " + info);
 		return info;
+	}
+	
+	public Producto agregarProducto(String codigoBarras, long idCategoria, long idTipoProducto, String nombre, String marca,
+			String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso)
+	{
+		log.info("Adicionando producto:" + codigoBarras);
+		Producto producto = psa.adicionarProducto(codigoBarras, idCategoria, idTipoProducto, nombre, marca, presentacion, cantidadPresent, uniMedida, volumen, peso);
+		log.info("Adicionando producto:" + codigoBarras);
+		return producto;
+	}
+	
+	public List<VOProducto> darVOProductos()
+	{
+		log.info("Generando los VO de producto");
+		{
+			List<VOProducto> voProducto = new LinkedList<VOProducto>();
+			for(Producto tb : psa.darProductos())
+			{
+				voProducto.add(tb);
+			}
+			log.info("Generando los VO de productos: " + voProducto.size() +" existentes");
+			return voProducto;
+		}
+	}
+	
+	public Proveedor agregarProveedor(String nit, String pNombre, double calificacion)
+	{
+		log.info("Adicionando proveedor:" + nit);
+		Proveedor proveedor = psa.adicionarProveedor(nit, pNombre, calificacion);
+		log.info("Adicionando proveedor:" + nit);
+		return proveedor;
+	}
+	
+	public List<VOProveedor> darVOProveedor()
+	{
+		log.info("Generando los VO de proveedor");
+		{
+			List<VOProveedor> voProveedor = new LinkedList<VOProveedor>();
+			for(Proveedor tb : psa.darProveedores())
+			{
+				voProveedor.add(tb);
+			}
+			log.info("Generando los VO de proveedores: " + voProveedor.size() +" existentes");
+			return voProveedor;
+		}
+	}
+	
+	public Promocion agregarPromocion(long idSucursal, String codigoBarras, String nombre, Date fechaInicio,
+			Date fechaFin, int tipoPromo, int valorOriginal, int valorPromo)
+	{
+		log.info("Adicionando promocion:" + nombre);
+		Promocion promocion = psa.adicionarPromocion(idSucursal, codigoBarras, nombre, fechaInicio, fechaFin, tipoPromo, valorOriginal, valorPromo);
+				log.info("Adicionando promocion:" + nombre);
+		return promocion;
+	}
+	
+	public List<VOPromocion> darVOPromocion()
+	{
+		log.info("Generando los VO de promocion");
+		{
+			List<VOPromocion> voPromocion = new LinkedList<VOPromocion>();
+			for(Promocion tb : psa.darPromociones())
+			{
+				voPromocion.add(tb);
+			}
+			log.info("Generando los VO de promociones: " + voPromocion.size() +" existentes");
+			return voPromocion;
+		}
+	}
+	
+	public Sucursal agregarSucursal(String pNombre, String pDireccion, String pCiudad)
+	{
+		log.info("Adicionando sucursal:" + pNombre);
+		Sucursal sucursal = psa.adicionarSucursal(pNombre, pDireccion, pCiudad);
+				log.info("Adicionando sucursal:" + pNombre);
+		return sucursal;
+	}
+	
+	public List<VOSucursal> darVOSucursal()
+	{
+		log.info("Generando los VO de sucursal");
+		{
+			List<VOSucursal> voSucursal = new LinkedList<VOSucursal>();
+			for(Sucursal tb : psa.darSucursales())
+			{
+				voSucursal.add(tb);
+			}
+			log.info("Generando los VO de sucursales: " + voSucursal.size() +" existentes");
+			return voSucursal;
+		}
 	}
 }

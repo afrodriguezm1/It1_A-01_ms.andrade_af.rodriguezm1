@@ -1,5 +1,6 @@
 package uniandes.isis2304.superAndes.negocio;
 
+import java.util.Date;
 import java.sql.Timestamp;
 
 /**
@@ -18,7 +19,7 @@ public class Promocion implements VOPromocion
 	/**
 	 * Codigo de barras del producto
 	 */
-	private long codigoBarras;
+	private String codigoBarras;
 	
 	/**
 	 * Nombre de la promoción
@@ -28,12 +29,12 @@ public class Promocion implements VOPromocion
 	/**
 	 * Fecha de inicio de la promocion
 	 */
-	private Timestamp fechaInicio;
+	private Date fechaInicio;
 	
 	/**
 	 * Fecha de fin de la promocion
 	 */
-	private Timestamp fechaFin;
+	private Date fechaFin;
 	
 	/**
 	 * Numero que indica cual es el tipo de promocion 
@@ -57,7 +58,7 @@ public class Promocion implements VOPromocion
 	{
 
 		this.idSucursal = 0;
-		this.codigoBarras = 0;
+		this.codigoBarras = "";
 		this.nombre = "";
 		this.fechaInicio = null;
 		this.fechaFin = null;
@@ -78,8 +79,8 @@ public class Promocion implements VOPromocion
 	 * @param valorOriginal
 	 * @param valorPromo
 	 */
-	public Promocion( long idSucursal, long codigoBarras, String nombre, Timestamp fechaInicio,
-			Timestamp fechaFin, int tipoPromo, int valorOriginal, int valorPromo) {
+	public Promocion( long idSucursal, String codigoBarras, String nombre, Date fechaInicio,
+			Date fechaFin, int tipoPromo, int valorOriginal, int valorPromo) {
 
 		this.idSucursal = idSucursal;
 		this.codigoBarras = codigoBarras;
@@ -108,14 +109,14 @@ public class Promocion implements VOPromocion
 	/**
 	 * @return the codigoBarras
 	 */
-	public long getCodigoBarras() {
+	public String getCodigoBarras() {
 		return codigoBarras;
 	}
 
 	/**
 	 * @param codigoBarras the codigoBarras to set
 	 */
-	public void setCodigoBarras(long codigoBarras) {
+	public void setCodigoBarras(String codigoBarras) {
 		this.codigoBarras = codigoBarras;
 	}
 
@@ -136,28 +137,28 @@ public class Promocion implements VOPromocion
 	/**
 	 * @return the fechaInicio
 	 */
-	public Timestamp getFechaInicio() {
+	public Date getFechaInicio() {
 		return fechaInicio;
 	}
 
 	/**
 	 * @param fechaInicio the fechaInicio to set
 	 */
-	public void setFechaInicio(Timestamp fechaInicio) {
+	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
 	/**
 	 * @return the fechaFin
 	 */
-	public Timestamp getFechaFin() {
+	public Date getFechaFin() {
 		return fechaFin;
 	}
 
 	/**
 	 * @param fechaFin the fechaFin to set
 	 */
-	public void setFechaFin(Timestamp fechaFin) {
+	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 

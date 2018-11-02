@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import uniandes.isis2304.superAndes.negocio.Clientes;
 import uniandes.isis2304.superAndes.negocio.Producto;
 import uniandes.isis2304.superAndes.negocio.Proveedor;
 
@@ -58,7 +59,7 @@ public class SQLProducto
 			String presentacion, int cantidadPresent, String uniMedida, int volumen, int peso)
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO (Codigo_barras, Id_categoria, Id_tipo_producto, Nombre, Marca, Presentacion, Cantidad_presen, Uni_medida, Volumen, Peso) "
-        		+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
+        		+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         q.setParameters(codigoBarras, idCategoria, idTipoProducto, nombre, marca,
     			presentacion, cantidadPresent,uniMedida, volumen, peso);
         return (long) q.executeUnique();
@@ -72,6 +73,7 @@ public class SQLProducto
 	public Producto darProductoPorCodBarras(PersistenceManager pm, String id)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM  PRODUCTO WHERE Codigo_barras = ?");
+		q.setResultClass(Producto.class);
 		q.setParameters(id);
 		return (Producto) q.executeUnique();
 	}
@@ -81,10 +83,21 @@ public class SQLProducto
 	 * @param id
 	 * @return
 	 */
-	public long eliminarProductoPorCodBarras(PersistenceManager pm, long id )
+	public long eliminarProductoPorCodBarras(PersistenceManager pm, String id )
 	{
         Query q = pm.newQuery(SQL, "DELETE FROM PRODUCTO WHERE Codigo_barras = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
 	}
+	
+	/**
+	 * 
+	 */
+	public List<Producto> darProductos(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO");
+		q.setResultClass(Producto.class);
+		return (List<Producto>) q.executeList();
+	}
+
 }

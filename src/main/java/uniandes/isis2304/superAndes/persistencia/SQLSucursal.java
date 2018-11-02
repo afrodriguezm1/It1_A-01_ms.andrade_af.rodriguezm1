@@ -1,8 +1,11 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import uniandes.isis2304.superAndes.negocio.Promocion;
 import uniandes.isis2304.superAndes.negocio.Sucursal;
 
 /**
@@ -83,6 +86,15 @@ public class SQLSucursal
         return (long) q.executeUnique();
 	}
 	
+	/**
+	 * 
+	 */
+	public List<Sucursal> darSucursales(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM SUCURSAL");
+		q.setResultClass(Sucursal.class);
+		return (List<Sucursal>) q.executeList();
+	}
 	
 	
 	
