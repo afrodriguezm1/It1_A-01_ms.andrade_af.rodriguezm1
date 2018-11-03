@@ -41,7 +41,7 @@ public class SQLCarrito
 	{
 		this.psa = psa;
 	}
-	
+
 	/**
 	 * 
 	 * @param pm
@@ -54,10 +54,10 @@ public class SQLCarrito
 	public long adicionarCarrito(PersistenceManager pm, String email, long idSucursal, long precio, String estado)
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO CARRITO (Email_Cliente, Id_Sucursal, Precio, Estado) values (?, ?, ?, ?)");
-        q.setParameters(email, idSucursal, precio, estado);
-        return (long) q.executeUnique();
+		q.setParameters(email, idSucursal, precio, estado);
+		return (long) q.executeUnique();
 	}
-	
+
 	/**
 	 * Dar carrito por email de cliente
 	 * @param pm
@@ -71,7 +71,7 @@ public class SQLCarrito
 		q.setParameters(email, idSucursal);
 		return (Carrito) q.executeUnique();
 	}
-	
+
 	/**
 	 * Elimina un carrito por email
 	 * @param pm
@@ -81,11 +81,11 @@ public class SQLCarrito
 	public long eliminarCarritoPorId (PersistenceManager pm, String email, long idSucursal)
 	{
 		Query toDelete = pm.newQuery(SQL, "SELECT ID FROM CARRITO WHERE  " );
-        Query q = pm.newQuery(SQL, "DELETE FROM CARRITO WHERE Email_Cliente = ? AND Id_Sucursal = ?");
-        q.setParameters(email, idSucursal );
-        return (long) q.executeUnique();
+		Query q = pm.newQuery(SQL, "DELETE FROM CARRITO WHERE Email_Cliente = ? AND Id_Sucursal = ?");
+		q.setParameters(email, idSucursal );
+		return (long) q.executeUnique();
 	}
-	
+
 	/**
 	 * Dar todos los carritos
 	 */
@@ -95,5 +95,19 @@ public class SQLCarrito
 		q.setResultClass(Carrito.class);
 		return (List<Carrito>) q.executeList();
 	}
-	
+
+	public long actualizarPrecioCarrito(PersistenceManager pm, String email, long idSucursal, long precio)
+	{
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET PRECIO = PRECIO + (?) WHERE EMAIL_CLIENTE = ? AND ID_SUCURSAL = ?");
+		q.setParameters(precio, email, idSucursal);
+		return (long) q.execute();
+	}
+
+	public long actualizarEstadoCarrito(PersistenceManager pm, String email, long idSucursal)
+	{
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET ESTADO = 'Abandonado' WHERE EMAIL_CLIENTE = ? AND ID_SUCURSAL = ?");
+		q.setParameters(email, idSucursal);
+		return (long) q.execute();
+
+	}
 }

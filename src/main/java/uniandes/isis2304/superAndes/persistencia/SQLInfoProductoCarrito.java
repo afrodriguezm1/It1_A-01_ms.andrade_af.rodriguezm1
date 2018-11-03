@@ -44,4 +44,25 @@ public class SQLInfoProductoCarrito
 		q.setParameters(idCarrito, codigoBarras, cantidad, 0);
 		return (long) q.executeUnique();
 	}
+	
+	public long eliminarInfoProdCarrito(PersistenceManager pm, long idCarrito, String codigoBarras)
+	{
+		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ? AND CODIGO_BARRAS = ?");
+		q.setParameters(idCarrito, codigoBarras);
+		return (long) q.executeUnique();
+	}
+	
+	public long eliminarTodosInfoProdCarrito(PersistenceManager pm, long idCarrito)
+	{
+		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ?");
+		q.setParameters(idCarrito);
+		return (long) q.execute();
+	}
+	
+	public long actualizarCantidadProd(PersistenceManager pm, long idCarrito, String codigoBarras, int cantidad)
+	{
+		Query q = pm.newQuery(SQL, "UPDATE INFO_PRODUCTO_CARRITO SET CANTIDAD = CANTIDAD + (?) WHERE ID_CARRITO = ? AND CODIGO_BARRAS = ?");
+		q.setParameters(cantidad, idCarrito, codigoBarras);
+		return (long) q.execute();
+	}
 }
