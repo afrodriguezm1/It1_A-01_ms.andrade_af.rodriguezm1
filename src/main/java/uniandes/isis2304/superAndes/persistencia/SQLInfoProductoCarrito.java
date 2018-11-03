@@ -1,7 +1,12 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
+import uniandes.isis2304.superAndes.negocio.Carrito;
+import uniandes.isis2304.superAndes.negocio.InfoProdCarrito;
 
 public class SQLInfoProductoCarrito 
 {
@@ -64,5 +69,15 @@ public class SQLInfoProductoCarrito
 		Query q = pm.newQuery(SQL, "UPDATE INFO_PRODUCTO_CARRITO SET CANTIDAD = CANTIDAD + (?) WHERE ID_CARRITO = ? AND CODIGO_BARRAS = ?");
 		q.setParameters(cantidad, idCarrito, codigoBarras);
 		return (long) q.execute();
+	}
+	
+	/**
+	 * Dar toda la info de todos los carritos
+	 */
+	public List<InfoProdCarrito> darInfoProdCarritos(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_CARRITO");
+		q.setResultClass(InfoProdCarrito.class);
+		return (List<InfoProdCarrito>) q.executeList();
 	}
 }

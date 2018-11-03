@@ -71,6 +71,19 @@ public class SQLCarrito
 		q.setParameters(email, idSucursal);
 		return (Carrito) q.executeUnique();
 	}
+	
+	/**
+	 * Dar carrito por email de cliente
+	 * @param pm
+	 * @param email
+	 * @return
+	 */
+	public long darIdCarrito(PersistenceManager pm, String email, long idSucursal)
+	{
+		Query q = pm.newQuery(SQL, "SELECT ID FROM CARRITO WHERE Email_Cliente = ? AND Id_Sucursal = ?");
+		q.setParameters(email, idSucursal);
+		return (long) q.executeUnique();
+	}
 
 	/**
 	 * Elimina un carrito por email

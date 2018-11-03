@@ -24,6 +24,7 @@ import uniandes.isis2304.superAndes.negocio.Carrito;
 import uniandes.isis2304.superAndes.negocio.Categoria;
 import uniandes.isis2304.superAndes.negocio.Clientes;
 import uniandes.isis2304.superAndes.negocio.Empresas;
+import uniandes.isis2304.superAndes.negocio.InfoProdCarrito;
 import uniandes.isis2304.superAndes.negocio.InfoProdProveedor;
 import uniandes.isis2304.superAndes.negocio.InfoProdSucursal;
 import uniandes.isis2304.superAndes.negocio.Informacion;
@@ -91,6 +92,8 @@ public class PersistenciaSuperAndes
 	private SQLInformacion sqlInformacion;
 	
 	private SQLCarrito sqlCarrito;
+	
+	private SQLInfoProductoCarrito sqlInfProdCarrito;
 
 	private PersistenciaSuperAndes()
 	{
@@ -119,6 +122,7 @@ public class PersistenciaSuperAndes
 		tablas.add("RESOLUCIONES");
 		tablas.add("INFORMACION");
 		tablas.add("CARRITO");
+		tablas.add("INFO_PRODUCTO_CARRITO");
 	}
 
 	private PersistenciaSuperAndes(JsonObject tableConfig)
@@ -188,7 +192,9 @@ public class PersistenciaSuperAndes
 		sqlVentas = new SQLVentas(this);
 		sqlInfProSucursal = new SQLInfoProductoSucursal(this);
 		sqlResoluciones = new SQLResoluciones(this);
-		sqlInformacion = new SQLInformacion(this);		
+		sqlInformacion = new SQLInformacion(this);
+		sqlCarrito = new SQLCarrito(this);
+		sqlInfProdCarrito = new SQLInfoProductoCarrito(this);
 
 	}
 
@@ -1505,9 +1511,56 @@ public class PersistenciaSuperAndes
 	public List<Carrito> darCarritos()
 	{
 		return sqlCarrito.darCarritos(pmf.getPersistenceManager());
+		
 	}
 	
-	public long eliminarCarrito(long idSucursal, String email)
+	public long darIdCarrito(String email, long idSucursal)
+	{
+		return sqlCarrito.darIdCarrito(pmf.getPersistenceManager(), email, idSucursal);
+	}
+	
+	public void eliminarCarritos()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			
+			
+			for (Carrito car : darCarritos()) {
+				tx.begin();
+				if(car.getEstado().equals("Abandonado"))
+				{
+
+				   for(InfoProdCarrito infoProd: darInfoProdCarritos())
+				   {
+					   if(infoProd.getIdCarrito() == darIdCarrito(car.getEmail(), car.getIdSucursal()))
+					       sqlAlmacenamiento.actualizarCantidadesAlmacenamiento(pm, car.getIdSucursal(), infoProd.getCodigoBarras() ,infoProd.getCantidad(), 2);
+				   }
+				   sqlCarrito.eliminarCarritoPorId(pm, car.getEmail(), car.getIdSucursal() );
+				}
+				tx.commit();
+			}
+			
+			
+			
+		}
+		catch(Exception e)
+		{
+			log.error("Exception :" + e.getMessage() + "\n" + darDetalleException(e));
+			
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public long abandonarCarrito(String email, long idSucursal)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1515,7 +1568,7 @@ public class PersistenciaSuperAndes
 		{
 			
 			tx.begin();
-			long resp = sqlCarrito.eliminarCarritoPorId(pm, email, idSucursal);
+			long resp = sqlCarrito.actualizarEstadoCarrito(pm, email, idSucursal);
 			tx.commit();
 			return resp;
 		}
@@ -1532,6 +1585,15 @@ public class PersistenciaSuperAndes
 			}
 			pm.close();
 		}
+	}
+	
+	//------------------------------------------------------------------------
+	// Info Prod Carrito
+	//------------------------------------------------------------------------
+	
+	public List<InfoProdCarrito> darInfoProdCarritos()
+	{
+		return sqlInfProdCarrito.darInfoProdCarritos(pmf.getPersistenceManager());
 	}
 	
 	

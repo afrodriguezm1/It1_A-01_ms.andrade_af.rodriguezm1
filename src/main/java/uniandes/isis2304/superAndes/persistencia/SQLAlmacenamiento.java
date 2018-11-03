@@ -61,7 +61,7 @@ public class SQLAlmacenamiento
 
 	public long actualizarCantidadesAlmacenamiento(PersistenceManager pm, long idSucursal, String codigoBarrasProducto, int cantidad, int tipoAlmacenamiento)
 	{
-		Query q = pm.newQuery(SQL, "UPDATE ALMACENAMIENTO SET cantidad = cantidad + (?) WHERE id_sucursal = ? AND codio_barras_producto = ? AND tipo_alma = ?");
+		Query q = pm.newQuery(SQL, "UPDATE ALMACENAMIENTO SET cantidad = cantidad + (?) WHERE id_sucursal = ? AND codigo_barras_producto = ? AND tipo_alma = ?");
 		q.setParameters(cantidad, idSucursal, codigoBarrasProducto, tipoAlmacenamiento);
 		return(long) q.executeUnique();
 	}

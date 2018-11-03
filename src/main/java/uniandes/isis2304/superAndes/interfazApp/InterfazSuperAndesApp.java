@@ -35,8 +35,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
+import uniandes.isis2304.superAndes.negocio.Carrito;
 import uniandes.isis2304.superAndes.negocio.SuperAndes;
 import uniandes.isis2304.superAndes.negocio.VOAlmacenamiento;
+import uniandes.isis2304.superAndes.negocio.VOCarrito;
 import uniandes.isis2304.superAndes.negocio.VOClientes;
 import uniandes.isis2304.superAndes.negocio.VOEmpresas;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdProveedor;
@@ -58,63 +60,68 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	 * Logger para escribir la traza de la ejecución
 	 */
 	private static Logger log = Logger.getLogger(InterfazSuperAndesApp.class.getName());
-	
+
 	/**
 	 * Ruta al archivo de configuración de la interfaz
 	 */
 	private static final String CONFIG_INTERFAZ = "./src/main/resources/config/interfaceConfigApp.json";
-	
+
 	/**
 	 * Ruta al archivo de configuración de los nombres de tablas de la base de datos
 	 */
 	private static final String CONFIG_TABLAS = "./src/main/resources/config/TablasBD_A.json";
-	
+
 	/* ****************************************************************
 	 * 			Atributos
 	 *****************************************************************/
-	
+
 	/**
-     * Objeto JSON con los nombres de las tablas de la base de datos que se quieren utilizar
-     */
+	 * Objeto JSON con los nombres de las tablas de la base de datos que se quieren utilizar
+	 */
 	private JsonObject tableConfig;
-	
+
 	/**
-     * Asociación a la clase principal del negocio.
-     */
+	 * Asociación a la clase principal del negocio.
+	 */
 	private SuperAndes superAndes;
 	
+	/**
+	 * Objeto carrito
+	 */
+	private VOCarrito carrito;
+
 	/* ****************************************************************
 	 * 			Atributos de interfaz
 	 *****************************************************************/
-	
+
 	/**
-     * Objeto JSON con la configuración de interfaz de la app.
-     */
+	 * Objeto JSON con la configuración de interfaz de la app.
+	 */
 	private JsonObject guiConfig;
-	
+
 	/**
-     * Panel de despliegue de interacción para los requerimientos
-     */
+	 * Panel de despliegue de interacción para los requerimientos
+	 */
 	private PanelDatos panelDatos;
 
-	 /**
-     * Menú de la aplicación
-     */
+	/**
+	 * Menú de la aplicación
+	 */
 	private JMenuBar menuBar;
-	
+
 	/**
 	 * Panel de carrito de compras
 	 */
 	private JPanel panelCarrito;
-	
+
 	/* ****************************************************************
 	 * 			Métodos
 	 *****************************************************************/
-	
+
 	/**
-     * Construye la ventana principal de la aplicación. <br>
-     * <b>post:</b> Todos los componentes de la interfaz fueron inicializados.
-     */
+	 * Construye la ventana principal de la aplicación. <br>
+	 * <b>post:</b> Todos los componentes de la interfaz fueron inicializados.
+	 */
 	public InterfazSuperAndesApp()
 	{
 		guiConfig = openConfig("Interfaz", CONFIG_INTERFAZ);
@@ -123,35 +130,35 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		{
 			crearMenu(guiConfig.getAsJsonArray("menuBar"));
 		}
-		
+
 		tableConfig = openConfig("Tablas BD", CONFIG_TABLAS);
 		superAndes = new SuperAndes(tableConfig);
-		
+
 		String path = guiConfig.get("bannerPath").getAsString();
 		panelDatos = new PanelDatos(this);
-		
+
 		setLayout ( new GridLayout(2, 1));
 		add(new JLabel( new ImageIcon (path)));
 		JPanel panel = new JPanel();
 		panel.setLayout( new GridLayout(1, 2));
 		panel.add(panelDatos);
-		
+
 		panelCarrito = new PanelCarrito();
 		panel.add(panelCarrito);
 		add(panel);
 	}
-	
+
 	/* ****************************************************************
 	 * 			Métodos de configuración de la interfaz
 	 *****************************************************************/
-	
+
 	/**
-     * Lee datos de configuración para la aplicació, a partir de un archivo JSON o con valores por defecto si hay errores.
-     * @param tipo - El tipo de configuración deseada
-     * @param archConfig - Archivo Json que contiene la configuración
-     * @return Un objeto JSON con la configuración del tipo especificado
-     * 			NULL si hay un error en el archivo.
-     */
+	 * Lee datos de configuración para la aplicació, a partir de un archivo JSON o con valores por defecto si hay errores.
+	 * @param tipo - El tipo de configuración deseada
+	 * @param archConfig - Archivo Json que contiene la configuración
+	 * @return Un objeto JSON con la configuración del tipo especificado
+	 * 			NULL si hay un error en el archivo.
+	 */
 	private JsonObject openConfig(String tipo, String archConfig)
 	{
 		JsonObject config = null;
@@ -172,8 +179,8 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	}
 
 	/**
-     * Método para configurar el frame principal de la aplicación
-     */
+	 * Método para configurar el frame principal de la aplicación
+	 */
 	private void configurarFrame()
 	{
 		int alto = 0;
@@ -193,68 +200,68 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			alto = guiConfig.get("frameH").getAsInt();
 			ancho =guiConfig.get("frameW").getAsInt();
 		}
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(50, 50);
 		setResizable(true);
 		setBackground(Color.WHITE);
-		
+
 		setTitle(titulo);
 		setSize(ancho, alto);
 	}
-	
+
 	/**
-     * Método para crear el menú de la aplicación con base em el objeto JSON leído
-     * Genera una barra de menú y los menús con sus respectivas opciones
-     * @param jsonMenu - Arreglo Json con los menùs deseados
-     */
+	 * Método para crear el menú de la aplicación con base em el objeto JSON leído
+	 * Genera una barra de menú y los menús con sus respectivas opciones
+	 * @param jsonMenu - Arreglo Json con los menùs deseados
+	 */
 	private void crearMenu(JsonArray jsonMenu)
 	{
 		try
 		{
-		menuBar = new JMenuBar();
-		for(JsonElement men : jsonMenu)
-		{
-			JsonObject jom = men.getAsJsonObject();
-			
-			String menuTitle = jom.get("menuTitle").getAsString();
-			JsonArray opciones = jom.getAsJsonArray("options");
-			
-			JMenu menu = new JMenu(menuTitle);
-			
-			for(JsonElement op : opciones)
+			menuBar = new JMenuBar();
+			for(JsonElement men : jsonMenu)
 			{
-				JsonObject jo = op.getAsJsonObject();
-				String lb = jo.get("label").getAsString();
-				if(lb.equals("separador"))
+				JsonObject jom = men.getAsJsonObject();
+
+				String menuTitle = jom.get("menuTitle").getAsString();
+				JsonArray opciones = jom.getAsJsonArray("options");
+
+				JMenu menu = new JMenu(menuTitle);
+
+				for(JsonElement op : opciones)
 				{
-					menu.addSeparator();
+					JsonObject jo = op.getAsJsonObject();
+					String lb = jo.get("label").getAsString();
+					if(lb.equals("separador"))
+					{
+						menu.addSeparator();
+					}
+					else
+					{
+						String event = jo.get("event").getAsString();
+
+						JMenuItem mItem = new JMenuItem(lb);
+						mItem.addActionListener(this);
+						mItem.setActionCommand(event);
+
+						menu.add(mItem);
+					}
 				}
-				else
-				{
-					String event = jo.get("event").getAsString();
-					
-					JMenuItem mItem = new JMenuItem(lb);
-					mItem.addActionListener(this);
-					mItem.setActionCommand(event);
-					
-					menu.add(mItem);
-				}
+				menuBar.add(menu);
 			}
-			menuBar.add(menu);
-		}
-		setJMenuBar(menuBar);
+			setJMenuBar(menuBar);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/* ****************************************************************
 	 * 			CRUD de Clientes
 	 *****************************************************************/
-	
+
 	public void agregarCliente()
 	{
 		try
@@ -321,7 +328,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
-	
+
 	public void listarClientes()
 	{
 		try
@@ -338,7 +345,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
-	
+
 	public void buscarCliente()
 	{
 		try
@@ -370,187 +377,187 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
-	
-	/**
-     * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
-     * @param lista - La lista con los tipos de bebida
-     * @return La cadena con una líea para cada tipo de bebida recibido
-     */
-    private String listarClientes(List<VOClientes> lista) 
-    {
-    	String resp = "Los tipos de bebida existentes son:\n";
-    	int i = 1;
-        for (VOClientes tb : lista)
-        {
-        	resp += i++ + ". " + tb.toString() + "\n";
-        }
-        return resp;
-	}
-    
-    /* ****************************************************************
-	 * 			CRUD de Almacenamiento
-	 *****************************************************************/
-    
-    public void agregarAlmacenamiento()
-    {
-    	try
-    	{
-    		String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		String codigoProd = JOptionPane.showInputDialog(this, "Cordigo barras que almacenará?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		String idCat = JOptionPane.showInputDialog(this, "Id categoria de producto?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		String idTipo = JOptionPane.showInputDialog(this, "Id tipo producto?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		String capaVol = JOptionPane.showInputDialog(this, "Capacidad en volumen del almacenamiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		String capaPeso = JOptionPane.showInputDialog(this, "Capacidad en peso del almacenamiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		String nivelRevast = JOptionPane.showInputDialog(this, "Nivel de reavastecimiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		int tipo = JOptionPane.showConfirmDialog(this, "Es bodega?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
-    		if( idSucursal != null && codigoProd != null && capaVol != null && capaPeso != null && nivelRevast != null)
-    		{
-    			VOAlmacenamiento al = superAndes.agregarAlmacenamiento(Integer.parseInt(idSucursal), codigoProd, Integer.parseInt(idCat), Integer.parseInt(idTipo), Integer.parseInt(capaVol), Integer.parseInt(capaPeso), tipo + 1, Integer.parseInt(nivelRevast));
-    			if(al == null)
-    			{
-        			throw new Exception ("No se pudo crear un almacenamiento a la sucursal: " + idSucursal);	
-    			}
-    			String resultado = "En adicinarAlmacenamiento\n\n";
-    			resultado += "Almacenamiento adicionado exitosamente: " + al;
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-    	}
-    	catch(Exception e)
-    	{
-    		e.printStackTrace();
-    		String resultado = generarMensajeError(e);
-    		panelDatos.actualizarInterfaz(resultado);
-    	}
-    }
-    
-    public void eliminarAlmacenamiento()
-    {
-    	try
-    	{
-    		String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Eliminar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		String codBarras = JOptionPane.showInputDialog(this, "Codigo de barras?", "Eliminar almacenamiento", JOptionPane.QUESTION_MESSAGE);
-    		int tipo = JOptionPane.showConfirmDialog(this, "Desea eliminar la bodega?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
-    		if(idSucursal != null && codBarras != null)
-    		{
-    			long alEliminados = superAndes.eliminarAlmacenamientoSucursal(Integer.parseInt(idSucursal), codBarras, tipo + 1);
-    			
-    			String resultado = "En eliminar Almacenamiento\n\n";
-    			resultado += alEliminados + " Almacenamientos eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelaa por el usuario");
-    		}
-    	}
-    	catch(Exception e)
-    	{
-    		String resultado = generarMensajeError(e);
-    		panelDatos.actualizarInterfaz(resultado);
-    	}
-    }
-    
-    public void listarAlmacenamientoSucursal()
-    {
-    	try
-    	{
-    		String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Listar almacenamientos", JOptionPane.QUESTION_MESSAGE);
-    		if(idSucursal != null)
-    		{
-    			List <VOAlmacenamiento> lista = superAndes.darVOAlmacenamiento(Integer.parseInt(idSucursal));
 
-    			System.out.println(lista.size());
-    			String resultado = "En listarAlmacenamiento";
-    			resultado += "\n" + listarAlmacenamientos(lista);
-    			panelDatos.actualizarInterfaz(resultado);
-    			resultado += "\n Operación Terminada";
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-    	}
-    	catch(Exception e)
-    	{
-    		e.printStackTrace();
-    		String resultado = generarMensajeError(e);
-    		panelDatos.actualizarInterfaz(resultado);
-    	}
-    }
-    
-    private String listarAlmacenamientos(List<VOAlmacenamiento> lista)
-    {
-    	String resp = "Los almacenamientos son: \n";
-    	int i =1;
-    	for(VOAlmacenamiento al : lista)
-    	{
-    		System.out.println(i);
-    		resp += i++ + ". " + al.toString() + "\n";
-    	}
-    	return resp;
-    }
-    
-    /* ****************************************************************
+	/**
+	 * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
+	 * @param lista - La lista con los tipos de bebida
+	 * @return La cadena con una líea para cada tipo de bebida recibido
+	 */
+	private String listarClientes(List<VOClientes> lista) 
+	{
+		String resp = "Los tipos de bebida existentes son:\n";
+		int i = 1;
+		for (VOClientes tb : lista)
+		{
+			resp += i++ + ". " + tb.toString() + "\n";
+		}
+		return resp;
+	}
+
+	/* ****************************************************************
 	 * 			CRUD de Almacenamiento
 	 *****************************************************************/
-    
-    public void nuevaVenta()
-    {
-    	try
-    	{
-    		String idSucursal = JOptionPane.showInputDialog (this, "Id Sucursal?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE);
-    		String email = JOptionPane.showInputDialog (this, "Email del cliente?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE);
-    		ArrayList<String> codigos = new ArrayList();
-    		ArrayList<Integer> cantidad = new ArrayList<>();
-    		int resp = 0;
-    		while(resp == 0)
-    		{
-    			codigos.add(JOptionPane.showInputDialog (this, "Código de barras?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE));
-    			cantidad.add(Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad del producto", "Venta Nueva", JOptionPane.QUESTION_MESSAGE)));
-    			resp = JOptionPane.showConfirmDialog(this, "desea agregar otro producto?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
-    		}
-    		if(idSucursal != null && email != null && !codigos.isEmpty() && !cantidad.isEmpty())
-    		{
-    			VOVentas su = superAndes.nuevaVenta(Integer.parseInt(idSucursal), email);
+
+	public void agregarAlmacenamiento()
+	{
+		try
+		{
+			String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			String codigoProd = JOptionPane.showInputDialog(this, "Cordigo barras que almacenará?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			String idCat = JOptionPane.showInputDialog(this, "Id categoria de producto?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			String idTipo = JOptionPane.showInputDialog(this, "Id tipo producto?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			String capaVol = JOptionPane.showInputDialog(this, "Capacidad en volumen del almacenamiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			String capaPeso = JOptionPane.showInputDialog(this, "Capacidad en peso del almacenamiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			String nivelRevast = JOptionPane.showInputDialog(this, "Nivel de reavastecimiento?", "Agregar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			int tipo = JOptionPane.showConfirmDialog(this, "Es bodega?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
+			if( idSucursal != null && codigoProd != null && capaVol != null && capaPeso != null && nivelRevast != null)
+			{
+				VOAlmacenamiento al = superAndes.agregarAlmacenamiento(Integer.parseInt(idSucursal), codigoProd, Integer.parseInt(idCat), Integer.parseInt(idTipo), Integer.parseInt(capaVol), Integer.parseInt(capaPeso), tipo + 1, Integer.parseInt(nivelRevast));
+				if(al == null)
+				{
+					throw new Exception ("No se pudo crear un almacenamiento a la sucursal: " + idSucursal);	
+				}
+				String resultado = "En adicinarAlmacenamiento\n\n";
+				resultado += "Almacenamiento adicionado exitosamente: " + al;
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	public void eliminarAlmacenamiento()
+	{
+		try
+		{
+			String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Eliminar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			String codBarras = JOptionPane.showInputDialog(this, "Codigo de barras?", "Eliminar almacenamiento", JOptionPane.QUESTION_MESSAGE);
+			int tipo = JOptionPane.showConfirmDialog(this, "Desea eliminar la bodega?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
+			if(idSucursal != null && codBarras != null)
+			{
+				long alEliminados = superAndes.eliminarAlmacenamientoSucursal(Integer.parseInt(idSucursal), codBarras, tipo + 1);
+
+				String resultado = "En eliminar Almacenamiento\n\n";
+				resultado += alEliminados + " Almacenamientos eliminados\n";
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelaa por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	public void listarAlmacenamientoSucursal()
+	{
+		try
+		{
+			String idSucursal = JOptionPane.showInputDialog(this, "Id de la sucursal?", "Listar almacenamientos", JOptionPane.QUESTION_MESSAGE);
+			if(idSucursal != null)
+			{
+				List <VOAlmacenamiento> lista = superAndes.darVOAlmacenamiento(Integer.parseInt(idSucursal));
+
+				System.out.println(lista.size());
+				String resultado = "En listarAlmacenamiento";
+				resultado += "\n" + listarAlmacenamientos(lista);
+				panelDatos.actualizarInterfaz(resultado);
+				resultado += "\n Operación Terminada";
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	private String listarAlmacenamientos(List<VOAlmacenamiento> lista)
+	{
+		String resp = "Los almacenamientos son: \n";
+		int i =1;
+		for(VOAlmacenamiento al : lista)
+		{
+			System.out.println(i);
+			resp += i++ + ". " + al.toString() + "\n";
+		}
+		return resp;
+	}
+
+	/* ****************************************************************
+	 * 			CRUD de Almacenamiento
+	 *****************************************************************/
+
+	public void nuevaVenta()
+	{
+		try
+		{
+			String idSucursal = JOptionPane.showInputDialog (this, "Id Sucursal?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE);
+			String email = JOptionPane.showInputDialog (this, "Email del cliente?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE);
+			ArrayList<String> codigos = new ArrayList();
+			ArrayList<Integer> cantidad = new ArrayList<>();
+			int resp = 0;
+			while(resp == 0)
+			{
+				codigos.add(JOptionPane.showInputDialog (this, "Código de barras?", "Venta Nueva", JOptionPane.QUESTION_MESSAGE));
+				cantidad.add(Integer.parseInt(JOptionPane.showInputDialog (this, "Cantidad del producto", "Venta Nueva", JOptionPane.QUESTION_MESSAGE)));
+				resp = JOptionPane.showConfirmDialog(this, "desea agregar otro producto?", "Agregar almacenamiento", JOptionPane.YES_NO_OPTION);
+			}
+			if(idSucursal != null && email != null && !codigos.isEmpty() && !cantidad.isEmpty())
+			{
+				VOVentas su = superAndes.nuevaVenta(Integer.parseInt(idSucursal), email);
 
 				ArrayList<VOInfoProdSucursal> arreglo = new ArrayList<>();
-    			for(int i = 0; i < codigos.size(); i++)
-    			{
-    				VOInfoProdSucursal a = superAndes.agregarProductoVenta(su.getId(), codigos.get(i), cantidad.get(i));
-    				arreglo.add(a);
-    			}
-    			if(su == null || arreglo.isEmpty())
-    			{
-    				throw new Exception("No se pudo crear la venta nueva");
-    			}
-    			String resultado = "En adicionar venta\n\n";
-    			resultado += "Venta agregada exitosamente: " + su;
-    			for(int i = 0; i < codigos.size(); i++)
-    			{
-    				resultado += codigos.get(i) + cantidad.get(i);
-    			}
-    			resultado += "\nOperación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-    	}
-    	catch(Exception e)
-    	{
-    		String resultado = generarMensajeError(e);
-    		panelDatos.actualizarInterfaz(resultado);
-    	}
-    }
-    
-    /* ****************************************************************
+				for(int i = 0; i < codigos.size(); i++)
+				{
+					VOInfoProdSucursal a = superAndes.agregarProductoVenta(su.getId(), codigos.get(i), cantidad.get(i));
+					arreglo.add(a);
+				}
+				if(su == null || arreglo.isEmpty())
+				{
+					throw new Exception("No se pudo crear la venta nueva");
+				}
+				String resultado = "En adicionar venta\n\n";
+				resultado += "Venta agregada exitosamente: " + su;
+				for(int i = 0; i < codigos.size(); i++)
+				{
+					resultado += codigos.get(i) + cantidad.get(i);
+				}
+				resultado += "\nOperación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+	/* ****************************************************************
 	 * 			CRUD de Productos
 	 *****************************************************************/   
 
@@ -837,6 +844,8 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
+	
+
 	/**
 	 * Genera una cadena de caracteres con la lista de los tipos de bebida recibida: una línea por cada tipo de bebida
 	 * @param lista - La lista con los tipos de bebida
@@ -851,14 +860,88 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			resp += i++ + ". " + tb.toString() + "\n";
 		}
 		return resp;
-	}   
+	}  
 
-    
-    
-    /* ****************************************************************
+	/* ****************************************************************
+	 * 			CRUD de Carritos
+	 * ****************************************************************/   
+	/**
+	 * Un cliente solicita un carrito.
+	 */
+	public void solicitarCarrito()
+	{
+		try
+		{
+			String idSucursalStr = JOptionPane.showInputDialog(this, "ID Sucursal", "Solicitar Carrito", JOptionPane.QUESTION_MESSAGE);
+			String email = JOptionPane.showInputDialog(this, "Email", "Solicitar Carrito", JOptionPane.QUESTION_MESSAGE);
+			
+			long idSucursal = Long.parseLong(idSucursalStr);
+
+			if(idSucursalStr != null && email != null)
+			{
+				VOCarrito tb = superAndes.agregarCarrito(email, idSucursal, new Long(0), "Activo");
+				carrito = tb;
+				if(tb == null)
+				{
+					throw new Exception("No se pudo solicitar el carrito para: " + email + ", en la sucursal: " + idSucursal);
+				}
+				String resultado = "En agregarPromocion\n\n";
+				resultado += "Promocion adicionada exitosamente: " + email + " " + idSucursal;
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	/**
+	 * Un cliente abandona un carrito
+	 */
+	public void abandonarCarrito()
+	{
+		try
+		{
+			superAndes.abandonarCarrito(carrito.getEmail(), carrito.getIdSucursal());
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	/**
+	 * Elimina los carritos y devuelve los productos a sus estantes.
+	 */
+	public void eliminarCarritos()
+	{
+		try
+		{
+			superAndes.eliminarCarritos();
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+
+ 
+
+
+
+	/* ****************************************************************
 	 * 			CRUD de mensajes de error
 	 *****************************************************************/
-	
+
 	/**
 	 * Genera una cadena para indicar al usuario que hubo un error en la aplicación
 	 * @param e - La excepción generada
@@ -871,12 +954,12 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		resultado += "\n\nRevise datanucleus.log y superandes.log para más detalles";
 		return resultado;
 	}
-	
+
 	/**
-     * Genera una cadena de caracteres con la descripción de la excepcion e, haciendo énfasis en las excepcionsde JDO
-     * @param e - La excepción recibida
-     * @return La descripción de la excepción, cuando es javax.jdo.JDODataStoreException, "" de lo contrario
-     */
+	 * Genera una cadena de caracteres con la descripción de la excepcion e, haciendo énfasis en las excepcionsde JDO
+	 * @param e - La excepción recibida
+	 * @return La descripción de la excepción, cuando es javax.jdo.JDODataStoreException, "" de lo contrario
+	 */
 	private String darDetalleException(Exception e) 
 	{
 		String resp = "";
@@ -887,13 +970,13 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		}
 		return resp;
 	}
-	
-	
-	
+
+
+
 	/* ****************************************************************
 	 * 			Métodos administrativos
 	 *****************************************************************/
-	
+
 	/**
 	 * Muestra el log de SuperAndes
 	 */
@@ -901,7 +984,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		mostrarArchivo("superandes.log");
 	}
-	
+
 	/**
 	 * Abre el archivo dado como parámetro con la aplicación por defecto del sistema
 	 * @param nombreArchivo - El nombre del archivo que se quiere mostrar
@@ -917,7 +1000,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Muestra el log de datanucleus
 	 */
@@ -925,7 +1008,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		mostrarArchivo("datanucleus.log");
 	}
-	
+
 	/**
 	 * Limpia el contenido del log de SuperAndes
 	 * Muestra en el panel de datos la traza de la ejecución
@@ -933,14 +1016,14 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	public void limpiarLogSuperAndes()
 	{
 		boolean resp = limpiarArchivo("superandes.log");
-		
+
 		String resultado = "\n\n************ Limpiando el log de superAndes ************ \n";
 		resultado += "Archivo " + (resp ? "limpiado exitosamente" : "NO PUDO ser limpiado !!");
 		resultado += "\nLimpieza terminada";
 
 		panelDatos.actualizarInterfaz(resultado);
 	}
-	
+
 	/**
 	 * Limpia el contenido del log de datanucleus
 	 * Muestra en el panel de datos la traza de la ejecución
@@ -956,7 +1039,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 		panelDatos.actualizarInterfaz(resultado);
 	}
-	
+
 	/**
 	 * Limpia el contenido de un archivo dado su nombre
 	 * @param nombreArchivo - El nombre del archivo que se quiere borrar
@@ -977,10 +1060,10 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			return false;
 		}
 	}
-	
+
 	/**
-     * Muestra la información acerca del desarrollo de esta apicación
-     */
+	 * Muestra la información acerca del desarrollo de esta apicación
+	 */
 	public void acercaDe ()
 	{
 		String resultado = "\n\n ************************************\n\n";
@@ -1000,10 +1083,10 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	}
 
 	/**
-     * Método para la ejecución de los eventos que enlazan el menú con los métodos de negocio
-     * Invoca al método correspondiente según el evento recibido
-     * @param pEvento - El evento del usuario
-     */
+	 * Método para la ejecución de los eventos que enlazan el menú con los métodos de negocio
+	 * Invoca al método correspondiente según el evento recibido
+	 * @param pEvento - El evento del usuario
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -1018,15 +1101,15 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			a.printStackTrace();
 		}
 	}
-	
+
 	/* ****************************************************************
 	 * 			Programa principal
 	 *****************************************************************/
 
 	/**
-     * Este método ejecuta la aplicación, creando una nueva interfaz
-     * @param args Arreglo de argumentos que se recibe por línea de comandos
-     */
+	 * Este método ejecuta la aplicación, creando una nueva interfaz
+	 * @param args Arreglo de argumentos que se recibe por línea de comandos
+	 */
 	public static void main(String[] args) 
 	{
 		try

@@ -257,6 +257,20 @@ public class SuperAndes
 		return carrito;
 	}
 	
+	public void abandonarCarrito(String email, long idSucursal)
+	{
+		log.info("Abandonando Carrito:" + email);
+		psa.abandonarCarrito(email, idSucursal);
+		log.info("Abandonando Carrito:" + email);
+	}
+	
+	public void eliminarCarritos()
+	{
+		log.info("Retornano productos de carritos abandonados:");
+		psa.eliminarCarritos();
+		log.info("Retornano productos de carritos abandonados:");
+	}
+	
 	public List<VOCarrito> darVOCarrito()
 	{
 		log.info("Generando los VO de carrito");
