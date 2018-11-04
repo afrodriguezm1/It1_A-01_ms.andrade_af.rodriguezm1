@@ -6,6 +6,7 @@ public class Carrito implements VOCarrito
 	// Atributos
 	//---------------------------------------------------------------------
 
+	private long id;
 	
 	private String email;
 	
@@ -78,6 +79,17 @@ public class Carrito implements VOCarrito
 	public void setEstado(String estado)
 	{
 		this.estado = estado;
+	}
+
+	@Override
+	public long getId() 
+	{
+		return this.id;
+	}
+	
+	public void setId(long id)
+	{
+		this.id = id;
 	}
 
 }

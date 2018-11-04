@@ -608,7 +608,7 @@ public class PersistenciaSuperAndes
 	//------------------------------------------------------------------------
 	// ProductoSucursal
 	//------------------------------------------------------------------------	
-		public ProductoSucursal adicionarProductoSucursal(long codigoBarras, long idSucursal, int precioUnitario, int precioUniMedida,
+		public ProductoSucursal adicionarProductoSucursal(String codigoBarras, long idSucursal, int precioUnitario, int precioUniMedida,
 				int numeroRecompra, int nivelReorde)
 		{
 			PersistenceManager pm = pmf.getPersistenceManager();
@@ -663,9 +663,9 @@ public class PersistenciaSuperAndes
 			}
 		}
 	
-	public ProductoSucursal darProductoSucursalPorCodBarras(long id)
+	public ProductoSucursal darProductoSucursalPorCodBarras(String id, long idSucursal)
 	{
-		return sqlProductoSucursal.darProductoSucursalPorCodBarras(pmf.getPersistenceManager(), id);
+		return sqlProductoSucursal.darProductoSucursalPorCodBarras(pmf.getPersistenceManager(), id, idSucursal);
 	}
 	
 	//------------------------------------------------------------------------
@@ -1587,9 +1587,138 @@ public class PersistenciaSuperAndes
 		}
 	}
 	
+	public Carrito darCarrito(String email, long idSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			tx.setIsolationLevel("SET TRANSACTION READ ONLY");
+			Carrito car = sqlCarrito.darCarritoPorId(pm, email, idSucursal);
+			tx.commit();
+			return car;
+		}
+		catch(Exception e)
+		{
+			log.error("Exception: " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	public Ventas finalizarCompra(long idCarrito, String email, long idSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			Carrito car = sqlCarrito.darCarritoPorId(pm, email, idSucursal);
+			List<InfoProdCarrito> infos = sqlInfProdCarrito.darInfoProdCarritosId(pm, idCarrito, email, idSucursal);
+			sqlVentas.agregarVenta(pm, idSucursal, email, 0,"");
+			long id = sqlVentas.darIdActual(pm);
+			for(int i = 0; i < infos.size(); i++)
+			{
+				sqlInfProSucursal.agregarInfoProductoSucursal(pm, id, infos.get(i).getCodigoBarras(), infos.get(i).getCantidad());
+			}
+			sqlInfProdCarrito.eliminarTodosInfoProdCarrito(pm, idCarrito);
+			sqlCarrito.eliminarCarritoPorId(pm, email, idSucursal);
+			Ventas ventas = new Ventas(id, idSucursal, email, 0, "", new Date());
+			tx.commit();
+			return ventas;
+		}
+		catch(Exception e)
+		{
+			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
 	//------------------------------------------------------------------------
 	// Info Prod Carrito
 	//------------------------------------------------------------------------
+	
+	public InfoProdCarrito agregarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			Almacenamiento al = sqlAlmacenamiento.buscarAlmacenamientoEnEspecifico(pm, idSucursal, codigoBarras, 2);
+			if(cantidad>al.getCantidad())
+			{
+				throw new Exception("No hay suficientes productos excibidos");
+			}
+			ProductoSucursal pr = sqlProductoSucursal.darProductoSucursalPorCodBarras(pm, codigoBarras, idSucursal);
+			long insertarTuplas = sqlInfProdCarrito.agregarInfoProdCarrito(pm, idCarrito, email, idSucursal, codigoBarras, cantidad, pr.getPrecioUnitario()*cantidad);
+			sqlCarrito.actualizarPrecioCarrito(pm, email, idSucursal, pr.getPrecioUnitario()*cantidad);
+			sqlAlmacenamiento.actualizarCantidadesAlmacenamiento(pm, idSucursal, codigoBarras, cantidad*(-1), 2);
+			tx.commit();
+			
+			log.trace("Inserción de producto al carrito: " + codigoBarras + " : " + insertarTuplas + " tuplas insertadas");
+			
+			return new InfoProdCarrito(idCarrito, email, idSucursal, codigoBarras, cantidad, 0);
+		}
+		catch(Exception e)
+		{
+			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	public long eliminarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			InfoProdCarrito info = sqlInfProdCarrito.darInfoProdCarritoId(pm, idCarrito, email, idSucursal, codigoBarras);
+			long resp = sqlInfProdCarrito.eliminarInfoProdCarrito(pm, idCarrito, email, idSucursal, codigoBarras);
+			sqlCarrito.actualizarPrecioCarrito(pm, email, idSucursal, (info.getPrecioTotal()*(-1)));
+			sqlAlmacenamiento.actualizarCantidadesAlmacenamiento(pm, idSucursal, codigoBarras, info.getCantidad(), 2);
+			tx.commit();
+			return resp;
+		}
+		catch(Exception e)
+		{
+			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
+		}
+		finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
 	
 	public List<InfoProdCarrito> darInfoProdCarritos()
 	{

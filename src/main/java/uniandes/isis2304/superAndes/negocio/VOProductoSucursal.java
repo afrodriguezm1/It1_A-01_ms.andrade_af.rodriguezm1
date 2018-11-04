@@ -7,17 +7,17 @@ package uniandes.isis2304.superAndes.negocio;
  * */
 public interface VOProductoSucursal
 {
-	public long getCodigoBarras();
+	public String getCodigoBarras();
 	
 	public long getIdSucursal();
 	
-	public int getPrecioUnitario();
+	public long getPrecioUnitario();
 	
-	public int getPrecioUniMedida();
+	public long getPrecioUniMedida();
 	
-	public int getNumeroRecompra();
+	public long getNumeroRecompra();
 	
-	public int getNivelReorden();
+	public long getNivelReorden();
 	
 	@Override
 	public String toString();

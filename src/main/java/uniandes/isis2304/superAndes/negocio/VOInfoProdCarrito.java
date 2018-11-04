@@ -11,6 +11,10 @@ public interface VOInfoProdCarrito
 	 */
 	public long getIdCarrito();
 	
+	public String getEmail();
+	
+	public long getIdSucursal();
+	
 	/**
 	 * @return El codigo de barras del producto de la info
 	 */

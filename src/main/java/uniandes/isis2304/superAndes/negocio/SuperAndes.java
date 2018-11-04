@@ -284,4 +284,38 @@ public class SuperAndes
 			return voCarrito;
 		}
 	}
+	
+	public Carrito darCarrito(String email, long idSucursal)
+	{
+		log.info("Dar carrito del cliente: " + email);
+		Carrito car = psa.darCarrito(email, idSucursal);
+			return car;
+	}
+	
+	public Ventas finalizarCompra(long idCarrito,String email, long idSucursal)
+	{
+		log.info("Finalizar compra de carrito: " + idCarrito);		
+		Ventas venta = psa.finalizarCompra(idCarrito, email, idSucursal);
+		return venta;
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar carritos
+	 *****************************************************************/
+	
+	public InfoProdCarrito agregarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad)
+	{
+		log.info("Adicionando InfoProductoCarrito:" + idCarrito);
+		InfoProdCarrito info = psa.agregarProductoCarrito(idCarrito, email, idSucursal, codigoBarras, cantidad);
+		log.info("Adicionando Carrito:" + idCarrito);
+		return info;
+	}
+	
+	public long eliminarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras)
+	{
+		log.info("Eliminar InfoProductoCarrito: " + codigoBarras);
+		long resp = psa.eliminarProductoCarrito(idCarrito, email, idSucursal, codigoBarras);
+		log.info("Eliminando InfoProductoCarrito ");
+		return resp;
+	}
 }

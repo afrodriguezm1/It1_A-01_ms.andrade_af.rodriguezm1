@@ -5,7 +5,6 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import uniandes.isis2304.superAndes.negocio.Carrito;
 import uniandes.isis2304.superAndes.negocio.InfoProdCarrito;
 
 public class SQLInfoProductoCarrito 
@@ -42,18 +41,19 @@ public class SQLInfoProductoCarrito
 		this.psa = psa;
 	}
 	
-	public long agregarInfoProdCarrito(PersistenceManager pm, long idCarrito, String codigoBarras, int cantidad)
+	public long agregarInfoProdCarrito(PersistenceManager pm, long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad, long precio)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_CARRITO (ID_CARRITO, CODIGO_BARRAS, CANTIDAD, PRECIO_TOTAL)"
-				+ "VALUES (?,?,?,?)");
-		q.setParameters(idCarrito, codigoBarras, cantidad, 0);
+		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_CARRITO (ID_CARRITO, EMAIL_CLIENTE, ID_SUCURSAL, CODIGO_BARRAS, CANTIDAD, PRECIO_TOTAL)"
+				+ "VALUES (?,?,?,?,?,?)");
+		q.setParameters(idCarrito,email,idSucursal, codigoBarras, cantidad, precio);
 		return (long) q.executeUnique();
 	}
 	
-	public long eliminarInfoProdCarrito(PersistenceManager pm, long idCarrito, String codigoBarras)
+	public long eliminarInfoProdCarrito(PersistenceManager pm, long idCarrito, String email, long idSucursal, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ? AND CODIGO_BARRAS = ?");
-		q.setParameters(idCarrito, codigoBarras);
+		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ? AND CODIGO_BARRAS = ? "
+				+ "AND EMAIL_CLIENTE = ? AND ID_SUCURSAL = ?");
+		q.setParameters(idCarrito, codigoBarras,email, idSucursal);
 		return (long) q.executeUnique();
 	}
 	
@@ -79,5 +79,27 @@ public class SQLInfoProductoCarrito
 		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_CARRITO");
 		q.setResultClass(InfoProdCarrito.class);
 		return (List<InfoProdCarrito>) q.executeList();
+	}
+	
+	/**
+	 * Dar toda la info de todos los carritos
+	 */
+	public List<InfoProdCarrito> darInfoProdCarritosId(PersistenceManager pm, long idCarrito, String email, long idSucursal)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ? AND EMAIL_CLIENTE = ? AND ID_SUCURSAL = ?");
+		q.setParameters(idCarrito, email, idSucursal);
+		q.setResultClass(InfoProdCarrito.class);
+		return (List<InfoProdCarrito>) q.executeList();
+	}
+	
+	/**
+	 * Dar toda la info de todos los carritos
+	 */
+	public InfoProdCarrito darInfoProdCarritoId(PersistenceManager pm, long idCarrito, String email, long idSucursal, String codigoBarras)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ? AND EMAIL_CLIENTE = ? AND ID_SUCURSAL = ? AND CODIGO_BARRAS = ?");
+		q.setParameters(idCarrito, email, idSucursal, codigoBarras);
+		q.setResultClass(InfoProdCarrito.class);
+		return (InfoProdCarrito) q.executeUnique();
 	}
 }

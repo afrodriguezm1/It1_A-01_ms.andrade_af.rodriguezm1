@@ -66,7 +66,7 @@ public class SQLCarrito
 	 */
 	public Carrito darCarritoPorId(PersistenceManager pm, String email, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM CARRITO WHERE Email_Cliente = ? AND Id_Sucursal = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM CARRITO WHERE EMAIL_CLIENTE = ? AND id_sucursal = ?");
 		q.setResultClass(Carrito.class);
 		q.setParameters(email, idSucursal);
 		return (Carrito) q.executeUnique();

@@ -9,7 +9,7 @@ public class ProductoSucursal implements VOProductoSucursal
 	/**
 	 * Codigo de barras del producto
 	 */
-	private long codigoBarras;
+	private String codigoBarras;
 	
 	/**
 	 * Id de la sucursal
@@ -19,29 +19,29 @@ public class ProductoSucursal implements VOProductoSucursal
 	/**
 	 * Precio unitario del producto
 	 */
-	private int precioUnitario;
+	private long precioUnitario;
 	
 	/**
 	 * precio unidad de medida del producto
 	 */
-	private int precioUniMedida;
+	private long precioUniMedida;
 	
 	/**
 	 * Numero de recompra del producto
 	 */
-	private int numeroRecompra;
+	private long numeroRecompra;
 	
 	/**
 	 * Numero minimo de productos para hacer reorden
 	 */
-	private int nivelReorden;
+	private long nivelReorden;
 	
 	/**
 	 * COnstructor por defecto
 	 */
 	public ProductoSucursal()
 	{
-		this.codigoBarras =0;
+		this.codigoBarras ="";
 		this.idSucursal = 0;
 		this.precioUnitario =0;
 		this.precioUniMedida =0;
@@ -58,9 +58,9 @@ public class ProductoSucursal implements VOProductoSucursal
 	 * @param numeroRecompra
 	 * @param nivelReorden
 	 */
-	public ProductoSucursal(long codigoBarras, long idSucursal, int precioUnitario, int precioUniMedida,
-			int numeroRecompra, int nivelReorden) {
-		super();
+	public ProductoSucursal(String codigoBarras, long idSucursal, int precioUnitario, int precioUniMedida,
+			int numeroRecompra, int nivelReorden) 
+	{
 		this.codigoBarras = codigoBarras;
 		this.idSucursal = idSucursal;
 		this.precioUnitario = precioUnitario;
@@ -72,20 +72,22 @@ public class ProductoSucursal implements VOProductoSucursal
 	/**
 	 * @return the codigoBarras
 	 */
-	public long getCodigoBarras() {
+	@Override
+	public String getCodigoBarras() {
 		return codigoBarras;
 	}
 
 	/**
 	 * @param codigoBarras the codigoBarras to set
 	 */
-	public void setCodigoBarras(long codigoBarras) {
+	public void setCodigoBarras(String codigoBarras) {
 		this.codigoBarras = codigoBarras;
 	}
 
 	/**
 	 * @return the idSucursal
 	 */
+	@Override
 	public long getIdSucursal() {
 		return idSucursal;
 	}
@@ -100,7 +102,8 @@ public class ProductoSucursal implements VOProductoSucursal
 	/**
 	 * @return the precioUnitario
 	 */
-	public int getPrecioUnitario() {
+	@Override
+	public long getPrecioUnitario() {
 		return precioUnitario;
 	}
 
@@ -114,7 +117,8 @@ public class ProductoSucursal implements VOProductoSucursal
 	/**
 	 * @return the precioUniMedida
 	 */
-	public int getPrecioUniMedida() {
+	@Override
+	public long getPrecioUniMedida() {
 		return precioUniMedida;
 	}
 
@@ -128,7 +132,8 @@ public class ProductoSucursal implements VOProductoSucursal
 	/**
 	 * @return the numeroRecompra
 	 */
-	public int getNumeroRecompra() {
+	@Override
+	public long getNumeroRecompra() {
 		return numeroRecompra;
 	}
 
@@ -142,7 +147,8 @@ public class ProductoSucursal implements VOProductoSucursal
 	/**
 	 * @return the nivelReorden
 	 */
-	public int getNivelReorden() {
+	@Override
+	public long getNivelReorden() {
 		return nivelReorden;
 	}
 

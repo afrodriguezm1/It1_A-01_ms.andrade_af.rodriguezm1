@@ -41,6 +41,7 @@ import uniandes.isis2304.superAndes.negocio.VOAlmacenamiento;
 import uniandes.isis2304.superAndes.negocio.VOCarrito;
 import uniandes.isis2304.superAndes.negocio.VOClientes;
 import uniandes.isis2304.superAndes.negocio.VOEmpresas;
+import uniandes.isis2304.superAndes.negocio.VOInfoProdCarrito;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdProveedor;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdSucursal;
 import uniandes.isis2304.superAndes.negocio.VOPersona;
@@ -112,7 +113,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	/**
 	 * Panel de carrito de compras
 	 */
-	private JPanel panelCarrito;
+	private PanelCarrito panelCarrito;
 
 	/* ****************************************************************
 	 * 			Métodos
@@ -143,7 +144,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		panel.setLayout( new GridLayout(1, 2));
 		panel.add(panelDatos);
 
-		panelCarrito = new PanelCarrito();
+		panelCarrito = new PanelCarrito(this);
 		panel.add(panelCarrito);
 		add(panel);
 	}
@@ -933,10 +934,133 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
-
- 
-
-
+	
+	public void finalizarCompra()
+	{
+		try
+		{
+			VOVentas venta = superAndes.finalizarCompra(carrito.getId(), carrito.getEmail(), carrito.getIdSucursal());
+			if(venta == null)
+			{
+				throw new Exception("No se puedo finalizar la venta del carrito: " + carrito.getId());
+			}
+			String resultado = "En finalizar compra\n\n";
+			resultado += "Venta agregada " + venta;
+			resultado += "\n Operación terminada";
+			panelDatos.actualizarInterfaz(resultado);
+			
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	/* ****************************************************************
+	 * 			CRUD de Carritos
+	 * ****************************************************************/   
+	
+	public void agregarProductoCarrito()
+	{
+		try
+		{
+			String codigoBarras = JOptionPane.showInputDialog (this, "Codigo de barras del producto?", "Agregar producto", JOptionPane.QUESTION_MESSAGE);
+			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cuantos desea agregar?", "Adicionar producto", JOptionPane.QUESTION_MESSAGE));
+			if(codigoBarras != null && cantidad != 0)
+			{
+				VOInfoProdCarrito ipc = superAndes.agregarProductoCarrito(carrito.getId(), carrito.getEmail(), carrito.getIdSucursal(), codigoBarras, cantidad);
+				if( ipc == null)
+				{
+					throw new Exception("No se pudo agregar un producto al carrito: " + codigoBarras);
+				}
+				String resultado = "En agregarProductoCarrito \n\n";
+				resultado += "Producto al carrito agregado exitosamente: " + ipc;
+				resultado += "\n Operación terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	public void eliminarProductoCarrito()
+	{
+		try
+		{
+			String codigoBarras = JOptionPane.showInputDialog (this, "Codigo de barras del producto a eliminar?", "Agregar producto", JOptionPane.QUESTION_MESSAGE);
+			if(codigoBarras != null)
+			{
+				long ipc = superAndes.eliminarProductoCarrito(carrito.getId(), carrito.getEmail(), carrito.getIdSucursal(), codigoBarras);
+				if(ipc == -1)
+				{
+					throw new Exception("No se pudo eliminar el producto : " + codigoBarras);
+				}
+				String resultado = "En eliminar producto carrito\n\n";
+				resultado += ipc + " Productos eliminados\n";
+				resultado += "\n Operacion terminada";
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	/* ****************************************************************
+	 * 			CRUD de interfaz de carrito
+	 *****************************************************************/
+	
+	public void mostrarCarrito()
+	{
+		try
+		{
+			String email = JOptionPane.showInputDialog (this, "Email del cliente", "Mostrar carrito", JOptionPane.QUESTION_MESSAGE);
+			long idSucursal = Integer.parseInt(JOptionPane.showInputDialog (this, "Id de la sucursal", "Mostrar carrito", JOptionPane.QUESTION_MESSAGE));
+			if(email != null && idSucursal != 0)
+			{
+				VOCarrito car = superAndes.darCarrito(email, idSucursal);
+				System.out.println(car);
+				String resultado = "En buscar carrito " + email + ", en la sucursal: " + idSucursal;
+				if(car != null)
+				{
+					resultado += "El carrito encontrado: " + car;
+					carrito = car;
+				}
+				else
+				{
+					resultado += "El carrito del cliente: " + email + " y con id de sucursal: " + idSucursal + " NO EXISTE";
+				}
+				resultado += "\n Operación terminada";
+				//panelCarrito.actualizarCarrito(carrito);
+				panelDatos.actualizarInterfaz(resultado);
+			}
+			else
+			{
+				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+			}
+		}
+		catch (Exception e) 
+    	{
+			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+		
+	}
 
 	/* ****************************************************************
 	 * 			CRUD de mensajes de error

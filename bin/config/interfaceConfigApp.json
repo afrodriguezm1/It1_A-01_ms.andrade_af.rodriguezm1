@@ -260,7 +260,28 @@
 		  			"event":"listarResolución"
 		  		}
 		  	]
-		},		
+		}
+		,
+		{ "menuTitle":"Carrito",
+		  "options":
+		  	[
+		  		{
+		  			"label":"Mostrar Carrito",
+		  			"event":"mostrarCarrito"
+		  		},
+		  		{
+		  			"label":"separador"
+		  		},
+		  		{
+		  			"label":"Agregar Resolución",
+		  			"event":"agregarResolución"
+		  		},
+		  		{
+		  			"label":"Listar Resolución",
+		  			"event":"listarResolución"
+		  		}
+		  	]
+		},			
 		{ "menuTitle": "Mantenimiento",
 		  "options":
 			[

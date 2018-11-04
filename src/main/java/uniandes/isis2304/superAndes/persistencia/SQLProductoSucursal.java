@@ -50,7 +50,7 @@ public class SQLProductoSucursal
 	 * @param pNombre
 	 * @return
 	 */
-	public long adicionarProductoSucursal(PersistenceManager pm,long codigoBarras, long idSucursal, int precioUnitario, int precioUniMedida,
+	public long adicionarProductoSucursal(PersistenceManager pm,String codigoBarras, long idSucursal, int precioUnitario, int precioUniMedida,
 			int numeroRecompra, int nivelReorden)
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO_SUCURSAL (Codigo_barras, Id_sucursal, Precio_unitario, Precio_unidad_medida, Numero_recompra, Nive_Reorden) "
@@ -64,11 +64,11 @@ public class SQLProductoSucursal
 	 * @param id
 	 * @return
 	 */
-	public ProductoSucursal darProductoSucursalPorCodBarras(PersistenceManager pm, long id)
+	public ProductoSucursal darProductoSucursalPorCodBarras(PersistenceManager pm, String codigoBarras, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO_SUCURSAL WHERE Codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO_SUCURSAL WHERE Codigo_barras = ? AND ID_SUCURSAL = ?");
 		q.setResultClass(ProductoSucursal.class);
-		q.setParameters(id);
+		q.setParameters(codigoBarras, idSucursal);
 		return (ProductoSucursal) q.executeUnique();
 	}
 	/**
