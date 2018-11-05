@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
+
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonObject;
@@ -91,6 +93,62 @@ public class SuperAndes
 		}
 	}
 	
+	public long eliminarCliente(String email)
+	{
+		return psa.eliminarCliente(email);
+	}
+	
+	public long eliminarPersona(String email)
+	{
+		return psa.eliminarClientePersona(email);
+	}
+	
+	public long eliminarEmpresa(String email)
+	{
+		return psa.eliminarClienteEmpresa(email);
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar las Categorias
+	 *****************************************************************/
+	public Categoria agregarCategoria(String nombre)
+	{
+		log.info("Adicionando Categoria: " + nombre);
+		Categoria categoria = psa.adicionarCategoria(nombre);
+		log.info("Adicionando empresa: " + nombre);
+		return categoria;
+	}
+	
+	public Categoria darCategoria(long id)
+	{
+		return psa.darCategoriaPorId(id);
+	}
+	
+	public long eliminarCategoria(String id)
+	{
+		return psa.eliminarCategoriaPorId(id);
+	}
+	public List<VOCategoria> darVOCategoria()
+	{
+		log.info("Generando los VO de categoria");
+		List<VOCategoria> voCategoria = new LinkedList<VOCategoria>();
+		for(Categoria al : psa.darCategorias())
+		{
+			voCategoria.add(al);
+		}
+		log.info("Generando los VO de categoria: " + voCategoria.size() + " existentes");
+		return voCategoria;
+	}
+	
+	/* ****************************************************************
+	 * 			Métodos para manejar los tipos de producto
+	 *****************************************************************/
+	public TipoProducto darTipoProd(long id)
+	{
+		return psa.darTipoProd(id);
+	}
+	
+	
 	/* ****************************************************************
 	 * 			Métodos para manejar los Almacenes
 	 *****************************************************************/
@@ -135,6 +193,11 @@ public class SuperAndes
 		return ventas;
 	}
 	
+	public List<Ventas> darVenta(String email)
+	{
+		return psa.darVentasDeUnCliente(email);
+	}
+	
 	public InfoProdSucursal agregarProductoVenta(long idVenta, String codigoBarras, int cantidad)
 	{
 		log.info("Adicionando producto a venta: " + codigoBarras);
@@ -156,6 +219,15 @@ public class SuperAndes
 		return producto;
 	}
 	
+	public Producto darProducto(String codBarras)
+	{
+		return psa.darProductoPorCodBarras(codBarras);
+	}
+	
+	public long eliminarProducto(String codBarras)
+	{
+		return psa.eliminarProductoPorCodBarras(codBarras);
+	}
 	public List<VOProducto> darVOProductos()
 	{
 		log.info("Generando los VO de producto");
@@ -179,6 +251,16 @@ public class SuperAndes
 		Proveedor proveedor = psa.adicionarProveedor(nit, pNombre, calificacion);
 		log.info("Adicionando proveedor:" + nit);
 		return proveedor;
+	}
+	
+	public Proveedor darProveedor(String nit)
+	{
+		return psa.darProveedorPorNit(nit);
+	}
+	
+	public long eliminarProveedor(String nit)
+	{
+		return psa.eliminarProveedorPorNit(nit);
 	}
 	
 	public List<VOProveedor> darVOProveedor()
@@ -221,6 +303,16 @@ public class SuperAndes
 		}
 	}
 	
+	public Promocion darPromocion(String codBarras, long idSucursal, String nombre)
+	{
+	   return psa.darPromocion(codBarras, idSucursal, nombre);
+	}
+	
+	public long eliminarPromocion(String codBarras, long idSucursal, String nombre)
+	{
+		return psa.eliminarPromocion(codBarras, idSucursal, nombre);
+	}
+	
 	/* ****************************************************************
 	 * 			Métodos para manejar sucursales
 	 *****************************************************************/
@@ -230,6 +322,16 @@ public class SuperAndes
 		Sucursal sucursal = psa.adicionarSucursal(pNombre, pDireccion, pCiudad);
 				log.info("Adicionando sucursal:" + pNombre);
 		return sucursal;
+	}
+	
+	public Sucursal darSucursal(String nombre)
+	{
+	   return psa.darSucursalPordNombre(nombre);
+	}
+	
+	public long eliminarSucursal(String nombre, String direccion)
+	{
+		return psa.eliminarSucursal(nombre, direccion);
 	}
 	
 	public List<VOSucursal> darVOSucursal()
@@ -244,6 +346,14 @@ public class SuperAndes
 			log.info("Generando los VO de sucursales: " + voSucursal.size() +" existentes");
 			return voSucursal;
 		}
+	}
+	
+	/**
+	 * 
+	 */
+	public long darIdSucursal(long id)
+	{
+		return psa.darIdSucursal(id);
 	}
 	
 	/* ****************************************************************

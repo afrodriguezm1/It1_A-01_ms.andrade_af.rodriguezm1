@@ -1,8 +1,11 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import uniandes.isis2304.superAndes.negocio.Carrito;
 import uniandes.isis2304.superAndes.negocio.Categoria;
 
 /**
@@ -74,10 +77,22 @@ public class SQLCategoria
 	 * @param id
 	 * @return
 	 */
-	public long eliminarCategoriaPorId(PersistenceManager pm, long id )
+	public long eliminarCategoriaPorId(PersistenceManager pm, String id )
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM  CATEGORIA WHERE Id = ?");
+        Query q = pm.newQuery(SQL, "DELETE FROM  CATEGORIA WHERE Nombre = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
+	}
+	
+	/**
+	 * @return 
+	 * 
+	 *
+	 */
+	public List<Categoria> darCategorias(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM CATEGORIA");
+		q.setResultClass(Categoria.class);
+		return (List<Categoria>) q.executeList();
 	}
 }

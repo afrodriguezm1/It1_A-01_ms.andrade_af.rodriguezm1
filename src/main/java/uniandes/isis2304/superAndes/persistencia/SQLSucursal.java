@@ -66,9 +66,9 @@ public class SQLSucursal
 	 * @param id
 	 * @return
 	 */
-	public Sucursal darSucursalPorId(PersistenceManager pm, long id)
+	public Sucursal darSucursalPorNombre(PersistenceManager pm, String id)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM SUCURSAL WHERE Id = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM SUCURSAL WHERE Nombre = ?");
 		q.setResultClass(Sucursal.class);
 		q.setParameters(id);
 		return (Sucursal) q.executeUnique();
@@ -79,10 +79,10 @@ public class SQLSucursal
 	 * @param id
 	 * @return
 	 */
-	public long eliminarSucursalPorId (PersistenceManager pm, long id)
+	public long eliminarSucursal (PersistenceManager pm, String nombre, String direccion)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM SUCURSAL WHERE Id = ?");
-        q.setParameters(id);
+        Query q = pm.newQuery(SQL, "DELETE FROM SUCURSAL WHERE Nombre = ? AND Direccion = ?");
+        q.setParameters(nombre, direccion);
         return (long) q.executeUnique();
 	}
 	
@@ -94,6 +94,16 @@ public class SQLSucursal
 		Query q = pm.newQuery(SQL, "SELECT * FROM SUCURSAL");
 		q.setResultClass(Sucursal.class);
 		return (List<Sucursal>) q.executeList();
+	}
+	
+	/**
+	 * 
+	 */
+	public long darIdSucursal(PersistenceManager pm, long id)
+	{
+		Query q = pm.newQuery(SQL, "SELECT ID FROM SUCURSAL WHERE ID = ?");
+		q.setParameters(id);
+		return (long) q.executeUnique();
 	}
 	
 	

@@ -69,11 +69,11 @@ public class SQLPromocion
 	 * @param id
 	 * @return
 	 */
-	public Promocion darPromocionPorId(PersistenceManager pm, long id)
+	public Promocion darPromocion(PersistenceManager pm, String codBarras, long idSucursal, String nombre)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM PROMOCION WHERE Id = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM PROMOCION WHERE Codigo_Barras = ? AND  Id_Sucursal = ? AND Nombre = ?");
 		q.setResultClass(Promocion.class);
-		q.setParameters(id);
+		q.setParameters(codBarras, idSucursal, nombre);
 		return (Promocion) q.executeUnique();
 	}
 	/**
@@ -82,10 +82,10 @@ public class SQLPromocion
 	 * @param id
 	 * @return
 	 */
-	public long eliminarPromocionPorId(PersistenceManager pm, long id )
+	public long eliminarPromocion(PersistenceManager pm, String codBarras, long idSucursal, String nombre )
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM PROMOCION WHERE Id = ?");
-        q.setParameters(id);
+        Query q = pm.newQuery(SQL, "DELETE FROM PROMOCION WHERE Codigo_Barras = ? AND  Id_Sucursal = ? AND Nombre = ?");
+        q.setParameters(codBarras, idSucursal, nombre);
         return (long) q.executeUnique();
 	}
 	

@@ -39,6 +39,7 @@ import uniandes.isis2304.superAndes.negocio.Proveedor;
 import uniandes.isis2304.superAndes.negocio.Resoluciones;
 import uniandes.isis2304.superAndes.negocio.Sucursal;
 import uniandes.isis2304.superAndes.negocio.TipoProducto;
+import uniandes.isis2304.superAndes.negocio.VOCategoria;
 import uniandes.isis2304.superAndes.negocio.Ventas;
 
 public class PersistenciaSuperAndes 
@@ -250,14 +251,14 @@ public class PersistenciaSuperAndes
 		}
 	}
 	
-	public long eliminarSucursalPorId(long id)
+	public long eliminarSucursal(String nombre, String direccion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long resp = sqlSucursal.eliminarSucursalPorId(pm, id);
+			long resp = sqlSucursal.eliminarSucursal(pm, nombre, direccion);
 			tx.commit();
 			return resp;
 		}
@@ -276,14 +277,22 @@ public class PersistenciaSuperAndes
 		}
 	}
 	
-	public Sucursal darSucursalPordId(long id)
+	public Sucursal darSucursalPordNombre(String id)
 	{
-		return sqlSucursal.darSucursalPorId(pmf.getPersistenceManager(),id);
+		return sqlSucursal.darSucursalPorNombre(pmf.getPersistenceManager(),id);
 	}
 	
 	public List<Sucursal> darSucursales()
 	{
 		return sqlSucursal.darSucursales(pmf.getPersistenceManager());
+	}
+	
+	/**
+	 * 
+	 */
+	public long darIdSucursal(long id)
+	{
+		return sqlSucursal.darIdSucursal(pmf.getPersistenceManager(), id);
 	}
 	
 	//------------------------------------------------------------------------
@@ -383,7 +392,7 @@ public class PersistenciaSuperAndes
 		}
 	}
 	
-	public long eliminarCategoriaPorId(long id)
+	public long eliminarCategoriaPorId(String id)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -412,6 +421,11 @@ public class PersistenciaSuperAndes
 	public Categoria darCategoriaPorId(long id)
 	{
 		return sqlCategoria.darCategoriaPorId(pmf.getPersistenceManager(), id);
+	}
+	
+	public List<Categoria> darCategorias()
+	{
+		return sqlCategoria.darCategorias(pmf.getPersistenceManager());
 	}
 	
 	
@@ -515,6 +529,11 @@ public class PersistenciaSuperAndes
 			}
 			pm.close();
 		}
+	}
+	
+	public TipoProducto darTipoProd(long id)
+	{
+		return sqlTipoProducto.darTipoProductoPorId(pmf.getPersistenceManager(), id);
 	}
 	
 	public long eliminarTipoProductoPorId(long id)
@@ -764,14 +783,14 @@ public class PersistenciaSuperAndes
 			}
 		}
 		
-		public long eliminarPromocionPorId(long id)
+		public long eliminarPromocion(String codBarras, long idSucursal, String nombre)
 		{
 			PersistenceManager pm = pmf.getPersistenceManager();
 			Transaction tx = pm.currentTransaction();
 			try
 			{
 				tx.begin();
-				long resp = sqlPromocion.eliminarPromocionPorId(pm, id);
+				long resp = sqlPromocion.eliminarPromocion(pm, codBarras, idSucursal, nombre);
 				tx.commit();
 				return resp;
 			}
@@ -789,10 +808,12 @@ public class PersistenciaSuperAndes
 				pm.close();
 			}
 		}
+		
+		
 	
-	public Promocion darPromocionPorId(long id)
+	public Promocion darPromocion(String codBarras, long idSucursal, String nombre)
 	{
-		return sqlPromocion.darPromocionPorId(pmf.getPersistenceManager(), id);
+		return sqlPromocion.darPromocion(pmf.getPersistenceManager(), codBarras, idSucursal, nombre);
 	}
 	
 	public List<Promocion> darPromociones()
