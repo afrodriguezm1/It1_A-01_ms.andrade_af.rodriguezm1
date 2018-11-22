@@ -85,3 +85,6 @@
 16:44:25,193 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
 16:44:26,613 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
 16:44:26,616 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
+21:30:32,299 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
+21:30:34,130 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
+21:30:34,133 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD

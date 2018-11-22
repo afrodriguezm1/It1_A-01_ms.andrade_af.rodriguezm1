@@ -1,0 +1,87 @@
+﻿{
+	"title": "Demostración de SuperAndes Uniandes",
+	"frameH": 600,
+	"frameW": 800,
+	"bannerPath":"./src/main/resources/config/banner.png",
+	"menuBar":
+	[
+		{ "menuTitle": "Sucursal",
+		  "options":
+			[
+				{
+					"label": "CRD Sucursal",
+					"event": "demoSucursal"
+				}
+			]
+		},		
+		{ "menuTitle": "Proveedor",
+		  "options":
+			[
+				{
+					"label": "CRD Proveedor",
+					"event": "demoProveedor"
+				}
+			]
+		},
+
+		{ "menuTitle": "Promocion",
+		  "options":
+			[
+				{
+					"label": "CRD Promocion",
+					"event": "demoPromocion"
+				}
+			]
+		},
+		{ "menuTitle": "Producto",
+		  "options":
+			[
+				{
+					"label": "CRD Producto",
+					"event": "demoProducto"
+				}
+			]
+		},
+		{ "menuTitle": "Cliente",
+		  "options":
+			[
+				{
+					"label": "CRD Cliente",
+					"event": "demoCliente"
+				}
+			]
+		},
+		{ "menuTitle": "Ventas",
+		  "options":
+			[
+				{
+					"label": "CRD Ventas",
+					"event": "demoVentas"
+				}			
+			]
+		},
+		{ "menuTitle": "Categoria",
+		  "options":
+			[
+				{
+					"label": "CRD Categoria",
+					"event": "demoCategoria"
+				}
+			]
+		},
+		{ "menuTitle": "Carrito",
+		  "options":
+			[
+				{
+					"label": "CRD Carrito",
+					"event": "demoCarrito"
+				},
+				{
+					"label": "CRD Info Producto Carrito",
+					"event": "demoInfoProductoCarrito"		
+			]
+		}
+			
+	]
+}
+	

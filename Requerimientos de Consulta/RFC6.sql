@@ -1,0 +1,4 @@
+SELECT *
+FROM VENTAS
+WHERE EMAIL_CLIENTE = 'doña@blanca.com'
+            AND fecha_venta BETWEEN TO_DATE('01/01/2018', 'DD/MM/YYYY') AND TO_DATE('31/12/2018', 'DD/MM/YYYY');
