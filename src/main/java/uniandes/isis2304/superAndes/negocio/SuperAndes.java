@@ -185,10 +185,10 @@ public class SuperAndes
 	 * 			Métodos para manejar ventas
 	 *****************************************************************/
 	
-	public Ventas nuevaVenta(long idSucursal, String email)
+	public Ventas nuevaVenta(long idSucursal, String email, long precio)
 	{
 		log.info("Adicionando Nueva Venta: " + email);
-		Ventas ventas = psa.agregarVenta(idSucursal, email);
+		Ventas ventas = psa.agregarVenta(idSucursal, email, precio);
 		log.info("Adicionando Nueva Venta: " + email);
 		return ventas;
 	}
@@ -198,10 +198,10 @@ public class SuperAndes
 		return psa.darVentasDeUnCliente(email);
 	}
 	
-	public InfoProdSucursal agregarProductoVenta(long idVenta, String codigoBarras, int cantidad)
+	public InfoProdSucursal agregarProductoVenta(long idVenta, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
 		log.info("Adicionando producto a venta: " + codigoBarras);
-		InfoProdSucursal info = psa.agregarInfProdSucursal(idVenta, codigoBarras, cantidad);
+		InfoProdSucursal info = psa.agregarInfProdSucursal(idVenta, idSucursal, codigoBarras, cantidad, precioTotal, precioUnitario);
 		log.info("Adicionando producto a venta: " + info);
 		return info;
 	}
@@ -402,10 +402,10 @@ public class SuperAndes
 			return car;
 	}
 	
-	public Ventas finalizarCompra(long idCarrito,String email, long idSucursal)
+	public Ventas finalizarCompra(long idCarrito,String email, long idSucursal, long precio)
 	{
 		log.info("Finalizar compra de carrito: " + idCarrito);		
-		Ventas venta = psa.finalizarCompra(idCarrito, email, idSucursal);
+		Ventas venta = psa.finalizarCompra(idCarrito, email, idSucursal, precio);
 		return venta;
 	}
 	
@@ -413,10 +413,10 @@ public class SuperAndes
 	 * 			Métodos para manejar carritos
 	 *****************************************************************/
 	
-	public InfoProdCarrito agregarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad)
+	public InfoProdCarrito agregarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
 		log.info("Adicionando InfoProductoCarrito:" + idCarrito);
-		InfoProdCarrito info = psa.agregarProductoCarrito(idCarrito, email, idSucursal, codigoBarras, cantidad);
+		InfoProdCarrito info = psa.agregarProductoCarrito(idCarrito, email, idSucursal, codigoBarras, cantidad, precioTotal, precioUnitario);
 		log.info("Adicionando Carrito:" + idCarrito);
 		return info;
 	}

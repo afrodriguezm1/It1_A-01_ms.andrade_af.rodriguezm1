@@ -11,7 +11,7 @@ public interface VOInfoProdCarrito
 	 */
 	public long getIdCarrito();
 	
-	public String getEmail();
+	public String getEmailCliente();
 	
 	public long getIdSucursal();
 	
@@ -29,4 +29,6 @@ public interface VOInfoProdCarrito
 	 * @return El precio total de un producto de la info
 	 */
 	public long getPrecioTotal();
+	
+	public long getPrecioUnitario();
 }

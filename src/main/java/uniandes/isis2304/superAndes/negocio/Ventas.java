@@ -21,10 +21,6 @@ public class Ventas implements VOVentas
 	
 	private String emailCliente;
 	
-	private long consecutivoFE;
-	
-	private String CUFE;
-	
 	private Date fechaVenta;
 	
 	private long precio;
@@ -34,18 +30,14 @@ public class Ventas implements VOVentas
 		this.id = 0;
 		this.idSucursal = 0;
 		this.emailCliente = "";
-		this.consecutivoFE = 0;
-		this.CUFE = "";
 		this.fechaVenta = null;
 	}
 	
-	public Ventas(long id, long idSucursal, String emailCliente, long consecutivoFE, String CUFE, Date fechaVenta)
+	public Ventas(long id, long idSucursal, String emailCliente, Date fechaVenta)
 	{
 		this.id = id;
 		this.idSucursal = idSucursal;
 		this.emailCliente = emailCliente;
-		this.consecutivoFE = consecutivoFE;
-		this.CUFE = CUFE;
 		this.fechaVenta = fechaVenta;
 	}
 
@@ -78,26 +70,6 @@ public class Ventas implements VOVentas
 	{
 		this.emailCliente = emailCliente;	
 	}
-
-	public long getConsecutivoFE() 
-	{
-		return consecutivoFE;
-	}
-	
-	public void setConsecutivoFE(long consecutivoFE)
-	{
-		this.consecutivoFE = consecutivoFE;
-	}
-
-	public String getCUFE() 
-	{
-		return CUFE;
-	}
-	
-	public void setCUFE(String CUFE)
-	{
-		this.CUFE = CUFE;
-	}
 	
 	public Date getFechaVenta() 
 	{
@@ -122,7 +94,7 @@ public class Ventas implements VOVentas
 	@Override
 	public String toString()
 	{
-		return "Venta [id=" + id + ", idSucursal=" + idSucursal + ", emailCliente=" + emailCliente + ", consecutivoFE=" + consecutivoFE + ", CUFE=" + CUFE
-				+ ", fechaVenta=" + fechaVenta +"]";
+		return "Venta [id=" + id + ", idSucursal=" + idSucursal + ", emailCliente=" + emailCliente +
+				 ", fechaVenta=" + fechaVenta +"]";
 	}
 }

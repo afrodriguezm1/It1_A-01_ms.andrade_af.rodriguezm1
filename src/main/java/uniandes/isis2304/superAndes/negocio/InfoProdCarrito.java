@@ -8,13 +8,15 @@ public class InfoProdCarrito implements VOInfoProdCarrito
 	
 	private long idCarrito;
 	
-	private String email;
+	private String emailCliente;
 	
 	private long idSucursal;
 	
 	private String codigoBarras;
 	
 	private int cantidad;
+	
+	private long precioUnitario;
 	
 	private long precioTotal;
 	
@@ -25,21 +27,23 @@ public class InfoProdCarrito implements VOInfoProdCarrito
 	public  InfoProdCarrito() 
 	{
 		this.idCarrito = 0;
-		this.email = "";
+		this.emailCliente = "";
 		this.idSucursal = 0;
 		this.codigoBarras = "";
 		this.cantidad = 0;
 		this.precioTotal = 0;
+		this.precioUnitario = 0;
 	}
 	
-	public InfoProdCarrito(long id, String email, long idSucursal, String codigoBarras, int cantidad, long precioTotal)
+	public InfoProdCarrito(long id, String email, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
 		this.idCarrito = id;
-		this.email = email;
+		this.emailCliente = email;
 		this.idSucursal = idSucursal;
 		this.codigoBarras = codigoBarras;
 		this.cantidad = cantidad;
 		this.precioTotal = precioTotal;
+		this.precioUnitario = precioUnitario;
 	}
 
 	@Override
@@ -54,14 +58,14 @@ public class InfoProdCarrito implements VOInfoProdCarrito
 	}
 	
 	@Override
-	public String getEmail() 
+	public String getEmailCliente() 
 	{
-		return this.email;
+		return this.emailCliente;
 	}
 	
-	public void setEmail(String email)
+	public void setEmailCliente(String email)
 	{
-		this.email = email;
+		this.emailCliente = email;
 	}
 
 	@Override
@@ -108,4 +112,14 @@ public class InfoProdCarrito implements VOInfoProdCarrito
 		this.precioTotal = precioTotal;
 	}
 
+	@Override
+	public long getPrecioUnitario() 
+	{
+		return this.precioUnitario;
+	}
+	
+	public void setPrecioUnitario(long precioUnitario)
+	{
+		this.precioUnitario = precioUnitario;
+	}
 }

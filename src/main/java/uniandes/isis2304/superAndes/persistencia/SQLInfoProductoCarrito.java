@@ -41,32 +41,32 @@ public class SQLInfoProductoCarrito
 		this.psa = psa;
 	}
 	
-	public long agregarInfoProdCarrito(PersistenceManager pm, long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad, long precio)
+	public long agregarInfoProdCarrito(PersistenceManager pm, long idCarrito, String emailCliente, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_CARRITO (ID_CARRITO, EMAIL_CLIENTE, ID_SUCURSAL, CODIGO_BARRAS, CANTIDAD, PRECIO_TOTAL)"
+		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_CARRITO (IDCARRITO, EMAILCLIENTE, IDSUCURSAL, CODIGOBARRAS, CANTIDAD, PRECIOTOTAL, precioUnitario)"
 				+ "VALUES (?,?,?,?,?,?)");
-		q.setParameters(idCarrito,email,idSucursal, codigoBarras, cantidad, precio);
+		q.setParameters(idCarrito,emailCliente,idSucursal, codigoBarras, cantidad, precioTotal, precioUnitario);
 		return (long) q.executeUnique();
 	}
 	
-	public long eliminarInfoProdCarrito(PersistenceManager pm, long idCarrito, String email, long idSucursal, String codigoBarras)
+	public long eliminarInfoProdCarrito(PersistenceManager pm, long idCarrito, String emailCliente, long idSucursal, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ? AND CODIGO_BARRAS = ? "
+		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_CARRITO WHERE IDCARRITO = ? AND CODIGOBARRAS = ? "
 				+ "AND EMAIL_CLIENTE = ? AND ID_SUCURSAL = ?");
-		q.setParameters(idCarrito, codigoBarras,email, idSucursal);
+		q.setParameters(idCarrito, codigoBarras,emailCliente, idSucursal);
 		return (long) q.executeUnique();
 	}
 	
 	public long eliminarTodosInfoProdCarrito(PersistenceManager pm, long idCarrito)
 	{
-		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ?");
+		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_CARRITO WHERE IDCARRITO = ?");
 		q.setParameters(idCarrito);
 		return (long) q.execute();
 	}
 	
 	public long actualizarCantidadProd(PersistenceManager pm, long idCarrito, String codigoBarras, int cantidad)
 	{
-		Query q = pm.newQuery(SQL, "UPDATE INFO_PRODUCTO_CARRITO SET CANTIDAD = CANTIDAD + (?) WHERE ID_CARRITO = ? AND CODIGO_BARRAS = ?");
+		Query q = pm.newQuery(SQL, "UPDATE INFO_PRODUCTO_CARRITO SET CANTIDAD = CANTIDAD + (?) WHERE IDCARRITO = ? AND CODIGOBARRAS = ?");
 		q.setParameters(cantidad, idCarrito, codigoBarras);
 		return (long) q.execute();
 	}
@@ -84,10 +84,10 @@ public class SQLInfoProductoCarrito
 	/**
 	 * Dar toda la info de todos los carritos
 	 */
-	public List<InfoProdCarrito> darInfoProdCarritosId(PersistenceManager pm, long idCarrito, String email, long idSucursal)
+	public List<InfoProdCarrito> darInfoProdCarritosId(PersistenceManager pm, long idCarrito, String emailCliente, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ? AND EMAIL_CLIENTE = ? AND ID_SUCURSAL = ?");
-		q.setParameters(idCarrito, email, idSucursal);
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_CARRITO WHERE IDCARRITO = ? AND EMAILCLIENTE = ? AND IDSUCURSAL = ?");
+		q.setParameters(idCarrito, emailCliente, idSucursal);
 		q.setResultClass(InfoProdCarrito.class);
 		return (List<InfoProdCarrito>) q.executeList();
 	}
@@ -95,10 +95,10 @@ public class SQLInfoProductoCarrito
 	/**
 	 * Dar toda la info de todos los carritos
 	 */
-	public InfoProdCarrito darInfoProdCarritoId(PersistenceManager pm, long idCarrito, String email, long idSucursal, String codigoBarras)
+	public InfoProdCarrito darInfoProdCarritoId(PersistenceManager pm, long idCarrito, String emailCliente, long idSucursal, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_CARRITO WHERE ID_CARRITO = ? AND EMAIL_CLIENTE = ? AND ID_SUCURSAL = ? AND CODIGO_BARRAS = ?");
-		q.setParameters(idCarrito, email, idSucursal, codigoBarras);
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_CARRITO WHERE IDCARRITO = ? AND EMAILCLIENTE = ? AND IDSUCURSAL = ? AND CODIGOBARRAS = ?");
+		q.setParameters(idCarrito, emailCliente, idSucursal, codigoBarras);
 		q.setResultClass(InfoProdCarrito.class);
 		return (InfoProdCarrito) q.executeUnique();
 	}

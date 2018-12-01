@@ -30,22 +30,22 @@ public class Almacenamiento implements VOAlmacenamiento
 	/**
 	 * El identidicador de la categoria del almacen
 	 */
-	private long idCategoria;
+	private long idCategoriaProd;
 	
 	/**
 	 * El identificador del tipo de producto del almacen
 	 */
-	private long idTipoProducto;
+	private long idTipoProd;
 	
 	/**
 	 * Capacidad en volumen del almacenamiento
 	 */
-	private double capacidadVol;
+	private double capaVol;
 	
 	/**
 	 * Capacidad en peso del almacenamiento
 	 */
-	private double capacidadPeso;
+	private double capaPeso;
 	
 	/**
 	 * Cantidad de productos actualmente en el almacenamiento
@@ -55,12 +55,12 @@ public class Almacenamiento implements VOAlmacenamiento
 	/**
 	 * Tipo de almacenamiento del almacen
 	 */
-	private int tipoAlmacenamiento;
+	private int tipoAlma;
 	
 	/**
 	 * Nivel en el que se reavastece el almacenamiento
 	 */
-	private int nivelReAvastecimiento;
+	private int nivelReAvast;
 	
 	//---------------------------------------------------------------------
 	// Métodos
@@ -74,13 +74,13 @@ public class Almacenamiento implements VOAlmacenamiento
 		this.id = 0;
 		this.idSucursal = 0;
 		this.codigoBarrasProducto = "";
-		this.idCategoria = 0;
-		this.idTipoProducto = 0;
-		this.capacidadVol = 0;
-		this.capacidadPeso = 0;
+		this.idCategoriaProd = 0;
+		this.idTipoProd = 0;
+		this.capaVol = 0;
+		this.capaPeso = 0;
 		this.cantidad = 0;
-		this.tipoAlmacenamiento = 0;
-		this.nivelReAvastecimiento = 0;
+		this.tipoAlma = 0;
+		this.nivelReAvast = 0;
 	}
 	
 	/**
@@ -100,13 +100,13 @@ public class Almacenamiento implements VOAlmacenamiento
 		this.id = id;
 		this.idSucursal = idSucursal;
 		this.codigoBarrasProducto = codigoBarrasProducto;
-		this.idCategoria = idCategoria;
-		this.idTipoProducto = idTipoProducto;
-		this.capacidadVol = capacidadVol;
-		this.capacidadPeso = capacidadPeso;
+		this.idCategoriaProd = idCategoria;
+		this.idTipoProd = idTipoProducto;
+		this.capaVol = capacidadVol;
+		this.capaPeso = capacidadPeso;
 		this.cantidad = cantidad;
-		this.tipoAlmacenamiento = tipoAlmacenamiento;
-		this.nivelReAvastecimiento = nivelReAvastecimiento;
+		this.tipoAlma = tipoAlmacenamiento;
+		this.nivelReAvast = nivelReAvastecimiento;
 	}
 
 	/**
@@ -160,65 +160,65 @@ public class Almacenamiento implements VOAlmacenamiento
 	/**
 	 * @return id de la categoria del almacenamiento
 	 */
-	public long getIdCategoria() 
+	public long getIdCategoriaProd() 
 	{
-		return idCategoria;
+		return idCategoriaProd;
 	}
 
 	/**
 	 * @param idCategoria - La nueva id de la categoria del almacenamiento
 	 */
-	public void setIdCategoria(long idCategoria)
+	public void setIdCategoriaProd(long idCategoria)
 	{
-		this.idCategoria = idCategoria;
+		this.idCategoriaProd = idCategoria;
 	}
 
 	/**
 	 * @return La id del tipo de producto del almacenamiento
 	 */
-	public long getIdTipoProducto() 
+	public long getIdTipoProd() 
 	{
-		return idTipoProducto;
+		return idTipoProd;
 	}
 	
 	/**
 	 * @param idTipoProducto - La nueva Id del tipo de producto del almacenamiento
 	 */
-	public void setIdTipoProducto(long idTipoProducto)
+	public void setIdTipoProd(long idTipoProducto)
 	{
-		this.idTipoProducto = idTipoProducto;
+		this.idTipoProd = idTipoProducto;
 	}
 
 	/**
 	 * @return La capacidad de volumen del almacenamiento
 	 */
-	public double getCapacidadVolumen() 
+	public double getCapaVol() 
 	{
-		return capacidadVol;
+		return capaVol;
 	}
 	
 	/**
 	 * @param capacidadVol - La nueva capacidad de volumen
 	 */
-	public void setCapacidadVolumen(double capacidadVol)
+	public void setCapaVol(double capacidadVol)
 	{
-		this.capacidadVol = capacidadVol;
+		this.capaVol = capacidadVol;
 	}
 
 	/**
 	 * @return Capacidad en peso del almacenamiento
 	 */
-	public double getCapacidadPeso() 
+	public double getCapaPeso() 
 	{
-		return capacidadPeso;
+		return capaPeso;
 	}
 	
 	/**
 	 * @param capacidadPeso - La nueva capacidad de peso del almacenamiento
 	 */
-	public void setCapacidadPeso(double capacidadPeso)
+	public void setCapaPeso(double capacidadPeso)
 	{
-		this.capacidadPeso = capacidadPeso;
+		this.capaPeso = capacidadPeso;
 	}
 
 	/**
@@ -240,25 +240,25 @@ public class Almacenamiento implements VOAlmacenamiento
 	/**
 	 * @return El tipo de Almacenamiento
 	 */
-	public int getTipoAlmacen() 
+	public int getTipoAlma() 
 	{
-		return tipoAlmacenamiento;
+		return tipoAlma;
 	}
 	
 	/**
 	 * @param tipoAlmacenamiento - El nuevo tipo de almacenamiento
 	 */
-	public void setTipoAlmacen(int tipoAlmacenamiento)
+	public void setTipoAlma(int tipoAlmacenamiento)
 	{
-		this.tipoAlmacenamiento = tipoAlmacenamiento;
+		this.tipoAlma = tipoAlmacenamiento;
 	}
 
 	/**
 	 * @return Nivel de reavastecimiento del almacenamiento
 	 */
-	public int getNivelReavastecimiento() 
+	public int getNivelReavast() 
 	{
-		return nivelReAvastecimiento;
+		return nivelReAvast;
 	}
 	
 	/**
@@ -266,7 +266,7 @@ public class Almacenamiento implements VOAlmacenamiento
 	 */
 	public void setNivelReavastecimiento(int nivelReAvastecimiento)
 	{
-		this.nivelReAvastecimiento = nivelReAvastecimiento;
+		this.nivelReAvast = nivelReAvastecimiento;
 	}
 	
 	/**
@@ -275,8 +275,8 @@ public class Almacenamiento implements VOAlmacenamiento
 	@Override
 	public String toString()
 	{
-		return "Almacenamiento [id=" + id + ", idSucursal=" + idSucursal + ", codigoBarrasProducto=" + codigoBarrasProducto + ", idCategoria=" + idCategoria +", idTipoProducto=" + idTipoProducto
-				+ ", capacidadVol=" + capacidadVol + ", capacidadPeso=" + capacidadPeso + ", cantidad=" + cantidad + ", tipoAlmacenamiento=" + tipoAlmacenamiento 
-				+ ", nivelReAvastecimiento=" + nivelReAvastecimiento + "]";
+		return "Almacenamiento [id=" + id + ", idSucursal=" + idSucursal + ", codigoBarrasProducto=" + codigoBarrasProducto + ", idCategoria=" + idCategoriaProd +", idTipoProducto=" + idTipoProd
+				+ ", capacidadVol=" + capaVol + ", capacidadPeso=" + capaPeso + ", cantidad=" + cantidad + ", tipoAlmacenamiento=" + tipoAlma
+				+ ", nivelReAvastecimiento=" + nivelReAvast + "]";
 	}
 }

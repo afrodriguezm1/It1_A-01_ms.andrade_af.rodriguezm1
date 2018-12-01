@@ -27,7 +27,6 @@ import uniandes.isis2304.superAndes.negocio.Empresas;
 import uniandes.isis2304.superAndes.negocio.InfoProdCarrito;
 import uniandes.isis2304.superAndes.negocio.InfoProdProveedor;
 import uniandes.isis2304.superAndes.negocio.InfoProdSucursal;
-import uniandes.isis2304.superAndes.negocio.Informacion;
 import uniandes.isis2304.superAndes.negocio.OrdenPedido;
 import uniandes.isis2304.superAndes.negocio.Personas;
 import uniandes.isis2304.superAndes.negocio.Producto;
@@ -36,7 +35,6 @@ import uniandes.isis2304.superAndes.negocio.ProductoRedimible;
 import uniandes.isis2304.superAndes.negocio.ProductoSucursal;
 import uniandes.isis2304.superAndes.negocio.Promocion;
 import uniandes.isis2304.superAndes.negocio.Proveedor;
-import uniandes.isis2304.superAndes.negocio.Resoluciones;
 import uniandes.isis2304.superAndes.negocio.Sucursal;
 import uniandes.isis2304.superAndes.negocio.TipoProducto;
 import uniandes.isis2304.superAndes.negocio.VOCategoria;
@@ -87,10 +85,6 @@ public class PersistenciaSuperAndes
 	private SQLVentas sqlVentas;
 
 	private SQLInfoProductoSucursal sqlInfProSucursal;
-
-	private SQLResoluciones sqlResoluciones;
-
-	private SQLInformacion sqlInformacion;
 	
 	private SQLCarrito sqlCarrito;
 	
@@ -192,8 +186,6 @@ public class PersistenciaSuperAndes
 		sqlEmpresas = new SQLEmpresas(this);		
 		sqlVentas = new SQLVentas(this);
 		sqlInfProSucursal = new SQLInfoProductoSucursal(this);
-		sqlResoluciones = new SQLResoluciones(this);
-		sqlInformacion = new SQLInformacion(this);
 		sqlCarrito = new SQLCarrito(this);
 		sqlInfProdCarrito = new SQLInfoProductoCarrito(this);
 
@@ -891,7 +883,7 @@ public class PersistenciaSuperAndes
 	//------------------------------------------------------------------------
 	
 	
-	public InfoProdProveedor agregarInfoProdProveedor(long idOrden,String codigoBarras)
+	public InfoProdProveedor agregarInfoProdProveedor(long idOrden,String codigoBarras, long precioTotal, long precioUnitario)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -900,11 +892,11 @@ public class PersistenciaSuperAndes
 			tx.begin();
 			long idOr = idOrden;
 			String cod = codigoBarras;
-			long tuplasInsertadas = sqlInfProProveedor.agregarInfoProductoProveedor(pm, idOr, cod);
+			long tuplasInsertadas = sqlInfProProveedor.agregarInfoProductoProveedor(pm, idOr, cod, precioTotal, precioUnitario);
 			tx.commit();
 
 			log.trace("Inserción de Información de producto proveedor: " + idOr + ": " + tuplasInsertadas + " tuplas insertad");
-			return new InfoProdProveedor(idOr, cod, 1);
+			return new InfoProdProveedor(idOr, cod, 1, precioTotal, precioUnitario);
 		}
 		catch(Exception e)
 		{
@@ -1313,7 +1305,7 @@ public class PersistenciaSuperAndes
 	// Ventas
 	//------------------------------------------------------------------------
 
-	public Ventas agregarVenta(long idSucursal, String email)
+	public Ventas agregarVenta(long idSucursal, String email, long precio)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1322,10 +1314,10 @@ public class PersistenciaSuperAndes
 			tx.begin();
 			long id = sqlVentas.darSiguienteId(pm);
 			long factE = 0;
-			long tuplaInsertadas = sqlVentas.agregarVenta(pm, idSucursal, email, factE, "");
+			long tuplaInsertadas = sqlVentas.agregarVenta(pm, idSucursal, email, precio);
 			tx.commit();
 			log.trace("Insercion de venta en sucursal : " + idSucursal + " : " + tuplaInsertadas + " tuplas insertadas");
-			return new Ventas(id, idSucursal, email, factE, "", new Date());
+			return new Ventas(id, idSucursal, email, new Date());
 		}
 		catch(Exception e)
 		{
@@ -1362,18 +1354,18 @@ public class PersistenciaSuperAndes
 	// Info Producto Sucursal
 	//------------------------------------------------------------------------
 
-	public InfoProdSucursal agregarInfProdSucursal(long idVenta, String codigoBarras, int cantidad)
+	public InfoProdSucursal agregarInfProdSucursal(long idVenta, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlInfProSucursal.agregarInfoProductoSucursal(pm, idVenta, codigoBarras, cantidad);
+			long tuplasInsertadas = sqlInfProSucursal.agregarInfoProductoSucursal(pm, idVenta, idSucursal, codigoBarras, cantidad, precioTotal, precioUnitario);
 			tx.commit();
 
 			log.trace("Inserción de InfoProdSucursal de venta : " + idVenta +" : "  + tuplasInsertadas +" tuplas insertadas");
-			return new InfoProdSucursal(idVenta, codigoBarras, 1);
+			return new InfoProdSucursal(idVenta, idSucursal, codigoBarras, 1, precioTotal, precioUnitario);
 		}
 		catch(Exception e)
 		{
@@ -1432,73 +1424,6 @@ public class PersistenciaSuperAndes
 	}
 
 	//------------------------------------------------------------------------
-	// Resoluciones
-	//------------------------------------------------------------------------
-
-	public Resoluciones agregarResolucion(long numeroResol,Date fechHabili, Date fechaVenc, long inicioCon, long finCon, long numActual)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long tuplasInsertadas = sqlResoluciones.agregarResolucion(pm, numeroResol, fechHabili, fechaVenc, inicioCon, finCon, numActual);
-			tx.commit();
-			log.trace("Insercion de Resolucion:  " + numeroResol + " : " + tuplasInsertadas + " tuplas insertadas");
-			return new Resoluciones(numeroResol, fechHabili, fechaVenc, inicioCon, finCon, numActual);
-		}
-		catch(Exception e)
-		{
-			log.error("Exception : " +e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-	//------------------------------------------------------------------------
-	// Información
-	//------------------------------------------------------------------------
-	public Informacion agregarInformacion(String nit, String nombre)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long tuplasInsertadas = sqlInformacion.agregarInformacion(pm, nit, nombre);
-			tx.commit();
-			log.trace("Insercion de Informacion: " + nombre  + " : " + tuplasInsertadas + "tuplas inserradas");
-			return new Informacion(nit, nombre, false);
-		}
-		catch(Exception e)
-		{
-			log.error("Exception : " + e.getMessage() +"\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-	
-	public Informacion darInformacion()
-	{
-		return sqlInformacion.darInformacion(pmf.getPersistenceManager());
-	}
-	
-
-	//------------------------------------------------------------------------
 	// Carrito
 	//------------------------------------------------------------------------
 	
@@ -1555,10 +1480,10 @@ public class PersistenciaSuperAndes
 
 				   for(InfoProdCarrito infoProd: darInfoProdCarritos())
 				   {
-					   if(infoProd.getIdCarrito() == darIdCarrito(car.getEmail(), car.getIdSucursal()))
+					   if(infoProd.getIdCarrito() == darIdCarrito(car.getEmailCliente(), car.getIdSucursal()))
 					       sqlAlmacenamiento.actualizarCantidadesAlmacenamiento(pm, car.getIdSucursal(), infoProd.getCodigoBarras() ,infoProd.getCantidad(), 2);
 				   }
-				   sqlCarrito.eliminarCarritoPorId(pm, car.getEmail(), car.getIdSucursal() );
+				   sqlCarrito.eliminarCarritoPorId(pm, car.getEmailCliente(), car.getIdSucursal() );
 				}
 				tx.commit();
 			}
@@ -1635,7 +1560,7 @@ public class PersistenciaSuperAndes
         }
 	}
 	
-	public Ventas finalizarCompra(long idCarrito, String email, long idSucursal)
+	public Ventas finalizarCompra(long idCarrito, String email, long idSucursal , long precio)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1644,15 +1569,15 @@ public class PersistenciaSuperAndes
 			tx.begin();
 			Carrito car = sqlCarrito.darCarritoPorId(pm, email, idSucursal);
 			List<InfoProdCarrito> infos = sqlInfProdCarrito.darInfoProdCarritosId(pm, idCarrito, email, idSucursal);
-			sqlVentas.agregarVenta(pm, idSucursal, email, 0,"");
+			sqlVentas.agregarVenta(pm, idSucursal, email, precio);
 			long id = sqlVentas.darIdActual(pm);
 			for(int i = 0; i < infos.size(); i++)
 			{
-				sqlInfProSucursal.agregarInfoProductoSucursal(pm, id, infos.get(i).getCodigoBarras(), infos.get(i).getCantidad());
+				sqlInfProSucursal.agregarInfoProductoSucursal(pm, id, idSucursal, infos.get(i).getCodigoBarras(), infos.get(i).getCantidad(), infos.get(i).getPrecioTotal(), infos.get(i).getPrecioUnitario());
 			}
 			sqlInfProdCarrito.eliminarTodosInfoProdCarrito(pm, idCarrito);
 			sqlCarrito.eliminarCarritoPorId(pm, email, idSucursal);
-			Ventas ventas = new Ventas(id, idSucursal, email, 0, "", new Date());
+			Ventas ventas = new Ventas(id, idSucursal, email, new Date());
 			tx.commit();
 			return ventas;
 		}
@@ -1675,7 +1600,7 @@ public class PersistenciaSuperAndes
 	// Info Prod Carrito
 	//------------------------------------------------------------------------
 	
-	public InfoProdCarrito agregarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad)
+	public InfoProdCarrito agregarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
@@ -1688,14 +1613,14 @@ public class PersistenciaSuperAndes
 				throw new Exception("No hay suficientes productos excibidos");
 			}
 			ProductoSucursal pr = sqlProductoSucursal.darProductoSucursalPorCodBarras(pm, codigoBarras, idSucursal);
-			long insertarTuplas = sqlInfProdCarrito.agregarInfoProdCarrito(pm, idCarrito, email, idSucursal, codigoBarras, cantidad, pr.getPrecioUnitario()*cantidad);
+			long insertarTuplas = sqlInfProdCarrito.agregarInfoProdCarrito(pm, idCarrito, email, idSucursal, codigoBarras, cantidad, pr.getPrecioUnitario()*cantidad, pr.getPrecioUnitario());
 			sqlCarrito.actualizarPrecioCarrito(pm, email, idSucursal, pr.getPrecioUnitario()*cantidad);
 			sqlAlmacenamiento.actualizarCantidadesAlmacenamiento(pm, idSucursal, codigoBarras, cantidad*(-1), 2);
 			tx.commit();
 			
 			log.trace("Inserción de producto al carrito: " + codigoBarras + " : " + insertarTuplas + " tuplas insertadas");
 			
-			return new InfoProdCarrito(idCarrito, email, idSucursal, codigoBarras, cantidad, 0);
+			return new InfoProdCarrito(idCarrito, email, idSucursal, codigoBarras, cantidad, precioTotal, precioUnitario);
 		}
 		catch(Exception e)
 		{

@@ -11,7 +11,7 @@ import java.util.Date;
 
 public interface VOPromocion
 {
-
+	public long getId();
 	
 	public long getIdSucursal();
 	
@@ -23,11 +23,11 @@ public interface VOPromocion
 	
 	public Date getFechaFin();
 	
-	public int getTipoPromo();
+	public int getTipoPromocion();
 	
-	public int getValorOriginal();
+	public int getValor1();
 	
-	public int getValorPromo();
+	public int getValor2();
 	
 	@Override
 	public String toString();

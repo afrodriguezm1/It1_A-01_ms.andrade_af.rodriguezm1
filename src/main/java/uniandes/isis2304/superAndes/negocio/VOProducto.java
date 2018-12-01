@@ -19,7 +19,7 @@ public interface VOProducto
 	
 	public String getPresentacion();
 	
-	public int getCantidadPresent();
+	public int getCantidadPresen();
 	
 	public String getUniMedida();
 	

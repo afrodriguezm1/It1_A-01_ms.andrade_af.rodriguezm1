@@ -8,7 +8,7 @@ public class Carrito implements VOCarrito
 
 	private long id;
 	
-	private String email;
+	private String emailCliente;
 	
 	private long idSucursal;
 	
@@ -22,7 +22,7 @@ public class Carrito implements VOCarrito
 	
 	public Carrito()
 	{
-		this.email = "";
+		this.emailCliente = "";
 		this.idSucursal = 0;
 		this.precio = 0;
 		this.estado = "";
@@ -30,7 +30,7 @@ public class Carrito implements VOCarrito
 	
 	public Carrito( String email, long idSucursal, long precio, String estado)
 	{
-		this.email = email;
+		this.emailCliente = email;
 		this.idSucursal = idSucursal;
 		this.precio = precio;
 		this.estado = estado;
@@ -38,14 +38,14 @@ public class Carrito implements VOCarrito
 
 
 	@Override
-	public String getEmail() 
+	public String getEmailCliente() 
 	{
-		return this.email;
+		return this.emailCliente;
 	}
 	
-	public void setEmail(String email)
+	public void setEmailCliente(String email)
 	{
-		this.email = email;
+		this.emailCliente = email;
 	}
 
 	@Override

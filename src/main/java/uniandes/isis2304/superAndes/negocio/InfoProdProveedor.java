@@ -27,6 +27,10 @@ public class InfoProdProveedor implements VOInfoProdProveedor
 	 * El número de productos que se pidieron
 	 */
 	private int cantidadProducto;
+	
+	private long precioTotal;
+	
+	private long precioUnitario;
 
 	//---------------------------------------------------------------------
 	// Atributos
@@ -40,6 +44,8 @@ public class InfoProdProveedor implements VOInfoProdProveedor
 		this.idOrden = 0;
 		this.codigoBarras = "";
 		this.cantidadProducto = 0;
+		this.precioTotal = 0;
+		this.precioUnitario = 0;
 	}
 	
 	/**
@@ -48,11 +54,13 @@ public class InfoProdProveedor implements VOInfoProdProveedor
 	 * @param codigoBarras - El codigo de barras del producto
 	 * @param cantidadProduct - La cantidad de productos
 	 */
-	public InfoProdProveedor(long idOrden, String codigoBarras, int cantidadProducto)
+	public InfoProdProveedor(long idOrden, String codigoBarras, int cantidadProducto, long precioTotal, long precioUnitario)
 	{
 		this.idOrden = idOrden;
 		this.codigoBarras = codigoBarras;
 		this.cantidadProducto = cantidadProducto;
+		this.precioTotal = precioTotal;
+		this.precioUnitario = precioUnitario;
 	}
 
 	/**
@@ -106,5 +114,27 @@ public class InfoProdProveedor implements VOInfoProdProveedor
 	public String toString()
 	{
 		return "InfoProdProveedor [idOrden=" + idOrden + ", codigoBarras=" + codigoBarras + ", cantidadProducto=" + cantidadProducto + "]";
+	}
+
+	@Override
+	public long getPrecioTotal() 
+	{
+		return this.precioTotal;
+	}
+	
+	public void setPrecioTotal(long precioTotal)
+	{
+		this.precioTotal = precioTotal;
+	}
+
+	@Override
+	public long getPrecioUnitario() 
+	{
+		return this.precioUnitario;
+	}
+	
+	public void setPrecioUnitario(long precioUnitario)
+	{
+		this.precioUnitario = precioUnitario;
 	}
 }

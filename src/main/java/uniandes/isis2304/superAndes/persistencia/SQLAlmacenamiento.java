@@ -44,39 +44,39 @@ public class SQLAlmacenamiento
 		this.psa = psa;
 	}
 
-	public long agregarAlmacenamientoSucursal(PersistenceManager pm, long idSucursal, String codigoBarrasProducto, long idCategoria, long idTipoProducto, double capacidadVol, double capacidadPeso,  int cantidad, int tipoAlma, int nivelReavastecimiento)
+	public long agregarAlmacenamientoSucursal(PersistenceManager pm, long idSucursal, String codigoBarrasProducto, long idCategoriaProd, long idTipoProd, double capaVol, double capaPeso,  int cantidad, int tipoAlma, int nivelReavast)
 	{
-		Query b = pm.newQuery(SQL, "INSERT INTO ALMACENAMIENTO (id_sucursal, codigo_barras_producto, id_categoria_prod, id_tipo_prod, capa_vol"
-				+ ", capa_peso, cantidad, tipo_alma, nivel_reavast) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		b.setParameters(idSucursal, codigoBarrasProducto, idCategoria, idTipoProducto, capacidadVol, capacidadPeso, cantidad, tipoAlma, nivelReavastecimiento);
+		Query b = pm.newQuery(SQL, "INSERT INTO ALMACENAMIENTO (idSucursal, codigoBarrasProducto, idCategoriaProd, idTipoProd, capaVol"
+				+ ", capaPeso, cantidad, tipoAlma, nivelReavast) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		b.setParameters(idSucursal, codigoBarrasProducto, idCategoriaProd, idTipoProd, capaVol, capaPeso, cantidad, tipoAlma, nivelReavast);
 		return (long) b.executeUnique();
 	}
 
-	public long eliminarAlmacenamientoSucursal(PersistenceManager pm, long idSucursal, String codigoBarrasProducto, int tipoAlmacenamiento)
+	public long eliminarAlmacenamientoSucursal(PersistenceManager pm, long idSucursal, String codigoBarrasProducto, int tipoAlma)
 	{
-		Query q = pm.newQuery(SQL, "DELETE FROM ALMACENAMIENTO WHERE id_sucursal = ? AND codigo_barras_producto = ? AND tipo_alma = ?");
-		q.setParameters(idSucursal, codigoBarrasProducto, tipoAlmacenamiento);
+		Query q = pm.newQuery(SQL, "DELETE FROM ALMACENAMIENTO WHERE idSucursal = ? AND codigo_barrasProducto = ? AND tipoAlma = ?");
+		q.setParameters(idSucursal, codigoBarrasProducto, tipoAlma);
 		return(long) q.executeUnique();
 	}
 
-	public long actualizarCantidadesAlmacenamiento(PersistenceManager pm, long idSucursal, String codigoBarrasProducto, int cantidad, int tipoAlmacenamiento)
+	public long actualizarCantidadesAlmacenamiento(PersistenceManager pm, long idSucursal, String codigoBarrasProducto, int cantidad, int tipoAlma)
 	{
-		Query q = pm.newQuery(SQL, "UPDATE ALMACENAMIENTO SET cantidad = cantidad + (?) WHERE id_sucursal = ? AND codigo_barras_producto = ? AND tipo_alma = ?");
-		q.setParameters(cantidad, idSucursal, codigoBarrasProducto, tipoAlmacenamiento);
+		Query q = pm.newQuery(SQL, "UPDATE ALMACENAMIENTO SET cantidad = cantidad + (?) WHERE idSucursal = ? AND codigobarrasProducto = ? AND tipoAlma = ?");
+		q.setParameters(cantidad, idSucursal, codigoBarrasProducto, tipoAlma);
 		return(long) q.executeUnique();
 	}
 	
-	public Almacenamiento buscarAlmacenamientoEnEspecifico(PersistenceManager pm, long idSucursal, String codigoBarras, int tipoAlmacenamiento)
+	public Almacenamiento buscarAlmacenamientoEnEspecifico(PersistenceManager pm, long idSucursal, String codigoBarras, int tipoAlma)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM ALMACENAMIENTO WHERE id_sucursal = ? AND codigo_barras_producto = ? AND tipo_almacenamiento = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM ALMACENAMIENTO WHERE idSucursal = ? AND codigoBarrasProducto = ? AND tipoAlma = ?");
 		q.setResultClass(Almacenamiento.class);
-		q.setParameters(idSucursal, codigoBarras, tipoAlmacenamiento);
+		q.setParameters(idSucursal, codigoBarras, tipoAlma);
 		return (Almacenamiento) q.executeUnique();
 	}
 	
 	public List<Almacenamiento> buscarAlmacenesPorSucursal(PersistenceManager pm, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM ALMACENAMIENTO WHERE id_sucursal = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM ALMACENAMIENTO WHERE idSucursal = ?");
 		q.setResultClass(Almacenamiento.class);
 		q.setParameters(idSucursal);
 		return (List<Almacenamiento>) q.executeList();

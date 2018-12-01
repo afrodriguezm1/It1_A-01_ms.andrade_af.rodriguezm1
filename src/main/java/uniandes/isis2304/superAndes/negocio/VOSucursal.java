@@ -11,6 +11,7 @@ public interface VOSucursal
 	// Métodos
 	//---------------------------------------------------------------------
 
+	public long getId();
 	
 	public String getNombre();
 	

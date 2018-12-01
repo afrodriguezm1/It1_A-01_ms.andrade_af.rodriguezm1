@@ -42,17 +42,17 @@ public class SQLVentas
 		this.psa = psa;
 	}
 	
-	public long agregarVenta(PersistenceManager pm, long idSucursal, String email, long consecutivoFE, String CUFE)
+	public long agregarVenta(PersistenceManager pm, long idSucursal, String emailCliente, long precio)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO VENTAS (id_sucursal, email_cliente, consecutivo_FE, cufe, fecha_venta)"
-				+ "VALUES (?, ?, ?, ?, TO_DATE(SYSDATE, 'DD-MON-YYYY'))");
-		q.setParameters(idSucursal, email, consecutivoFE, CUFE);
+		Query q = pm.newQuery(SQL, "INSERT INTO VENTAS (idSucursal, emailCliente, fecha_venta, precio)"
+				+ "VALUES (?, ?, TO_DATE(SYSDATE, 'DD-MON-YYYY'), ?)");
+		q.setParameters(idSucursal, emailCliente, precio);
 		return (long) q.executeUnique();
 	}
 	
 	public List<Ventas> buscarVentasDeCliente(PersistenceManager pm, String email)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM VENTAS WHERE email_cliente = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM VENTAS WHERE emailCliente = ?");
 		q.setResultClass(Ventas.class);
 		q.setParameters(email);
 		return (List<Ventas>)q.executeUnique();
@@ -60,7 +60,7 @@ public class SQLVentas
 	
 	public List<Ventas> buscarVentasEntreTiempo(PersistenceManager pm, Date fechaInicio, Date fechaFin, String email)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM VENTAS WHERE email_cliente = ? AND fecha_ventas BETWEEN ? AND ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM VENTAS WHERE emailCliente = ? AND fechaVenta BETWEEN ? AND ?");
 		q.setResultClass(Ventas.class);
 		q.setParameters(email, fechaInicio, fechaFin);
 		return (List<Ventas>) q.executeUnique();
@@ -68,7 +68,7 @@ public class SQLVentas
 	
 	public List<Ventas> buscarVentasPorSucursal(PersistenceManager pm, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELEC * FROM VENTAS WHERE id_sucursal = ?");
+		Query q = pm.newQuery(SQL, "SELEC * FROM VENTAS WHERE idSucursal = ?");
 		q.setResultClass(Ventas.class);
 		q.setParameters(idSucursal);
 		return (List<Ventas>) q.executeUnique();

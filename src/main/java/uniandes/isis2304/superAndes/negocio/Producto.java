@@ -39,7 +39,7 @@ public class Producto implements VOProducto
 	/**
 	 * Cantidad de la presentacion
 	 */
-	private int cantidadPresent;
+	private int cantidadPresen;
 	
 	/**
 	 * Unidad de medida del producto
@@ -67,7 +67,7 @@ public class Producto implements VOProducto
 		this.nombre = "";
 		this.marca = "";
 		this.presentacion = "";
-		this.cantidadPresent = 0;
+		this.cantidadPresen = 0;
 		this.uniMedida = "";
 		this.volumen = 0;
 		this.peso = 0;
@@ -94,7 +94,7 @@ public class Producto implements VOProducto
 		this.nombre = nombre;
 		this.marca = marca;
 		this.presentacion = presentacion;
-		this.cantidadPresent = cantidadPresent;
+		this.cantidadPresen = cantidadPresent;
 		this.uniMedida = uniMedida;
 		this.volumen = volumen;
 		this.peso = peso;
@@ -187,15 +187,15 @@ public class Producto implements VOProducto
 	/**
 	 * @return the cantidadPresent
 	 */
-	public int getCantidadPresent() {
-		return cantidadPresent;
+	public int getCantidadPresen() {
+		return cantidadPresen;
 	}
 
 	/**
 	 * @param cantidadPresent the cantidadPresent to set
 	 */
-	public void setCantidadPresent(int cantidadPresent) {
-		this.cantidadPresent = cantidadPresent;
+	public void setCantidadPresen(int cantidadPresent) {
+		this.cantidadPresen = cantidadPresent;
 	}
 
 	/**
@@ -247,7 +247,7 @@ public class Producto implements VOProducto
 	public String toString() {
 		return "Producto [codigoBarras=" + codigoBarras + ", idCategoria=" + idCategoria + ", idTipoProducto="
 				+ idTipoProducto + ", nombre=" + nombre + ", marca=" + marca + ", presentacion=" + presentacion
-				+ ", cantidadPresent=" + cantidadPresent + ", uniMedida=" + uniMedida + ", volumen=" + volumen
+				+ ", cantidadPresent=" + cantidadPresen + ", uniMedida=" + uniMedida + ", volumen=" + volumen
 				+ ", peso=" + peso + "]";
 	}
 	

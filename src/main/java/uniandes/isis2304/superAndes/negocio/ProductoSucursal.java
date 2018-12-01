@@ -24,7 +24,7 @@ public class ProductoSucursal implements VOProductoSucursal
 	/**
 	 * precio unidad de medida del producto
 	 */
-	private long precioUniMedida;
+	private long precioUnidadMedida;
 	
 	/**
 	 * Numero de recompra del producto
@@ -44,7 +44,7 @@ public class ProductoSucursal implements VOProductoSucursal
 		this.codigoBarras ="";
 		this.idSucursal = 0;
 		this.precioUnitario =0;
-		this.precioUniMedida =0;
+		this.precioUnidadMedida =0;
 		this.numeroRecompra = 0;
 		this.nivelReorden =0;
 	}
@@ -64,7 +64,7 @@ public class ProductoSucursal implements VOProductoSucursal
 		this.codigoBarras = codigoBarras;
 		this.idSucursal = idSucursal;
 		this.precioUnitario = precioUnitario;
-		this.precioUniMedida = precioUniMedida;
+		this.precioUnidadMedida = precioUniMedida;
 		this.numeroRecompra = numeroRecompra;
 		this.nivelReorden = nivelReorden;
 	}
@@ -118,15 +118,15 @@ public class ProductoSucursal implements VOProductoSucursal
 	 * @return the precioUniMedida
 	 */
 	@Override
-	public long getPrecioUniMedida() {
-		return precioUniMedida;
+	public long getPrecioUnidadMedida() {
+		return precioUnidadMedida;
 	}
 
 	/**
 	 * @param precioUniMedida the precioUniMedida to set
 	 */
-	public void setPrecioUniMedida(int precioUniMedida) {
-		this.precioUniMedida = precioUniMedida;
+	public void setPrecioUnidadMedida(int precioUniMedida) {
+		this.precioUnidadMedida = precioUniMedida;
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class ProductoSucursal implements VOProductoSucursal
 	@Override
 	public String toString() {
 		return "ProductoSucursal [codigoBarras=" + codigoBarras + ", idSucursal=" + idSucursal + ", precioUnitario="
-				+ precioUnitario + ", precioUniMedida=" + precioUniMedida + ", numeroRecompra=" + numeroRecompra
+				+ precioUnitario + ", precioUniMedida=" + precioUnidadMedida + ", numeroRecompra=" + numeroRecompra
 				+ ", nivelReorden=" + nivelReorden + "]";
 	}
 	

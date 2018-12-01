@@ -51,10 +51,10 @@ public class SQLCarrito
 	 * @param estado
 	 * @return
 	 */
-	public long adicionarCarrito(PersistenceManager pm, String email, long idSucursal, long precio, String estado)
+	public long adicionarCarrito(PersistenceManager pm, String emailCliente, long idSucursal, long precio, String estado)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO CARRITO (Email_Cliente, Id_Sucursal, Precio, Estado) values (?, ?, ?, ?)");
-		q.setParameters(email, idSucursal, precio, estado);
+		Query q = pm.newQuery(SQL, "INSERT INTO CARRITO (EmailCliente, IdSucursal, Precio, Estado) values (?, ?, ?, ?)");
+		q.setParameters(emailCliente, idSucursal, precio, estado);
 		return (long) q.executeUnique();
 	}
 
@@ -64,11 +64,11 @@ public class SQLCarrito
 	 * @param email
 	 * @return
 	 */
-	public Carrito darCarritoPorId(PersistenceManager pm, String email, long idSucursal)
+	public Carrito darCarritoPorId(PersistenceManager pm, String emailCliente, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM CARRITO WHERE EMAIL_CLIENTE = ? AND id_sucursal = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM CARRITO WHERE EMAILCLIENTE = ? AND idSucursal = ?");
 		q.setResultClass(Carrito.class);
-		q.setParameters(email, idSucursal);
+		q.setParameters(emailCliente, idSucursal);
 		return (Carrito) q.executeUnique();
 	}
 	
@@ -78,10 +78,10 @@ public class SQLCarrito
 	 * @param email
 	 * @return
 	 */
-	public long darIdCarrito(PersistenceManager pm, String email, long idSucursal)
+	public long darIdCarrito(PersistenceManager pm, String emailCliente, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT ID FROM CARRITO WHERE Email_Cliente = ? AND Id_Sucursal = ?");
-		q.setParameters(email, idSucursal);
+		Query q = pm.newQuery(SQL, "SELECT ID FROM CARRITO WHERE EmailCliente = ? AND IdSucursal = ?");
+		q.setParameters(emailCliente, idSucursal);
 		return (long) q.executeUnique();
 	}
 
@@ -91,11 +91,10 @@ public class SQLCarrito
 	 * @param id
 	 * @return
 	 */
-	public long eliminarCarritoPorId (PersistenceManager pm, String email, long idSucursal)
+	public long eliminarCarritoPorId (PersistenceManager pm, String emailCliente, long idSucursal)
 	{
-		Query toDelete = pm.newQuery(SQL, "SELECT ID FROM CARRITO WHERE  " );
-		Query q = pm.newQuery(SQL, "DELETE FROM CARRITO WHERE Email_Cliente = ? AND Id_Sucursal = ?");
-		q.setParameters(email, idSucursal );
+		Query q = pm.newQuery(SQL, "DELETE FROM CARRITO WHERE EmailCCliente = ? AND IdSucursal = ?");
+		q.setParameters(emailCliente, idSucursal );
 		return (long) q.executeUnique();
 	}
 
@@ -109,17 +108,17 @@ public class SQLCarrito
 		return (List<Carrito>) q.executeList();
 	}
 
-	public long actualizarPrecioCarrito(PersistenceManager pm, String email, long idSucursal, long precio)
+	public long actualizarPrecioCarrito(PersistenceManager pm, String emailCliente, long idSucursal, long precio)
 	{
-		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET PRECIO = PRECIO + (?) WHERE EMAIL_CLIENTE = ? AND ID_SUCURSAL = ?");
-		q.setParameters(precio, email, idSucursal);
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET PRECIO = PRECIO + (?) WHERE EMAILCLIENTE = ? AND IDSUCURSAL = ?");
+		q.setParameters(precio, emailCliente, idSucursal);
 		return (long) q.execute();
 	}
 
-	public long actualizarEstadoCarrito(PersistenceManager pm, String email, long idSucursal)
+	public long actualizarEstadoCarrito(PersistenceManager pm, String emailCliente, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET ESTADO = 'Abandonado' WHERE EMAIL_CLIENTE = ? AND ID_SUCURSAL = ?");
-		q.setParameters(email, idSucursal);
+		Query q = pm.newQuery(SQL, "UPDATE CARRITO SET ESTADO = 'Abandonado' WHERE EMAILCLIENTE = ? AND IDSUCURSAL = ?");
+		q.setParameters(emailCliente, idSucursal);
 		return (long) q.execute();
 
 	}

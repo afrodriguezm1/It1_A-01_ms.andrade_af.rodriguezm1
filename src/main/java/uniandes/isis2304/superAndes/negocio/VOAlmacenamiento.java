@@ -31,22 +31,22 @@ public interface VOAlmacenamiento
 	/**
 	 * @return El id de la categoria que acepta el almacenamiento
 	 */
-	public long getIdCategoria();
+	public long getIdCategoriaProd();
 	
 	/**
 	 * @return El id del tipo de producto que acepta el almacenamiento
 	 */
-	public long getIdTipoProducto();
+	public long getIdTipoProd();
 	
 	/**
 	 * @return La capacidad de volumen del almacenamiento
 	 */
-	public double getCapacidadVolumen();
+	public double getCapaVol();
 	
 	/**
 	 * @return La capacidad de peso del almacenamiento
 	 */
-	public double getCapacidadPeso();
+	public double getCapaPeso();
 	
 	/**
 	 * @return Cantidad actual del producto en el almacenamiento
@@ -56,10 +56,10 @@ public interface VOAlmacenamiento
 	/**
 	 * @return Tipo de almacenamiento
 	 */
-	public int getTipoAlmacen();
+	public int getTipoAlma();
 	
 	/**
 	 * @return Nivel de reavastecimiento
 	 */
-	public int getNivelReavastecimiento();
+	public int getNivelReavast();
 }

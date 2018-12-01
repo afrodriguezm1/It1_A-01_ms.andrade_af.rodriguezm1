@@ -42,23 +42,23 @@ public class SQLInfoProductoSucursal
 		this.psa = psa;	
 	}
 	
-	public long agregarInfoProductoSucursal(PersistenceManager pm, long idVenta, String codigoBarras, int cantidad)
+	public long agregarInfoProductoSucursal(PersistenceManager pm, long idVenta, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_SUCURSAL (id_venta, codigo_barras, cantidad_producto) VALUES (?, ?, ?)");
-		q.setParameters(idVenta, codigoBarras, cantidad);
+		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_SUCURSAL (idVenta, idSucursal, codigoBarras, cantidadProducto, precioTotal, precioUnitario) VALUES (?, ?, ?, ?, ?, ?)");
+		q.setParameters(idVenta, idSucursal, codigoBarras, cantidad, precioTotal, precioUnitario);
 		return (long) q.executeUnique();
 	}
 	
 	public long eliminarInfoProductoSucursal(PersistenceManager pm, long idVenta, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_SUCURSAL WHERE id_venta = ? AND codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_SUCURSAL WHERE idVenta = ? AND codigoBarras = ?");
 		q.setParameters(idVenta, codigoBarras);
 		return (long) q.executeUnique();
 	}
 	
 	public InfoProdSucursal darInfoProdSucursalEspecifico(PersistenceManager pm, long idVenta, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_SUCURSAL WHERE Id_venta = ? AND codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_SUCURSAL WHERE IdVenta = ? AND codigoBarras = ?");
 		q.setResultClass(InfoProdSucursal.class);
 		q.setParameters(idVenta, codigoBarras);
 		return (InfoProdSucursal) q.executeUnique();
@@ -66,7 +66,7 @@ public class SQLInfoProductoSucursal
 	
 	public List<InfoProdSucursal> darInfoProdSucursalPorVenta(PersistenceManager pm, long idVenta)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_SUCURSAL WHERE Id_venta = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_SUCURSAL WHERE IdVenta = ?");
 		q.setResultClass(InfoProdSucursal.class);
 		q.setParameters(idVenta);
 		return (List<InfoProdSucursal>) q.executeUnique();
@@ -74,8 +74,8 @@ public class SQLInfoProductoSucursal
 	
 	public long aumentarNumeroProductos(PersistenceManager pm, long idVenta, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "UPDATE INFO_PRODUCTO_SUCURSAL SET cantidad_producto = cantidad_Producto + 1 "
-				+ "WHERE Id_venta = ? AND codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "UPDATE INFO_PRODUCTO_SUCURSAL SET cantidadProducto = cantidadProducto + 1 "
+				+ "WHERE IdVenta = ? AND codigoBarras = ?");
 		q.setParameters(idVenta, codigoBarras);
 		return (long) q.executeUnique();
 	}

@@ -52,7 +52,7 @@ public class SQLProductoRedimible
 	 */
 	public long adicionarProductoRedimible(PersistenceManager pm,long codigoBarras, long idSucursal, int puntos)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO_REDIMIBLE (Codigo_barras, Id_sucursal, Puntos) "
+        Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO_REDIMIBLE (CodigoBarras, IdSucursal, Puntos) "
         		+ "values (?, ?, ?)");
         q.setParameters(codigoBarras, idSucursal, puntos);
         return (long) q.executeUnique();
@@ -65,7 +65,7 @@ public class SQLProductoRedimible
 	 */
 	public ProductoRedimible darProductoRedimiblePorCodBarras(PersistenceManager pm, long id)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO_REDIMIBLE WHERE Codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO_REDIMIBLE WHERE CodigoBarras = ?");
 		q.setResultClass(ProductoRedimible.class);
 		q.setParameters(id);
 		return (ProductoRedimible) q.executeUnique();
@@ -78,7 +78,7 @@ public class SQLProductoRedimible
 	 */
 	public long eliminarProductoRedimiblePorCodBarras(PersistenceManager pm, long id )
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM PRODUCTO_REDIMIBLE WHERE Codigo_barras = ?");
+        Query q = pm.newQuery(SQL, "DELETE FROM PRODUCTO_REDIMIBLE WHERE CodigoBarras = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
 	}

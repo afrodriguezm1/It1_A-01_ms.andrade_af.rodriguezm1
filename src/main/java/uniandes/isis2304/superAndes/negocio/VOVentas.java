@@ -20,10 +20,6 @@ public interface VOVentas
 	
 	public String getEmailCliente();
 	
-	public long getConsecutivoFE();
-	
-	public String getCUFE();
-	
 	public Date getFechaVenta();
 	
 	public long getPrecio();

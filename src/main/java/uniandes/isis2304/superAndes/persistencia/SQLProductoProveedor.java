@@ -52,7 +52,7 @@ public class SQLProductoProveedor
 	 */
 	public long adicionarProductoProveedor(PersistenceManager pm, long codigoBarras, String nit, int esExclusivo, int precioUnitario, int precioUniMedida)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO_PROVEEDOR (Codigo_barras, Nit, Es_exclusivo, Precio_unitario, Precio_unidad_medida) values (?, ?, ?, ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO_PROVEEDOR (CodigoBarras, Nit, EsExclusivo, PrecioUnitario, PrecioUnidadMedida) values (?, ?, ?, ?, ?)");
         q.setParameters(codigoBarras, nit, esExclusivo, precioUnitario, precioUniMedida);
         return (long) q.executeUnique();
 	}
@@ -64,7 +64,7 @@ public class SQLProductoProveedor
 	 */
 	public ProductoProveedor darProductoProveedorPorCodBarras(PersistenceManager pm, long id)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO_PROVEEDOR WHERE Codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO_PROVEEDOR WHERE CodigoBarras = ?");
 		q.setResultClass(ProductoProveedor.class);
 		q.setParameters(id);
 		return (ProductoProveedor) q.executeUnique();
@@ -77,7 +77,7 @@ public class SQLProductoProveedor
 	 */
 	public long eliminarProductoProveedorPorCodBarras(PersistenceManager pm, long id )
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM PRODUCTO_PROVEEDOR WHERE Codigo_barras = ?");
+        Query q = pm.newQuery(SQL, "DELETE FROM PRODUCTO_PROVEEDOR WHERE CodigoBarras = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
 	}

@@ -28,6 +28,10 @@ public interface VOInfoProdProveedor
 	 */
 	public int getCantidadProducto();
 	
+	public long getPrecioTotal();
+	
+	public long getPrecioUnitario();
+	
 	/**
 	 * @return Una cadena de caracteres con todos los atributos de la info del producto
 	 */

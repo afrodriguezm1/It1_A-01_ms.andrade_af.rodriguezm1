@@ -48,23 +48,23 @@ public class SQLInfoProductoProveedor
 		this.psa = psa;
 	}
 	
-	public long agregarInfoProductoProveedor(PersistenceManager pm, long idOrden, String codigoBarras)
+	public long agregarInfoProductoProveedor(PersistenceManager pm, long idOrden, String codigoBarras, long precioTotal, long precioUnitario)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_PROVEEDOR (Id_orden, codigo_barras, cantidad_producto) values (?,?,1)");
-		q.setParameters(idOrden, codigoBarras);
+		Query q = pm.newQuery(SQL, "INSERT INTO INFO_PRODUCTO_PROVEEDOR (IdOrden, codigoBarras, cantidadProducto, precioTotal, precioUnitario) values (?,?,1,?,?)");
+		q.setParameters(idOrden, codigoBarras, precioTotal, precioUnitario);
 		return (long) q.executeUnique();
 	}
 	
 	public long eliminarInfoProductoProveedor(PersistenceManager pm, long idOrden, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_PROVEEDOR WHERE Id_orden = ? AND codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "DELETE FROM INFO_PRODUCTO_PROVEEDOR WHERE IdOrden = ? AND codigoBarras = ?");
 		q.setParameters(idOrden, codigoBarras);
 		return (long) q.executeUnique();
 	}
 	
 	public InfoProdProveedor darInfoProdProveedorEspecifico(PersistenceManager pm, long idOrden, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_PROVEEDOR WHERE Id_orden = ? AND codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_PROVEEDOR WHERE IdOrden = ? AND codigoBarras = ?");
 		q.setResultClass(InfoProdProveedor.class);
 		q.setParameters(idOrden, codigoBarras);
 		return (InfoProdProveedor) q.executeUnique();
@@ -72,7 +72,7 @@ public class SQLInfoProductoProveedor
 	
 	public List<InfoProdProveedor> darInfoProdProveedorPorOrden(PersistenceManager pm, long idOrden)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_PROVEEDOR WHERE Id_orden = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM INFO_PRODUCTO_PROVEEDOR WHERE IdOrden = ?");
 		q.setResultClass(InfoProdProveedor.class);
 		q.setParameters(idOrden);
 		return (List<InfoProdProveedor>) q.executeUnique();
@@ -80,8 +80,8 @@ public class SQLInfoProductoProveedor
 	
 	public long aumentarNumeroProductos(PersistenceManager pm, long idOrden, String codigoBarras)
 	{
-		Query q = pm.newQuery(SQL, "UPDATE INFO_PRODUCTO_PROVEEDOR SET cantidad_producto = cantidad_Producto + 1 "
-				+ "WHERE Id_orden = ? AND codigo_barras = ?");
+		Query q = pm.newQuery(SQL, "UPDATE INFO_PRODUCTO_PROVEEDOR SET cantidadProducto = cantidadProducto + 1 "
+				+ "WHERE IdOrden = ? AND codigoBarras = ?");
 		q.setParameters(idOrden, codigoBarras);
 		return (long) q.executeUnique();
 	}

@@ -7,6 +7,7 @@ package uniandes.isis2304.superAndes.negocio;
 public class Sucursal implements VOSucursal
 {
 
+	public long id;
 	
 	/**
 	 * Nombre de la sucursal
@@ -28,10 +29,10 @@ public class Sucursal implements VOSucursal
 	 */
 	public Sucursal()
 	{
-
-		nombre = "";
-		direccion ="";
-		ciudad = "";
+		this.id = 0;
+		this.nombre = "";
+		this.direccion ="";
+		this.ciudad = "";
 	}
 	
 	
@@ -42,13 +43,33 @@ public class Sucursal implements VOSucursal
 	 * @param pDireccion
 	 * @param pCiudad
 	 */
-	public Sucursal(String pNombre, String pDireccion, String pCiudad)
+	public Sucursal(long id, String pNombre, String pDireccion, String pCiudad)
 	{
-
+		this.id = id;
 		this.nombre = pNombre;
 		this.direccion = pDireccion;
 		this.ciudad = pCiudad;
 		
+	}
+	
+	public Sucursal(String pNombre, String pDireccion, String pCiudad)
+	{
+		this.nombre = pNombre;
+		this.direccion = pDireccion;
+		this.ciudad = pCiudad;
+		
+	}
+
+
+	@Override
+	public long getId() 
+	{
+		return this.id;
+	}
+	
+	public void setId(long id)
+	{
+		this.id = id;
 	}
 
 

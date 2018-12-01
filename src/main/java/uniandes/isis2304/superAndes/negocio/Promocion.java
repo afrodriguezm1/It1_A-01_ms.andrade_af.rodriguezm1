@@ -10,6 +10,7 @@ import java.sql.Timestamp;
  */
 public class Promocion implements VOPromocion
 {
+	private long id;
 
 	/**
 	 * Id de la sucursal
@@ -39,17 +40,17 @@ public class Promocion implements VOPromocion
 	/**
 	 * Numero que indica cual es el tipo de promocion 
 	 */
-	private int tipoPromo;
+	private int tipoPromocion;
 	
 	/**
 	 * Valor original del producto en la promocion
 	 */
-	private int valorOriginal;
+	private int valor1;
 	
 	/**
 	 * Valor del producto(s) en la promocion
 	 */
-	private int valorPromo;
+	private int valor2;
 	
 	/**
 	 * Costructor por defecto
@@ -62,9 +63,9 @@ public class Promocion implements VOPromocion
 		this.nombre = "";
 		this.fechaInicio = null;
 		this.fechaFin = null;
-		this.tipoPromo = 0;
-		this.valorOriginal =0;
-		this.valorPromo = 0;
+		this.tipoPromocion = 0;
+		this.valor1 =0;
+		this.valor2 = 0;
 	}
 
 	/**
@@ -87,9 +88,9 @@ public class Promocion implements VOPromocion
 		this.nombre = nombre;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
-		this.tipoPromo = tipoPromo;
-		this.valorOriginal = valorOriginal;
-		this.valorPromo = valorPromo;
+		this.tipoPromocion = tipoPromo;
+		this.valor1 = valorOriginal;
+		this.valor2 = valorPromo;
 	}
 
 	/**
@@ -165,43 +166,43 @@ public class Promocion implements VOPromocion
 	/**
 	 * @return the tipoPromo
 	 */
-	public int getTipoPromo() {
-		return tipoPromo;
+	public int getTipoPromocion() {
+		return tipoPromocion;
 	}
 
 	/**
 	 * @param tipoPromo the tipoPromo to set
 	 */
-	public void setTipoPromo(int tipoPromo) {
-		this.tipoPromo = tipoPromo;
+	public void setTipoPromocion(int tipoPromo) {
+		this.tipoPromocion = tipoPromo;
 	}
 
 	/**
 	 * @return the valorOriginal
 	 */
-	public int getValorOriginal() {
-		return valorOriginal;
+	public int getValor1() {
+		return valor1;
 	}
 
 	/**
 	 * @param valorOriginal the valorOriginal to set
 	 */
-	public void setValorOriginal(int valorOriginal) {
-		this.valorOriginal = valorOriginal;
+	public void setValor1(int valorOriginal) {
+		this.valor1 = valorOriginal;
 	}
 
 	/**
 	 * @return the valorPromo
 	 */
-	public int getValorPromo() {
-		return valorPromo;
+	public int getValor2() {
+		return valor2;
 	}
 
 	/**
 	 * @param valorPromo the valorPromo to set
 	 */
-	public void setValorPromo(int valorPromo) {
-		this.valorPromo = valorPromo;
+	public void setValor2(int valorPromo) {
+		this.valor2= valorPromo;
 	}
 
 	/* (non-Javadoc)
@@ -210,8 +211,19 @@ public class Promocion implements VOPromocion
 	@Override
 	public String toString() {
 		return "Promocion [idSucursal=" + idSucursal + ", codigoBarras=" + codigoBarras + ", nombre="
-				+ nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", tipoPromo=" + tipoPromo
-				+ ", valorOriginal=" + valorOriginal + ", valorPromo=" + valorPromo + "]";
+				+ nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", tipoPromo=" + tipoPromocion
+				+ ", valorOriginal=" + valor1 + ", valorPromo=" + valor2 + "]";
+	}
+
+	@Override
+	public long getId() 
+	{
+		return this.id;
+	}
+	
+	public void setId(long id)
+	{
+		this.id = id;
 	}
 	
 	

@@ -18,6 +18,8 @@ public interface VOInfoProdSucursal
 	 */
 	public long getIdVenta();
 	
+	public long getIdSucursal();
+	
 	/**
 	 * @return El código de barras del Producto
 	 */
@@ -27,6 +29,10 @@ public interface VOInfoProdSucursal
 	 * @return La cantidad de productos en la orden de pedido
 	 */
 	public int getCantidadProducto();
+	
+	public long getPrecioTotal();
+	
+	public long getPrecioUnitario();
 	
 	/**
 	 * @return Una cadena de caracteres con todos los atributos de la info del producto

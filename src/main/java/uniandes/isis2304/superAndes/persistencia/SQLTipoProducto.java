@@ -54,7 +54,7 @@ public class SQLTipoProducto
 	 */
 	public long adicionarTipoProducto(PersistenceManager pm, long idCategoria, String pNombre)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO  TIPO_PRODUCTO (Id_categoria, Nombre) values ( ?, ?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO  TIPO_PRODUCTO (IdCategoria, Nombre) values ( ?, ?)");
         q.setParameters(idCategoria, pNombre);
         return (long) q.executeUnique();
 	}

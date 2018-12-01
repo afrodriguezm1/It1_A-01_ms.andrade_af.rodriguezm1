@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 public class OrdenPedido implements VOOrdenPedido
 {
 
+	private long id;
 	
 	/**
 	 * Id de la sucursal
@@ -46,7 +47,7 @@ public class OrdenPedido implements VOOrdenPedido
 	 */
 	public OrdenPedido()
 	{
-
+		this.id = 0;
 		this.idSucursal =0;
 		this.nitProveedor = "";
 		this.fechaEntrega = null;
@@ -65,9 +66,21 @@ public class OrdenPedido implements VOOrdenPedido
 	 * @param fechaEntrega
 	 * @param estado
 	 */
-	public OrdenPedido(long idSucursal, String nitProveedor, Timestamp fechaExp, Timestamp fechaEst,
-			Timestamp fechaEntrega, String estado) {
+	public OrdenPedido(long id, long idSucursal, String nitProveedor, Timestamp fechaExp, Timestamp fechaEst,
+			Timestamp fechaEntrega, String estado) 
+	{
 
+		this.id = id;
+		this.idSucursal = idSucursal;
+		this.nitProveedor = nitProveedor;
+		this.fechaExp = fechaExp;
+		this.fechaEst = fechaEst;
+		this.fechaEntrega = fechaEntrega;
+		this.estado = estado;
+	}
+	public OrdenPedido( long idSucursal, String nitProveedor, Timestamp fechaExp, Timestamp fechaEst,
+			Timestamp fechaEntrega, String estado) 
+	{
 		this.idSucursal = idSucursal;
 		this.nitProveedor = nitProveedor;
 		this.fechaExp = fechaExp;
@@ -167,6 +180,17 @@ public class OrdenPedido implements VOOrdenPedido
 	public String toString() {
 		return "OrdenPedido [idSucursal=" + idSucursal + ", nitProveedor=" + nitProveedor + ", fechaExp="
 				+ fechaExp + ", fechaEst=" + fechaEst + ", fechaEntrega=" + fechaEntrega + ", estado=" + estado + "]";
+	}
+
+	@Override
+	public long getId() 
+	{
+		return this.id;
+	}
+	
+	public void setId(long id)
+	{
+		this.id = id;
 	}
 	
 	

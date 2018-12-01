@@ -6,8 +6,9 @@ package uniandes.isis2304.superAndes.negocio;
  */
 public class Categoria implements VOCategoria
 {
-
 	
+	private long id;
+		
 	/**
 	 * Nombre de la categoria.
 	 */
@@ -18,6 +19,7 @@ public class Categoria implements VOCategoria
 	 */
 	public Categoria()
 	{
+		this.id = 0;
 		this.nombre ="";
 	}
 	
@@ -26,13 +28,15 @@ public class Categoria implements VOCategoria
 	 * @param id
 	 * @param nombre
 	 */
-	public Categoria( String nombre) {
-		super();
-
+	public Categoria(long id, String nombre) 
+	{	this.id = id;
 		this.nombre = nombre;
 	}
-
-
+	
+	public Categoria( String nombre) 
+	{
+		this.nombre = nombre;
+	}
 
 	/**
 	 * @return the nombre
@@ -48,13 +52,20 @@ public class Categoria implements VOCategoria
 		this.nombre = nombre;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Categoria [nombre=" + nombre + "]";
 	}
+
+	@Override
+	public long getId() 
+	{
+		return this.id;
+	}
 	
+	public void setId(long id)
+	{
+		this.id = id;
+	}
 	
 }

@@ -58,7 +58,7 @@ public class SQLPromocion
 	public long adicionarPromocion(PersistenceManager pm, long idSucursal, String codigoBarras, String nombre, Date fechaInicio,
 			Date fechaFin, int tipoPromo, int valorOriginal, int valorPromo)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO PROMOCION (Id_sucursal, Codigo_barras, Nombre, Fecha_inicio, Fecha_fin, Tipo_promo, Valor1, Valor2) "
+        Query q = pm.newQuery(SQL, "INSERT INTO PROMOCION (IdSucursal, CodigoBarras, Nombre, FechaInicio, FechaFin, TipoPromo, Valor1, Valor2) "
         		+ "values ( ?, ?, ?, ?, ?, ?, ?, ?)");
         q.setParameters(idSucursal, codigoBarras, nombre, fechaInicio, fechaFin, tipoPromo, valorOriginal, valorPromo);
         return (long) q.executeUnique();
@@ -71,7 +71,7 @@ public class SQLPromocion
 	 */
 	public Promocion darPromocion(PersistenceManager pm, String codBarras, long idSucursal, String nombre)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM PROMOCION WHERE Codigo_Barras = ? AND  Id_Sucursal = ? AND Nombre = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM PROMOCION WHERE CodigoBarras = ? AND  IdSucursal = ? AND Nombre = ?");
 		q.setResultClass(Promocion.class);
 		q.setParameters(codBarras, idSucursal, nombre);
 		return (Promocion) q.executeUnique();
@@ -84,7 +84,7 @@ public class SQLPromocion
 	 */
 	public long eliminarPromocion(PersistenceManager pm, String codBarras, long idSucursal, String nombre )
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM PROMOCION WHERE Codigo_Barras = ? AND  Id_Sucursal = ? AND Nombre = ?");
+        Query q = pm.newQuery(SQL, "DELETE FROM PROMOCION WHERE CodigoBarras = ? AND  IdSucursal = ? AND Nombre = ?");
         q.setParameters(codBarras, idSucursal, nombre);
         return (long) q.executeUnique();
 	}

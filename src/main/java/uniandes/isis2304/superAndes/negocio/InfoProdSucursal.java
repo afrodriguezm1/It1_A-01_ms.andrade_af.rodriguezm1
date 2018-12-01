@@ -18,6 +18,8 @@ public class InfoProdSucursal implements VOInfoProdSucursal
 	 */
 	private long idVenta;
 	
+	private long idSucursal;
+	
 	/**
 	 * El código de barras del producto
 	 */
@@ -27,6 +29,10 @@ public class InfoProdSucursal implements VOInfoProdSucursal
 	 * El número de productos que se pidieron
 	 */
 	private int cantidadProducto;
+	
+	private long precioTotal;
+	
+	private long precioUnitario;
 
 	//---------------------------------------------------------------------
 	// Atributos
@@ -38,8 +44,11 @@ public class InfoProdSucursal implements VOInfoProdSucursal
 	public InfoProdSucursal()
 	{
 		this.idVenta = 0;
+		this.idVenta = 0;
 		this.codigoBarras = "";
 		this.cantidadProducto = 0;
+		this.precioTotal = 0;
+		this.precioUnitario = 0;
 	}
 	
 	/**
@@ -48,11 +57,14 @@ public class InfoProdSucursal implements VOInfoProdSucursal
 	 * @param codigoBarras - El codigo de barras del producto
 	 * @param cantidadProduct - La cantidad de productos
 	 */
-	public InfoProdSucursal(long idVenta, String codigoBarras, int cantidadProducto)
+	public InfoProdSucursal(long idVenta, long idSucursal, String codigoBarras, int cantidadProducto, long precioTotal, long precioUnitario)
 	{
 		this.idVenta = idVenta;
+		this.idSucursal = idSucursal;
 		this.codigoBarras = codigoBarras;
 		this.cantidadProducto = cantidadProducto;
+		this.precioTotal = precioTotal;
+		this.precioUnitario = precioUnitario;
 	}
 
 	/**
@@ -106,5 +118,38 @@ public class InfoProdSucursal implements VOInfoProdSucursal
 	public String toString()
 	{
 		return "InfoProdProveedor [idOrden=" + idVenta + ", codigoBarras=" + codigoBarras + ", cantidadProducto=" + cantidadProducto + "]";
+	}
+
+	@Override
+	public long getIdSucursal() 
+	{
+		return this.idSucursal;
+	}
+	
+	public void setIdSucursal(long idSucursal)
+	{
+		this.idSucursal = idSucursal;
+	}
+
+	@Override
+	public long getPrecioTotal() 
+	{
+		return this.precioTotal;
+	}
+	
+	public void setPrecioTotal(long precioTotal)
+	{
+		this.precioTotal = precioTotal;
+	}
+
+	@Override
+	public long getPrecioUnitario() 
+	{
+		return this.precioUnitario;
+	}
+	
+	public void setPrecioUnitario(long precioUnitario)
+	{
+		this.precioUnitario = precioUnitario;
 	}
 }

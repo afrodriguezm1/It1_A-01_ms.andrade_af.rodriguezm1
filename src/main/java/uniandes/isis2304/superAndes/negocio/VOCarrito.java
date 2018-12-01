@@ -18,7 +18,7 @@ public interface VOCarrito
 	/**
 	 * @return El email del cliente que tiene el carrito
 	 */
-	public String getEmail();
+	public String getEmailCliente();
 	
 	/**
 	 * @return El id de la sucursal del carrito

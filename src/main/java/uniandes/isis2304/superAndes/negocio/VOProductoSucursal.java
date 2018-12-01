@@ -13,7 +13,7 @@ public interface VOProductoSucursal
 	
 	public long getPrecioUnitario();
 	
-	public long getPrecioUniMedida();
+	public long getPrecioUnidadMedida();
 	
 	public long getNumeroRecompra();
 	

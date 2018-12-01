@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 public interface VOOrdenPedido 
 {
 
+	public long getId();
 	
 	public long getIdSucursal();
 	

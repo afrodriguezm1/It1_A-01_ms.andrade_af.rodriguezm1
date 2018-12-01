@@ -53,7 +53,7 @@ public class SQLProductoSucursal
 	public long adicionarProductoSucursal(PersistenceManager pm,String codigoBarras, long idSucursal, int precioUnitario, int precioUniMedida,
 			int numeroRecompra, int nivelReorden)
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO_SUCURSAL (Codigo_barras, Id_sucursal, Precio_unitario, Precio_unidad_medida, Numero_recompra, Nive_Reorden) "
+        Query q = pm.newQuery(SQL, "INSERT INTO PRODUCTO_SUCURSAL (CodigoBarras, IdSucursal, PrecioUnitario, PrecioUnidadMedida, NumeroRecompra, NiveReorden) "
         		+ "values (?, ?, ?, ?, ?, ?)");
         q.setParameters(codigoBarras, idSucursal, precioUnitario, precioUniMedida, numeroRecompra, nivelReorden);
         return (long) q.executeUnique();
@@ -66,7 +66,7 @@ public class SQLProductoSucursal
 	 */
 	public ProductoSucursal darProductoSucursalPorCodBarras(PersistenceManager pm, String codigoBarras, long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO_SUCURSAL WHERE Codigo_barras = ? AND ID_SUCURSAL = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM PRODUCTO_SUCURSAL WHERE CodigoBarras = ? AND IDSUCURSAL = ?");
 		q.setResultClass(ProductoSucursal.class);
 		q.setParameters(codigoBarras, idSucursal);
 		return (ProductoSucursal) q.executeUnique();
@@ -79,7 +79,7 @@ public class SQLProductoSucursal
 	 */
 	public long eliminarProductoSucursalPorCodBarras(PersistenceManager pm, long id )
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM PRODUCTO_SUCURSAL WHERE Codigo_barras = ?");
+        Query q = pm.newQuery(SQL, "DELETE FROM PRODUCTO_SUCURSAL WHERE CodigoBarras = ?");
         q.setParameters(id);
         return (long) q.executeUnique();
 	}

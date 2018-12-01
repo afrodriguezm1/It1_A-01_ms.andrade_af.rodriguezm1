@@ -525,7 +525,9 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			}
 			if(idSucursal != null && email != null && !codigos.isEmpty() && !cantidad.isEmpty())
 			{
-				VOVentas su = superAndes.nuevaVenta(Integer.parseInt(idSucursal), email);
+				VOVentas su = superAndes.nuevaVenta(Integer.parseInt(idSucursal), email, 0
+						
+						);
 
 				ArrayList<VOInfoProdSucursal> arreglo = new ArrayList<>();
 				for(int i = 0; i < codigos.size(); i++)
@@ -910,7 +912,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		try
 		{
-			superAndes.abandonarCarrito(carrito.getEmail(), carrito.getIdSucursal());
+			superAndes.abandonarCarrito(carrito.getEmailCliente(), carrito.getIdSucursal());
 		}
 		catch(Exception e)
 		{
@@ -939,7 +941,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		try
 		{
-			VOVentas venta = superAndes.finalizarCompra(carrito.getId(), carrito.getEmail(), carrito.getIdSucursal());
+			VOVentas venta = superAndes.finalizarCompra(carrito.getId(), carrito.getEmailCliente(), carrito.getIdSucursal());
 			if(venta == null)
 			{
 				throw new Exception("No se puedo finalizar la venta del carrito: " + carrito.getId());
@@ -969,7 +971,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cuantos desea agregar?", "Adicionar producto", JOptionPane.QUESTION_MESSAGE));
 			if(codigoBarras != null && cantidad != 0)
 			{
-				VOInfoProdCarrito ipc = superAndes.agregarProductoCarrito(carrito.getId(), carrito.getEmail(), carrito.getIdSucursal(), codigoBarras, cantidad);
+				VOInfoProdCarrito ipc = superAndes.agregarProductoCarrito(carrito.getId(), carrito.getEmailCliente(), carrito.getIdSucursal(), codigoBarras, cantidad);
 				if( ipc == null)
 				{
 					throw new Exception("No se pudo agregar un producto al carrito: " + codigoBarras);
@@ -998,7 +1000,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			String codigoBarras = JOptionPane.showInputDialog (this, "Codigo de barras del producto a eliminar?", "Agregar producto", JOptionPane.QUESTION_MESSAGE);
 			if(codigoBarras != null)
 			{
-				long ipc = superAndes.eliminarProductoCarrito(carrito.getId(), carrito.getEmail(), carrito.getIdSucursal(), codigoBarras);
+				long ipc = superAndes.eliminarProductoCarrito(carrito.getId(), carrito.getEmailCliente(), carrito.getIdSucursal(), codigoBarras);
 				if(ipc == -1)
 				{
 					throw new Exception("No se pudo eliminar el producto : " + codigoBarras);
