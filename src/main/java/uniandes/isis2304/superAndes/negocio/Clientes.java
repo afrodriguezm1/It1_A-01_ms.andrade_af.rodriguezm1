@@ -22,6 +22,10 @@ public class Clientes implements VOClientes
 	 */
 	private String nombre;
 	
+	private String documento;
+	
+	private String direccion;
+	
 	//---------------------------------------------------------------------
 	// Métodos
 	//---------------------------------------------------------------------
@@ -33,6 +37,8 @@ public class Clientes implements VOClientes
 	{
 		this.email = "";
 		this.nombre = "";
+		this.documento = "";
+		this.direccion = "";
 	}
 	
 	/**
@@ -40,10 +46,12 @@ public class Clientes implements VOClientes
 	 * @param email - Email del cliente
 	 * @param nombre - El nombre del cliente
 	 */
-	public Clientes(String email, String nombre)
+	public Clientes(String email, String nombre, String documento, String direccion)
 	{
 		this.email = email;
 		this.nombre = nombre;
+		this.documento = documento;
+		this.direccion = direccion;
 	}
 	
 	/**
@@ -84,6 +92,18 @@ public class Clientes implements VOClientes
 	@Override
 	public String toString()
 	{
-		return "Clientes [email=" + email + ", nombre=" + nombre + "]";
+		return "Clientes [email=" + email + ",\n nombre=" + nombre + ",\n documento="+ this.documento +",\n direccion="+ this.direccion+"]";
+	}
+
+	@Override
+	public String getDocumento() 
+	{
+		return this.documento;
+	}
+
+	@Override
+	public String getDireccion() 
+	{
+		return this.direccion;
 	}
 }

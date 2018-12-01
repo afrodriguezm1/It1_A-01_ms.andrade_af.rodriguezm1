@@ -104,7 +104,7 @@ public class PanelCarrito extends JPanel implements ActionListener{
 	
 	public void actualizarCarrito(VOCarrito carrito)
 	{
-		lblNombreCliente.setText(carrito.getEmail());
+		lblNombreCliente.setText(carrito.getDocumentoCliente());
 		lblNombresucursal.setText(carrito.getIdSucursal()+"");
 		lblPrecio.setText(carrito.getPrecioTotal()+"");
 	}

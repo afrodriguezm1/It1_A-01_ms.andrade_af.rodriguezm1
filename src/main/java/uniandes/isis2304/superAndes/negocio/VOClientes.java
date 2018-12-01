@@ -23,6 +23,10 @@ public interface VOClientes
 	 */
 	public String getNombre();
 	
+	public String getDocumento();
+	
+	public String getDireccion();
+	
 	/**
 	 * @return Una cadena de caracteres con la información básica del cliente
 	 */

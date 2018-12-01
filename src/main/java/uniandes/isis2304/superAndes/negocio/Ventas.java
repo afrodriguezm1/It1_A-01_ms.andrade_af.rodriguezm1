@@ -19,7 +19,7 @@ public class Ventas implements VOVentas
 	
 	private long idSucursal;
 	
-	private String emailCliente;
+	private String documentoCliente;
 	
 	private Date fechaVenta;
 	
@@ -29,15 +29,15 @@ public class Ventas implements VOVentas
 	{
 		this.id = 0;
 		this.idSucursal = 0;
-		this.emailCliente = "";
+		this.documentoCliente = "";
 		this.fechaVenta = null;
 	}
 	
-	public Ventas(long id, long idSucursal, String emailCliente, Date fechaVenta)
+	public Ventas(long id, long idSucursal, String documentoCliente, Date fechaVenta)
 	{
 		this.id = id;
 		this.idSucursal = idSucursal;
-		this.emailCliente = emailCliente;
+		this.documentoCliente = documentoCliente;
 		this.fechaVenta = fechaVenta;
 	}
 
@@ -61,14 +61,14 @@ public class Ventas implements VOVentas
 		this.idSucursal = idSucursal;
 	}
 
-	public String getEmailCliente() 
+	public String getDocumentoCliente() 
 	{
-		return emailCliente;
+		return documentoCliente;
 	}
 	
-	public void setEmailCliente(String emailCliente)
+	public void setDocumentoCliente(String emailCliente)
 	{
-		this.emailCliente = emailCliente;	
+		this.documentoCliente = emailCliente;	
 	}
 	
 	public Date getFechaVenta() 
@@ -94,7 +94,7 @@ public class Ventas implements VOVentas
 	@Override
 	public String toString()
 	{
-		return "Venta [id=" + id + ", idSucursal=" + idSucursal + ", emailCliente=" + emailCliente +
+		return "Venta [id=" + id + ", idSucursal=" + idSucursal + ", emailCliente=" + documentoCliente +
 				 ", fechaVenta=" + fechaVenta +"]";
 	}
 }

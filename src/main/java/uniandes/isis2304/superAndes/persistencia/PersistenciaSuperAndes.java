@@ -23,12 +23,10 @@ import uniandes.isis2304.superAndes.negocio.Almacenamiento;
 import uniandes.isis2304.superAndes.negocio.Carrito;
 import uniandes.isis2304.superAndes.negocio.Categoria;
 import uniandes.isis2304.superAndes.negocio.Clientes;
-import uniandes.isis2304.superAndes.negocio.Empresas;
 import uniandes.isis2304.superAndes.negocio.InfoProdCarrito;
 import uniandes.isis2304.superAndes.negocio.InfoProdProveedor;
 import uniandes.isis2304.superAndes.negocio.InfoProdSucursal;
 import uniandes.isis2304.superAndes.negocio.OrdenPedido;
-import uniandes.isis2304.superAndes.negocio.Personas;
 import uniandes.isis2304.superAndes.negocio.Producto;
 import uniandes.isis2304.superAndes.negocio.ProductoProveedor;
 import uniandes.isis2304.superAndes.negocio.ProductoRedimible;
@@ -77,10 +75,6 @@ public class PersistenciaSuperAndes
 	private SQLAlmacenamiento sqlAlmacenamiento;
 
 	private SQLClientes sqlClientes;
-
-	private SQLPersonas sqlPersonas;
-
-	private SQLEmpresas sqlEmpresas;
 
 	private SQLVentas sqlVentas;
 
@@ -181,9 +175,7 @@ public class PersistenciaSuperAndes
 		sqlOrdenPedido = new SQLOrdenPedido(this);
 		sqlInfProProveedor= new SQLInfoProductoProveedor(this);
 		sqlAlmacenamiento = new SQLAlmacenamiento(this);
-		sqlClientes = new SQLClientes(this);
-		sqlPersonas = new SQLPersonas(this);
-		sqlEmpresas = new SQLEmpresas(this);		
+		sqlClientes = new SQLClientes(this);		
 		sqlVentas = new SQLVentas(this);
 		sqlInfProSucursal = new SQLInfoProductoSucursal(this);
 		sqlCarrito = new SQLCarrito(this);
@@ -1083,18 +1075,18 @@ public class PersistenciaSuperAndes
 	// Clientes
 	//------------------------------------------------------------------------
 
-	public Clientes agregarCliente(String email, String nombre)
+	public Clientes agregarCliente(String email, String nombre, String documento, String direccion)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try
 		{
 			tx.begin();
-			long tuplasInsertadas = sqlClientes.agregarCliente(pm, email, nombre);
+			long tuplasInsertadas = sqlClientes.agregarCliente(pm, email, nombre, documento, direccion);
 			tx.commit();
 
 			log.trace("Inserción de cliente: " + nombre + ": " + tuplasInsertadas + " tuplasInsertadas");
-			return new Clientes(email, nombre);
+			return new Clientes(email, nombre, documento, direccion);
 		}
 		catch(Exception e)
 		{
@@ -1138,9 +1130,9 @@ public class PersistenciaSuperAndes
 		}
 	}
 
-	public Clientes darClientePorEmail(String email)
+	public Clientes darClientePorEmail(String documento)
 	{
-		return sqlClientes.darClientePorEmail(pmf.getPersistenceManager(), email);
+		return sqlClientes.darClientePorDocumento(pmf.getPersistenceManager(), documento);
 	}
 
 	public List<Clientes> darClientesporNombre(String nombre)
@@ -1152,153 +1144,10 @@ public class PersistenciaSuperAndes
 	{
 		return sqlClientes.darClientes(pmf.getPersistenceManager());
 	}
-
-	//------------------------------------------------------------------------
-	// Personas
-	//------------------------------------------------------------------------
-
-	public Personas agregarClientePersona(String email, long documento)
+	
+	public List<Clientes> reqFunC10()
 	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long tuplaInsertadas = sqlPersonas.agregarClientePersona(pm, email, documento, 0);
-			tx.commit();
-			log.trace("Insercion de cliente Persona : " + documento  + " : "+ tuplaInsertadas + " tuplas insertadas");
-			return new Personas(email, documento, 0);
-		}
-		catch(Exception e)
-		{
-			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-	public long eliminarClientePersona(String email)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long resp = sqlClientes.eliminarCliente(pm, email);
-			tx.commit();
-			return resp;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			log.error(("Exception : " + e.getMessage() + "\n" + darDetalleException(e)));
-			return - 1;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-	public Personas darClientePersonaPorEmail(String email)
-	{
-		return sqlPersonas.buscarClientePersonaPorEmail(pmf.getPersistenceManager(), email);
-	}
-
-	public Personas darClientePersonaPorDocumento(long documento)
-	{
-		return sqlPersonas.buscarClientePersonaPorDocumento(pmf.getPersistenceManager(), documento);
-	}
-
-	public List<Personas> darClientesPersonas()
-	{
-		return sqlPersonas.buscarClientesPersonas(pmf.getPersistenceManager());
-	}
-
-	//------------------------------------------------------------------------
-	// Empresas
-	//------------------------------------------------------------------------
-
-	public Empresas agregarEmpresa(String email, String nit, String direccion)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long tuplasInsertadas = sqlEmpresas.agregarClienteEmpresa(pm, email, nit, direccion);
-			tx.commit();
-
-			log.trace("Insercion de Empresa  :" + email +" : " + tuplasInsertadas +"tuplas insertadas");
-
-			return new Empresas(email, nit, direccion);
-		}
-		catch(Exception e)
-		{
-			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-	public long eliminarClienteEmpresa(String email)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long resp = sqlEmpresas.eliminarClienteEmpresa(pm, email);
-			tx.commit();
-			return resp;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			log.error("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return -1;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-	public Empresas darEmpresaPorEmail(String email)
-	{
-		return sqlEmpresas.buscarClienteEmpresasPorEmail(pmf.getPersistenceManager(), email);
-	}
-
-	public Empresas darEmpresaPorNit(String nit)
-	{
-		return sqlEmpresas.buscarClienteEmpresasPorNit(pmf.getPersistenceManager(), nit);
-	}
-
-	public List<Empresas> darEmpresas()
-	{
-		return sqlEmpresas.buscarClientesEmpresas(pmf.getPersistenceManager());
+		return sqlClientes.reqFunC10(pmf.getPersistenceManager());
 	}
 
 	//------------------------------------------------------------------------
@@ -1480,10 +1329,10 @@ public class PersistenciaSuperAndes
 
 				   for(InfoProdCarrito infoProd: darInfoProdCarritos())
 				   {
-					   if(infoProd.getIdCarrito() == darIdCarrito(car.getEmailCliente(), car.getIdSucursal()))
+					   if(infoProd.getIdCarrito() == darIdCarrito(car.getDocumentoCliente(), car.getIdSucursal()))
 					       sqlAlmacenamiento.actualizarCantidadesAlmacenamiento(pm, car.getIdSucursal(), infoProd.getCodigoBarras() ,infoProd.getCantidad(), 2);
 				   }
-				   sqlCarrito.eliminarCarritoPorId(pm, car.getEmailCliente(), car.getIdSucursal() );
+				   sqlCarrito.eliminarCarritoPorId(pm, car.getDocumentoCliente(), car.getIdSucursal() );
 				}
 				tx.commit();
 			}

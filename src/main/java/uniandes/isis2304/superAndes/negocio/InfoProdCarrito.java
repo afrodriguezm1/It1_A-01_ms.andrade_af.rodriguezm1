@@ -8,7 +8,7 @@ public class InfoProdCarrito implements VOInfoProdCarrito
 	
 	private long idCarrito;
 	
-	private String emailCliente;
+	private String documentoCliente;
 	
 	private long idSucursal;
 	
@@ -27,7 +27,7 @@ public class InfoProdCarrito implements VOInfoProdCarrito
 	public  InfoProdCarrito() 
 	{
 		this.idCarrito = 0;
-		this.emailCliente = "";
+		this.documentoCliente = "";
 		this.idSucursal = 0;
 		this.codigoBarras = "";
 		this.cantidad = 0;
@@ -35,10 +35,10 @@ public class InfoProdCarrito implements VOInfoProdCarrito
 		this.precioUnitario = 0;
 	}
 	
-	public InfoProdCarrito(long id, String email, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
+	public InfoProdCarrito(long id, String documentoCliente, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
 		this.idCarrito = id;
-		this.emailCliente = email;
+		this.documentoCliente = documentoCliente;
 		this.idSucursal = idSucursal;
 		this.codigoBarras = codigoBarras;
 		this.cantidad = cantidad;
@@ -58,14 +58,14 @@ public class InfoProdCarrito implements VOInfoProdCarrito
 	}
 	
 	@Override
-	public String getEmailCliente() 
+	public String getDocumentoCliente() 
 	{
-		return this.emailCliente;
+		return this.documentoCliente;
 	}
 	
-	public void setEmailCliente(String email)
+	public void setDocumentoCliente(String documentoClientel)
 	{
-		this.emailCliente = email;
+		this.documentoCliente = documentoCliente;
 	}
 
 	@Override

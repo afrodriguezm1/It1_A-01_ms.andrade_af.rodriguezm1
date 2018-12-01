@@ -41,25 +41,25 @@ public class SQLClientes
 		this.psa = psa;
 	}
 	
-	public long agregarCliente(PersistenceManager pm, String email, String nombre)
+	public long agregarCliente(PersistenceManager pm, String email, String nombre, String documento, String direccion)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO CLIENTES (email, nombre) values (?,?)");
-		q.setParameters(email, nombre);
+		Query q = pm.newQuery(SQL, "INSERT INTO CLIENTES (email, nombre, documento, direccion) values (?,?,?,?)");
+		q.setParameters(email, nombre, documento, direccion);
 		return (long) q.executeUnique();
 	}
 	
-	public long eliminarCliente(PersistenceManager pm, String email)
+	public long eliminarCliente(PersistenceManager pm, String documento)
 	{
-		Query q = pm.newQuery(SQL, "DELETE FROM CLIENTES WHERE email = ?");
-		q.setParameters("prueba");
+		Query q = pm.newQuery(SQL, "DELETE FROM CLIENTES WHERE documento = ?");
+		q.setParameters(documento);
 		return (long) q.executeUnique();
 	}
 	
-	public Clientes darClientePorEmail(PersistenceManager pm, String email)
+	public Clientes darClientePorDocumento(PersistenceManager pm, String documento)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM CLIENTES WHERE email = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM CLIENTES WHERE documento = ?");
 		q.setResultClass(Clientes.class);
-		q.setParameters(email);
+		q.setParameters(documento);
 		return (Clientes) q.executeUnique();
 	}
 	
@@ -73,6 +73,13 @@ public class SQLClientes
 	public List<Clientes> darClientes(PersistenceManager pm)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM CLIENTES");
+		q.setResultClass(Clientes.class);
+		return (List<Clientes>) q.executeList();
+	}
+	
+	public List<Clientes> reqFunC10(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "");
 		q.setResultClass(Clientes.class);
 		return (List<Clientes>) q.executeList();
 	}

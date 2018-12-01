@@ -281,6 +281,27 @@
 		  			"event":"listarResolución"
 		  		}
 		  	]
+		},
+		{ "menuTitle":"Iteración 3",
+		  "options":
+		  	[
+		  		{
+		  			"label":"RFC 10",
+		  			"event":"rfc10"
+		  		},
+		  		{
+		  			"label":"RFC 11",
+		  			"event":"rfc11"
+		  		},
+		  		{
+		  			"label":"RFC 12",
+		  			"event":"rfc12"
+		  		},
+		  		{
+		  			"label":"RFC 13",
+		  			"event":"rfc13"
+		  		}
+		  	]
 		},			
 		{ "menuTitle": "Mantenimiento",
 		  "options":

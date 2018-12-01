@@ -18,7 +18,7 @@ public interface VOVentas
 	
 	public long getIdSucursal();
 	
-	public String getEmailCliente();
+	public String getDocumentoCliente();
 	
 	public Date getFechaVenta();
 	

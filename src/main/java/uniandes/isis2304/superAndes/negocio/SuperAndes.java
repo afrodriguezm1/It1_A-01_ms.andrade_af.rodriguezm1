@@ -48,28 +48,12 @@ public class SuperAndes
 	 * 			Métodos para manejar los Clientes
 	 *****************************************************************/
 	
-	public Clientes agregarCliente(String email, String nombre)
+	public Clientes agregarCliente(String email, String nombre, String documento, String direccion)
 	{
 		log.info("Adicionando cliente:" + email);
-		Clientes cliente = psa.agregarCliente(email, nombre);
+		Clientes cliente = psa.agregarCliente(email, nombre, documento, direccion);
 		log.info("Adicionando cliente: " + email);
 		return cliente;
-	}
-	
-	public Empresas agregarEmpresa(String email, String nit, String direccion)
-	{
-		log.info("Adicionando empresa: " + email);
-		Empresas empresa = psa.agregarEmpresa(email, nit, direccion);
-		log.info("Adicionando empresa: " + email);
-		return empresa;
-	}
-	
-	public Personas agregarPersona(String email, long documento)
-	{
-		log.info("Adicionando persona: " + email);
-		Personas persona = psa.agregarClientePersona(email, documento);
-		log.info("Adicionando persona: " + email);
-		return persona;
 	}
 	
 	public Clientes darCliente(String email)
@@ -96,16 +80,6 @@ public class SuperAndes
 	public long eliminarCliente(String email)
 	{
 		return psa.eliminarCliente(email);
-	}
-	
-	public long eliminarPersona(String email)
-	{
-		return psa.eliminarClientePersona(email);
-	}
-	
-	public long eliminarEmpresa(String email)
-	{
-		return psa.eliminarClienteEmpresa(email);
 	}
 	
 	/* ****************************************************************

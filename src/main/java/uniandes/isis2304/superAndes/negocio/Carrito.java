@@ -8,7 +8,7 @@ public class Carrito implements VOCarrito
 
 	private long id;
 	
-	private String emailCliente;
+	private String documentoCliente;
 	
 	private long idSucursal;
 	
@@ -22,7 +22,7 @@ public class Carrito implements VOCarrito
 	
 	public Carrito()
 	{
-		this.emailCliente = "";
+		this.documentoCliente = "";
 		this.idSucursal = 0;
 		this.precio = 0;
 		this.estado = "";
@@ -30,7 +30,7 @@ public class Carrito implements VOCarrito
 	
 	public Carrito( String email, long idSucursal, long precio, String estado)
 	{
-		this.emailCliente = email;
+		this.documentoCliente = email;
 		this.idSucursal = idSucursal;
 		this.precio = precio;
 		this.estado = estado;
@@ -38,14 +38,14 @@ public class Carrito implements VOCarrito
 
 
 	@Override
-	public String getEmailCliente() 
+	public String getDocumentoCliente() 
 	{
-		return this.emailCliente;
+		return this.documentoCliente;
 	}
 	
-	public void setEmailCliente(String email)
+	public void setDocumentoCliente(String email)
 	{
-		this.emailCliente = email;
+		this.documentoCliente = email;
 	}
 
 	@Override

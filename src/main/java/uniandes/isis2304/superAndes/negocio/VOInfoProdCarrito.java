@@ -11,7 +11,7 @@ public interface VOInfoProdCarrito
 	 */
 	public long getIdCarrito();
 	
-	public String getEmailCliente();
+	public String getDocumentoCliente();
 	
 	public long getIdSucursal();
 	

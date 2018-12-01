@@ -40,11 +40,9 @@ import uniandes.isis2304.superAndes.negocio.SuperAndes;
 import uniandes.isis2304.superAndes.negocio.VOAlmacenamiento;
 import uniandes.isis2304.superAndes.negocio.VOCarrito;
 import uniandes.isis2304.superAndes.negocio.VOClientes;
-import uniandes.isis2304.superAndes.negocio.VOEmpresas;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdCarrito;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdProveedor;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdSucursal;
-import uniandes.isis2304.superAndes.negocio.VOPersona;
 import uniandes.isis2304.superAndes.negocio.VOProducto;
 import uniandes.isis2304.superAndes.negocio.VOPromocion;
 import uniandes.isis2304.superAndes.negocio.VOProveedor;
@@ -269,25 +267,20 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 		{
 			String emailCliente = JOptionPane.showInputDialog(this, "Email del cliente?", "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
 			String nombreCliente = JOptionPane.showInputDialog(this, "Nombre del Cliente?", "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
-			int tipo = JOptionPane.showConfirmDialog(this, "El cliente es una empresa?", "Agregar Cliente", JOptionPane.YES_NO_OPTION);
-			System.out.println(tipo);
-			String dato1 = JOptionPane.showInputDialog(this, ((tipo == 0)? "Nit de la empresa" : "Documento del cliente"), "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
-			if(tipo == 0)
-			{
-				String dato2 = JOptionPane.showInputDialog(this, "Dirección del cliente?", "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
+			String documento = JOptionPane.showInputDialog(this, "Documento del cliente?", "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
+			String direccion = JOptionPane.showInputDialog(this, "Direccion del Cliente?", "Agregar Cliente", JOptionPane.QUESTION_MESSAGE);
 				if(emailCliente != null)
 				{
-					VOClientes tb = superAndes.agregarCliente(emailCliente, nombreCliente);
-					VOEmpresas tb2 = superAndes.agregarEmpresa(emailCliente, dato1, dato2);
-					if(tb == null || tb2 == null)
+					VOClientes tb = superAndes.agregarCliente(emailCliente, nombreCliente, documento, direccion);
+					if(tb == null)
 					{
 						throw new Exception("No se pudo crear el cliente con el email: " + emailCliente);
 					}
 					String resultado = "En agregarCliente\n\n";
 					resultado += "Cliente adicionado exitosamente:    " + emailCliente + "\n";
 					resultado += "                    	   Nombre:    " + nombreCliente + "\n";
-					resultado += "                    	   Nit:       " + dato1 + "\n";
-					resultado += "                    	   Dirección: " + dato2 + "\n";
+					resultado += "                    	   Documento: " + documento + "\n";
+					resultado += "                    	   Dirección: " + direccion + "\n";
 					resultado += "\n Operación terminada";
 					panelDatos.actualizarInterfaz(resultado);
 				}
@@ -295,33 +288,8 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 				{
 					panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
 				}
-			}
-			else if(tipo == 1)
-			{
-				if(emailCliente != null)
-				{
-					VOClientes tb = superAndes.agregarCliente(emailCliente, nombreCliente);
-					VOPersona tb2 = superAndes.agregarPersona(emailCliente, Integer.parseInt(dato1));
-					if(tb == null || tb2 == null)
-					{
-						throw new Exception("No se pudo crear el cliente con el email: " + emailCliente);
-					}
-					String resultado = "En agregarCliente\n\n";
-					resultado += "Cliente adicionado exitosamente: " + emailCliente + "\n";
-					resultado += "                    	   Nombre:    " + nombreCliente + "\n";
-					resultado += "                    	   Documento: " + dato1 + "\n";
-					resultado += "\n Operación terminada";
-					panelDatos.actualizarInterfaz(resultado);
-				}
-				else
-				{
-					panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-				}
-			}
-			else
-			{
-				panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-			}
+						
+						
 		}
 		catch(Exception e)
 		{
@@ -532,7 +500,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 				ArrayList<VOInfoProdSucursal> arreglo = new ArrayList<>();
 				for(int i = 0; i < codigos.size(); i++)
 				{
-					VOInfoProdSucursal a = superAndes.agregarProductoVenta(su.getId(), codigos.get(i), cantidad.get(i));
+					VOInfoProdSucursal a = superAndes.agregarProductoVenta(su.getId(), su.getIdSucursal(), codigos.get(i), cantidad.get(i), 0 , 0);
 					arreglo.add(a);
 				}
 				if(su == null || arreglo.isEmpty())
@@ -912,7 +880,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		try
 		{
-			superAndes.abandonarCarrito(carrito.getEmailCliente(), carrito.getIdSucursal());
+			superAndes.abandonarCarrito(carrito.getDocumentoCliente(), carrito.getIdSucursal());
 		}
 		catch(Exception e)
 		{
@@ -941,7 +909,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 	{
 		try
 		{
-			VOVentas venta = superAndes.finalizarCompra(carrito.getId(), carrito.getEmailCliente(), carrito.getIdSucursal());
+			VOVentas venta = superAndes.finalizarCompra(carrito.getId(), carrito.getDocumentoCliente(), carrito.getIdSucursal(), carrito.getPrecioTotal());
 			if(venta == null)
 			{
 				throw new Exception("No se puedo finalizar la venta del carrito: " + carrito.getId());
@@ -971,7 +939,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			int cantidad = Integer.parseInt(JOptionPane.showInputDialog (this, "Cuantos desea agregar?", "Adicionar producto", JOptionPane.QUESTION_MESSAGE));
 			if(codigoBarras != null && cantidad != 0)
 			{
-				VOInfoProdCarrito ipc = superAndes.agregarProductoCarrito(carrito.getId(), carrito.getEmailCliente(), carrito.getIdSucursal(), codigoBarras, cantidad);
+				VOInfoProdCarrito ipc = superAndes.agregarProductoCarrito(carrito.getId(), carrito.getDocumentoCliente(), carrito.getIdSucursal(), codigoBarras, cantidad, 0 , 0);
 				if( ipc == null)
 				{
 					throw new Exception("No se pudo agregar un producto al carrito: " + codigoBarras);
@@ -1000,7 +968,7 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			String codigoBarras = JOptionPane.showInputDialog (this, "Codigo de barras del producto a eliminar?", "Agregar producto", JOptionPane.QUESTION_MESSAGE);
 			if(codigoBarras != null)
 			{
-				long ipc = superAndes.eliminarProductoCarrito(carrito.getId(), carrito.getEmailCliente(), carrito.getIdSucursal(), codigoBarras);
+				long ipc = superAndes.eliminarProductoCarrito(carrito.getId(), carrito.getDocumentoCliente(), carrito.getIdSucursal(), codigoBarras);
 				if(ipc == -1)
 				{
 					throw new Exception("No se pudo eliminar el producto : " + codigoBarras);
