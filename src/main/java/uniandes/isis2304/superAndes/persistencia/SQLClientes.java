@@ -83,4 +83,19 @@ public class SQLClientes
 		q.setResultClass(Clientes.class);
 		return (List<Clientes>) q.executeList();
 	}
+	
+
+	public List<Clientes> darRequFunC10(PersistenceManager pm, long id, String restri)
+	{
+		Query q = pm.newQuery(SQL, "SELECT EMAIL, NOMBRE, DOCUMENTO, DIRECCION FROM INFO_PRODUCTO_SUCURSAL IPS, ( SELECT * FROM CLIENTES C, VENTAS V WHERE C.DOCUMENTO = V.DOCUMENTOCLIENTE) B WHERE IPS.IDVENTA = B.ID " + restri + " AND V.idSucursal = "+id+" GROUP BY B.DOCUMENTO, B.NOMBRE, B.DIRECCION, B.EMAIL ORDER BY DOCUMENTO;");
+		q.setResultClass(Clientes.class);
+		return (List<Clientes>) q.executeList();
+	}
+	
+	public List<Clientes> darRequFunC11(PersistenceManager pm, long id, String restri)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM CLIENTES MINUS(SELECT EMAIL, NOMBRE, DOCUMENTO, DIRECCION FROM INFO_PRODUCTO_SUCURSAL IPS, ( SELECT * FROM CLIENTES C, VENTAS V WHERE C.DOCUMENTO = V.DOCUMENTOCLIENTE) B WHERE IPS.IDVENTA = B.ID" + restri + " AND V.idSucursal = "+id+" GROUP BY B.DOCUMENTO, B.NOMBRE, B.DIRECCION, B.EMAIL ORDER BY DOCUMENTO);");
+		q.setResultClass(Clientes.class);
+		return (List<Clientes>) q.executeList();
+	}
 }

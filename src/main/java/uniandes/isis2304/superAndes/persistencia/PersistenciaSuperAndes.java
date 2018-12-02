@@ -1145,6 +1145,11 @@ public class PersistenciaSuperAndes
 		return sqlClientes.darClientes(pmf.getPersistenceManager());
 	}
 	
+	public List<Clientes> darRequFunC10(long id, String restri)
+	{
+		return sqlClientes.reqFunC10(pmf.getPersistenceManager(), id, restri);
+	}
+	
 	public List<Clientes> reqFunC10()
 	{
 		return sqlClientes.reqFunC10(pmf.getPersistenceManager());
