@@ -100,10 +100,20 @@ public class Clientes implements VOClientes
 	{
 		return this.documento;
 	}
+	
+	public void setDocumento(String documento)
+	{
+		this.documento = documento;
+	}
 
 	@Override
 	public String getDireccion() 
 	{
 		return this.direccion;
+	}
+	
+	public void setDireccion(String direccion)
+	{
+		this.direccion = direccion;
 	}
 }

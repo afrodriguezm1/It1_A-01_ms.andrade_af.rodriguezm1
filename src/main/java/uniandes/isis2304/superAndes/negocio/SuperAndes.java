@@ -77,6 +77,48 @@ public class SuperAndes
 		}
 	}
 	
+	public List<VOClientes> darVORequC10(int id, String restri)
+	{
+		log.info("Generando los VO de clintes");
+		{
+			List<VOClientes> voClientes = new LinkedList<VOClientes>();
+			for(Clientes tb: psa.darRequFunC10(id, restri))
+			{
+				voClientes.add(tb);
+			}
+			log.info("Generando los VO de Clientes");
+			return voClientes;
+		}
+	}
+	
+	public List<VOClientes> darVORequ11(int id, String restri)
+	{
+		log.info("Generando los VO de clintes");
+		{
+			List<VOClientes> voClientes = new LinkedList<VOClientes>();
+			for(Clientes tb: psa.darRequFunC11(id, restri))
+			{
+				voClientes.add(tb);
+			}
+			log.info("Generando los VO de Clientes");
+			return voClientes;
+		}
+	}
+	
+	public List<VOClientes> darVORequ13(int tipo)
+	{
+		log.info("Generando los VO de clintes");
+		{
+			List<VOClientes> voClientes = new LinkedList<VOClientes>();
+			for(Clientes tb: psa.darRequFunC13(tipo))
+			{
+				voClientes.add(tb);
+			}
+			log.info("Generando los VO de Clientes");
+			return voClientes;
+		}
+	}
+	
 	public long eliminarCliente(String email)
 	{
 		return psa.eliminarCliente(email);
@@ -386,7 +428,6 @@ public class SuperAndes
 	/* ****************************************************************
 	 * 			Métodos para manejar carritos
 	 *****************************************************************/
-	
 	public InfoProdCarrito agregarProductoCarrito(long idCarrito, String email, long idSucursal, String codigoBarras, int cantidad, long precioTotal, long precioUnitario)
 	{
 		log.info("Adicionando InfoProductoCarrito:" + idCarrito);
@@ -401,5 +442,19 @@ public class SuperAndes
 		long resp = psa.eliminarProductoCarrito(idCarrito, email, idSucursal, codigoBarras);
 		log.info("Eliminando InfoProductoCarrito ");
 		return resp;
+	}
+	
+	public List<VORequ12> darVORequ12(long id)
+	{
+		log.info("Generando los VO de clientes");
+		{
+			List<VORequ12> vorequ = new LinkedList<VORequ12>();
+			for(Requ12 tb : psa.requ12(id))
+			{
+				vorequ.add(tb);
+			}
+			log.info("Generando los VO de Clientes: " + vorequ.size() +" existentes");
+			return vorequ;
+		}
 	}
 }

@@ -1,90 +1,10 @@
-01:39:28,446 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando InfoProductoCarrito:1
-01:39:28,790 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : El Query tenia que devolver objetos de tipo "uniandes.isis2304.superAndes.negocio.ProductoSucursal" pero era imposible poner el valor al campo "CODIGO_BARRAS"  tipo "java.lang.String". El campo debe tener un metodo publico set/put o ser publico.
-
-01:39:28,790 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Adicionando Carrito:1
-01:50:33,124 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Eliminar InfoProductoCarrito: 9308907443850
-01:50:33,501 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : null
-
-01:50:33,501 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Eliminando InfoProductoCarrito 
-01:51:07,471 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Eliminar InfoProductoCarrito: 9308907443850
-01:51:07,774 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception : null
-
-01:51:07,774 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Eliminando InfoProductoCarrito 
-01:54:13,105 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Dar carrito del cliente: prueba
-01:54:42,799 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Dar carrito del cliente: prueba
-01:56:00,088 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Dar carrito del cliente: prueba
-02:04:09,173 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Dar carrito del cliente: prueba
-02:04:09,197 (AWT-EventQueue-0) ERROR [uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes] - Exception: Cannot change the transaction isolation level while a datastore transaction is active
-
-15:55:17,680 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-15:55:19,706 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-15:55:19,709 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-15:56:29,523 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-15:56:34,131 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-15:56:34,135 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-15:59:08,297 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-15:59:10,292 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-15:59:10,296 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:05:03,104 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:05:05,771 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:05:05,775 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:06:07,153 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:06:08,595 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:06:08,598 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:08:25,740 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:08:27,189 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:08:27,192 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:10:23,292 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:16:33,683 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:16:34,779 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:16:34,782 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:17:25,376 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:17:28,906 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:17:28,909 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:18:08,727 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:18:10,138 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:18:10,141 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:18:31,201 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:18:31,204 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:19:47,013 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:19:48,684 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:19:48,687 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:20:23,740 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:20:24,895 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:20:24,898 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:20:50,832 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:20:51,915 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:20:51,918 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:21:43,722 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:21:45,456 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:21:45,460 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:24:31,254 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:24:32,420 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:24:32,424 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:31:30,313 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:31:32,480 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:31:32,483 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:32:05,035 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:32:06,342 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:32:06,345 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:32:37,045 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:32:38,759 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:32:38,762 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:32:54,819 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:32:56,225 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:32:56,228 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:33:19,351 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:33:20,596 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:33:20,599 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:35:28,455 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:35:30,176 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:35:30,179 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:43:26,645 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:43:28,246 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:43:28,249 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-16:44:25,193 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-16:44:26,613 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-16:44:26,616 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
-21:30:32,299 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - NO se encontró un archivo de configuración válido
-21:30:34,130 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se aplica configuración por defecto
-21:30:34,133 (main) INFO  [uniandes.isis2304.superAndes.InterfazDemo.InterfazSuperAndesDemo] - Se encontró un archivo de configuración válido: Tablas BD
+18:09:15,536 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clientes
+18:13:58,557 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clientes
+18:15:18,184 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clientes
+19:27:21,564 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clintes
+19:28:15,334 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clintes
+19:28:53,223 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clintes
+19:31:32,229 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clintes
+19:34:42,802 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clientes
+19:35:00,252 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clientes
+19:37:46,109 (AWT-EventQueue-0) INFO  [uniandes.isis2304.superAndes.negocio.SuperAndes] - Generando los VO de clintes

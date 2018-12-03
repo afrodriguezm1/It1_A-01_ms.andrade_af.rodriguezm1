@@ -37,9 +37,7 @@ import uniandes.isis2304.superAndes.negocio.SuperAndes;
 import uniandes.isis2304.superAndes.negocio.VOCarrito;
 import uniandes.isis2304.superAndes.negocio.VOCategoria;
 import uniandes.isis2304.superAndes.negocio.VOClientes;
-import uniandes.isis2304.superAndes.negocio.VOEmpresas;
 import uniandes.isis2304.superAndes.negocio.VOInfoProdCarrito;
-import uniandes.isis2304.superAndes.negocio.VOPersona;
 import uniandes.isis2304.superAndes.negocio.VOProducto;
 import uniandes.isis2304.superAndes.negocio.VOPromocion;
 import uniandes.isis2304.superAndes.negocio.VOProveedor;
@@ -523,10 +521,8 @@ public class InterfazSuperAndesDemo extends JFrame implements ActionListener
 			String direccion = "Carrera 5 23-12";
 			boolean errorCliente = false;
 			
-			VOClientes clientePersona = superAndes.agregarCliente(emailPersona, nombrePersona);
-			VOPersona persona = superAndes.agregarPersona(emailPersona, documento);
+			VOClientes clientePersona = superAndes.agregarCliente(emailPersona, nombrePersona, documento, direccion);
 			VOClientes clienteEmpresa = superAndes.agregarCliente(emailEmpresa, nombreEmpresa);
-			VOEmpresas empresa = superAndes.agregarEmpresa(emailEmpresa, nit, direccion);
 			
 			if(clientePersona == null)
 			{

@@ -33,6 +33,7 @@ import uniandes.isis2304.superAndes.negocio.ProductoRedimible;
 import uniandes.isis2304.superAndes.negocio.ProductoSucursal;
 import uniandes.isis2304.superAndes.negocio.Promocion;
 import uniandes.isis2304.superAndes.negocio.Proveedor;
+import uniandes.isis2304.superAndes.negocio.Requ12;
 import uniandes.isis2304.superAndes.negocio.Sucursal;
 import uniandes.isis2304.superAndes.negocio.TipoProducto;
 import uniandes.isis2304.superAndes.negocio.VOCategoria;
@@ -83,6 +84,8 @@ public class PersistenciaSuperAndes
 	private SQLCarrito sqlCarrito;
 	
 	private SQLInfoProductoCarrito sqlInfProdCarrito;
+	
+	private SQLRequ12 sqlRequ12;
 
 	private PersistenciaSuperAndes()
 	{
@@ -1147,12 +1150,17 @@ public class PersistenciaSuperAndes
 	
 	public List<Clientes> darRequFunC10(long id, String restri)
 	{
-		return sqlClientes.reqFunC10(pmf.getPersistenceManager(), id, restri);
+		return sqlClientes.darRequFunC10(pmf.getPersistenceManager(), id, restri);
 	}
 	
-	public List<Clientes> reqFunC10()
+	public List<Clientes> darRequFunC11(long id , String restri)
 	{
-		return sqlClientes.reqFunC10(pmf.getPersistenceManager());
+		return sqlClientes.darRequFunC11(pmf.getPersistenceManager(), id, restri);
+	}
+
+	public List<Clientes> darRequFunC13(long tipo)
+	{
+		return sqlClientes.darRequFun13(pmf.getPersistenceManager(), tipo);
 	}
 
 	//------------------------------------------------------------------------
@@ -1526,6 +1534,9 @@ public class PersistenciaSuperAndes
 	}
 	
 	
-	
+	public List<Requ12> requ12(long id)
+	{
+		return sqlRequ12.buscar(pmf.getPersistenceManager(), id);
+	}
 	
 }

@@ -46,6 +46,7 @@ import uniandes.isis2304.superAndes.negocio.VOInfoProdSucursal;
 import uniandes.isis2304.superAndes.negocio.VOProducto;
 import uniandes.isis2304.superAndes.negocio.VOPromocion;
 import uniandes.isis2304.superAndes.negocio.VOProveedor;
+import uniandes.isis2304.superAndes.negocio.VORequ12;
 import uniandes.isis2304.superAndes.negocio.VOSucursal;
 import uniandes.isis2304.superAndes.negocio.VOVentas;
 
@@ -314,6 +315,101 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
 	}
+	
+	public void rfc12() throws Exception
+	{
+		int id = Integer.parseInt(JOptionPane.showInputDialog(this, "sucursal de las busquedas?", "Mostrar carrito", JOptionPane.QUESTION_MESSAGE));
+		if(id <=0 || id >150)
+		{
+			throw new Exception ("No es un valor válido de sucursal");		
+		}
+		try
+		{
+			List<VORequ12> lista = superAndes.darVORequ12(id);
+			String resultado = "En el requerimiento 12";
+			resultado += "\n" + listarRequ12(lista);
+			panelDatos.actualizarInterfaz(resultado);
+			resultado += "\n Operacion terminada";
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	public void rfc10() throws Exception
+	{
+		int id = Integer.parseInt(JOptionPane.showInputDialog(this, "sucursal de las busquedas?", "Sucursal?", JOptionPane.QUESTION_MESSAGE));
+		String restrincciones = JOptionPane.showInputDialog(this, "Que restrincciones desea agregar?", "Restrincciones", JOptionPane.QUESTION_MESSAGE);
+		try
+		{
+			List<VOClientes> lista = superAndes.darVORequC10(id, restrincciones);
+			String resultado = "En Requerimiento";
+			resultado += "\n" + listarClientes(lista);
+			panelDatos.actualizarInterfaz(resultado);
+			resultado += "\n Operacion terminada";
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}	
+	}
+	
+	public void rfc11() throws Exception
+	{
+		int id = Integer.parseInt(JOptionPane.showInputDialog(this, "sucursal de las busquedas?", "Sucursal?", JOptionPane.QUESTION_MESSAGE));
+		String restrincciones = JOptionPane.showInputDialog(this, "Que restrincciones desea agregar?", "Restrincciones", JOptionPane.QUESTION_MESSAGE);
+		try
+		{
+			List<VOClientes> lista = superAndes.darVORequ11(id, restrincciones);
+			String resultado = "En listarClientes";
+			resultado += "\n" + listarClientes(lista);
+			panelDatos.actualizarInterfaz(resultado);
+			resultado += "\n Operacion terminada";
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+	}
+	
+	public void rfc13() throws Exception
+	{
+		int id = Integer.parseInt(JOptionPane.showInputDialog(this, "Cual tipo de cliente desea buscar? 1, 2 o 3?", "Sucursal?", JOptionPane.QUESTION_MESSAGE));
+		if(id <=0 || id >150)
+		{
+			throw new Exception ("No es un valor válido de respuesta");		
+		}
+		try
+		{
+			List<VOClientes> lista = superAndes.darVORequ13(id);
+			String resultado = "En listarClientes";
+			resultado += "\n" + listarClientes(lista);
+			panelDatos.actualizarInterfaz(resultado);
+			resultado += "\n Operacion terminada";
+		}
+		catch(Exception e)
+		{
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}	
+	}
+	
+	private String listarRequ12(List<VORequ12> lista) 
+	{
+		String resp = "Los resultados del requerimiento son";
+		int i = 1;
+		for (VORequ12 tb : lista)
+		{
+			resp += i++ + ". " + tb.toString() + "\n";
+		}
+		return resp;
+	}
+	
+	
 
 	public void buscarCliente()
 	{
@@ -1175,6 +1271,8 @@ public class InterfazSuperAndesApp extends JFrame implements ActionListener
 
 		panelDatos.actualizarInterfaz(resultado);		
 	}
+	
+	
 
 	/**
 	 * Método para la ejecución de los eventos que enlazan el menú con los métodos de negocio
